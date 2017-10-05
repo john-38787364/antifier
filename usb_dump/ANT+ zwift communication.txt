@@ -1,0 +1,55 @@
+#config channel
+0000   a4 03 42 00 10 00 f5 00 00 #[42] assign channel, [00] 0, [10] type 10 bidirectional transmit, [00] network number 0, [f5] extended assignment
+0000   a4 05 51 00 01 00 11 05 e5 00 00 #[51] set channel ID, [00] number 0 (wildcard search) , [01] device number 1, [00] pairing request (off), [11] device type ANT+ Fitness Equipment, [05] transmission type (page 18 and 66 Protocols) 00000101 - 01= independent channel, 1=global data pages used
+0000   a4 02 45 00 39 da 00 00 #[45] set channel freq, [00] transmit channel on network #0, [39] freq 2400 + 57 x 1 Mhz= 2457 Mhz
+0000   a4 03 43 00 00 20 c4 00 00 #[43] set messaging period, [00] channel #0, [f61f] = 32768/8182 = 4Hz (The channel messaging period in seconds * 32768. Maximum messaging period is ~2 seconds. )
+0000   a4 02 60 00 03 c5 00 00 #[60] set transmit power, [00] channel #0, [03] 0 dBm
+0000   a4 01 4b 00 ee 00 00 #open channel #0
+0000   a4 09 4e 00 10 19 86 86 8d 20 00 30 77 00 00 #broadcast manufacturer's data
+
+report cadence and power #D000001231_-_ANT+_Device_Profile_-_Fitness_Equipment_-_Rev_4.2.pdf
+0000   a4 09 4e 00 19 10 5a b0 47 1b 01 30 6d 00 00 #p.60 [19] specific trainer data, [10] counter rollover 256, [5a] inst cadence, [b0] acc power lsb, [47] acc power msb (r/over 65536W), [1b] inst power lsb, [01] bits 0-3 inst power MSB bits 4-7 trainer status bit, [30] flags bit field
+power explanation
+lsb- 1b
+msb- 01 = 0000 0001, bits 0-3 = 001 = 0x01. Little endian calc 1b01 = 283W 
+
+0000   a4 09 4e 00 19 11 5a cb 48 1b 01 30 18 00 00
+0000   a4 09 4e 00 10 19 89 8c 8d 20 00 30 72 00 00 #p.44 [10] general fe data, [19] eqpt type trainer, [89] acc value time since start in 0.25s r/over 64s, [8c] acc value time dist travelled in m r/over 256m, [8d] [20] speed lsb msb 0.001m/s, [00] hr, [30] capabilities bit field
+0000   a4 09 4e 00 19 13 5a 01 4b 1b 01 30 d3 00 00
+0000   a4 09 4e 00 19 14 5a 1c 4c 1b 01 30 ce 00 00
+0000   a4 09 4e 00 10 19 8b 92 8d 20 00 30 6e 00 00
+
+zwift started
+0000   a4 09 4e 00 10 19 18 19 1a 41 00 30 80 00 00
+reply  a4 09 4f 00 33 ff ff ff ff 45 4e ff 25 # p.74 [33] track resistance, ff ff ff ff reserved, [45] slope lsb, [4e] slope msb in 1/100%, [ff] coefficient rolling resistance
+Simulated Grade (%) = (Raw Grade Value x 0.01%) – 200.00% , 454e = 20037 x 0.01 -200 = 0.37%
+0000   a4 09 4e 00 19 71 5a 89 21 5e 01 30 16 00 00
+0000   a4 09 4e 00 19 73 5a 45 24 5e 01 30 dd 00 00
+0000   a4 09 4e 00 10 19 1b 26 1a 41 00 30 bc 00 00
+0000   a4 09 4e 00 19 76 5a 5f 28 5e 01 30 ce 00 00
+0000   a4 09 4e 00 19 78 5a 1b 2b 5e 01 30 87 00 00
+reply  a4 09 4f 00 33 ff ff ff ff 98 4e ff f8 #[984e] = 1.2% grade
+
+page 0x50 every 17s, repeats, counter for page 0x19 continues to increment- Manufacturers Info
+Oct  5, 2017 19:20:11.175125000 BST	0	a4:09:4e:00:10:19:f5:cd:8d:20:00:30:4f:00:00
+Oct  5, 2017 19:20:11.370901000 BST	0	a4:09:4e:00:19:a6:5a:82:ed:1b:01:30:43:00:00
+Oct  5, 2017 19:20:11.648683000 BST	0	a4:09:4e:00:19:a7:5a:9d:ee:1b:01:30:5e:00:00
+Oct  5, 2017 19:20:11.898344000 BST	0	a4:09:4e:00:10:19:f7:d3:8d:20:00:30:53:00:00
+Oct  5, 2017 19:20:12.155080000 BST	0	a4:09:4e:00:50:ff:ff:01:0f:00:85:83:bb:00:00 #every 17s repeated after 250ms
+Oct  5, 2017 19:20:12.383852000 BST	0	a4:09:4e:00:50:ff:ff:01:0f:00:85:83:bb:00:00
+Oct  5, 2017 19:20:12.657505000 BST	0	a4:09:4e:00:10:19:f9:d9:8d:20:00:30:57:00:00
+Oct  5, 2017 19:20:12.896561000 BST	0	a4:09:4e:00:19:ab:5a:09:f3:1b:01:30:db:00:00
+
+page 0x51 every 17s- Product Info
+Oct  5, 2017 19:20:19.904540000 BST	0	a4:09:4e:00:19:c6:5a:e2:10:1b:01:30:be:00:00
+Oct  5, 2017 19:20:20.145522000 BST	0	a4:09:4e:00:51:ff:ff:01:01:00:00:00:b2:00:00
+Oct  5, 2017 19:20:20.399842000 BST	0	a4:09:4e:00:51:ff:ff:01:01:00:00:00:b2:00:00
+Oct  5, 2017 19:20:20.663634000 BST	0	a4:09:4e:00:19:c9:5a:33:14:1b:01:30:64:00:00
+
+replies from zwift approx every second
+2422	286.751891	5.255.1	host	USB	40	URB_BULK in
+2433	288.001895	5.255.1	host	USB	40	URB_BULK in
+2442	289.001907	5.255.1	host	USB	40	URB_BULK in
+2451	290.001884	5.255.1	host	USB	40	URB_BULK in
+2462	291.251892	5.255.1	host	USB	40	URB_BULK in
+2471	292.251907	5.255.1	host	USB	40	URB_BULK in
