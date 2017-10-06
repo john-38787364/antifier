@@ -1,0 +1,2533 @@
+000000: PnP Event: Device Connected (UP), 2017-10-05 07:38:40.3721257 (1. Device: Playback)
+The USB device has just been connected to the system.
+000001: Get Descriptor Request (DOWN), 2017-10-05 07:39:26.1418017 +45.7696730 (1. Device: Playback)
+Descriptor Type: Device
+Descriptor Index: 0x0
+Transfer Buffer Size: 0x12 bytes
+000002: Control Transfer (UP), 2017-10-05 07:39:26.1428392 +0.0010375. (1. Device: Playback) Status: 0x00000000
+Pipe Handle: Control Pipe
+ 12 01 00 02 00 00 00 20 CF 0F 08 10 00 01 01 02   ....... Ï.......
+ 03 01                                             ..
+Setup Packet
+ 80 06 00 01 00 00 12 00                           €.......
+Recipient: Device
+Request Type: Standard
+Direction: Device->Host
+Request: 0x6 (GET_DESCRIPTOR)
+Value: 0x100
+Index: 0x0
+Length: 0x12
+000003: Get Descriptor Request (DOWN), 2017-10-05 07:39:26.1436938 +0.0008546 (1. Device: Playback)
+Descriptor Type: Configuration
+Descriptor Index: 0x0
+Transfer Buffer Size: 0x9 bytes
+
+
+000004: Control Transfer (UP), 2017-10-05 07:39:26.1448376 +0.0011438. (1. Device: Playback) Status: 0x00000000
+Pipe Handle: Control Pipe
+ 09 02 20 00 01 01 02 80 32                        .. ....€2
+Setup Packet
+ 80 06 00 02 00 00 09 00                           €.......
+Recipient: Device
+Request Type: Standard
+Direction: Device->Host
+Request: 0x6 (GET_DESCRIPTOR)
+Value: 0x200
+Index: 0x0
+Length: 0x9
+
+000005: Get Descriptor Request (DOWN), 2017-10-05 07:39:26.1448892 +0.0000516 (1. Device: Playback)
+Descriptor Type: Configuration
+Descriptor Index: 0x0
+Transfer Buffer Size: 0x20 bytes
+
+
+000006: Control Transfer (UP), 2017-10-05 07:39:26.1458404 +0.0009512. (1. Device: Playback) Status: 0x00000000
+Pipe Handle: Control Pipe
+ 09 02 20 00 01 01 02 80 32 09 04 00 00 02 FF 00   .. ....€2.....ÿ.
+ 00 02 07 05 81 02 40 00 01 07 05 01 02 40 00 01   .....@......@..
+
+Setup Packet
+ 80 06 00 02 00 00 20 00                           €..... .
+Recipient: Device
+Request Type: Standard
+Direction: Device->Host
+Request: 0x6 (GET_DESCRIPTOR)
+Value: 0x200
+Index: 0x0
+Length: 0x20
+000007: Get Descriptor Request (DOWN), 2017-10-05 07:39:26.1459588 +0.0001184 (1. Device: Playback)
+Descriptor Type: String
+Descriptor Index: 0x0
+Transfer Buffer Size: 0xff bytes
+LanguageId: 0x0
+
+000008: Control Transfer (UP), 2017-10-05 07:39:26.1468369 +0.0008781. (1. Device: Playback) Status: 0x00000000
+Pipe Handle: Control Pipe
+ 04 03 09 04                                       ....
+Setup Packet
+ 80 06 00 03 00 00 FF 00                           €.....ÿ.
+Recipient: Device
+Request Type: Standard
+Direction: Device->Host
+Request: 0x6 (GET_DESCRIPTOR)
+Value: 0x300
+Index: 0x0
+Length: 0xff
+
+000009: Get Descriptor Request (DOWN), 2017-10-05 07:39:26.1468850 +0.0000481 (1. Device: Playback)
+Descriptor Type: String
+Descriptor Index: 0x2
+Transfer Buffer Size: 0xff bytes
+LanguageId: 0x409
+
+000010: Control Transfer (UP), 2017-10-05 07:39:26.1478379 +0.0009529. (1. Device: Playback) Status: 0x00000000
+Pipe Handle: Control Pipe
+ 20 03 4D 00 6F 00 76 00 65 00 73 00 74 00 69 00    .M.o.v.e.s.t.i.
+ 63 00 6B 00 20 00 6D 00 69 00 6E 00 69 00 00 00   c.k. .m.i.n.i...
+
+Setup Packet
+ 80 06 02 03 09 04 FF 00                           €.....ÿ.
+Recipient: Device
+Request Type: Standard
+Direction: Device->Host
+Request: 0x6 (GET_DESCRIPTOR)
+Value: 0x302
+Index: 0x409
+Length: 0xff
+000011: Get Descriptor Request (DOWN), 2017-10-05 07:39:26.1478873 +0.0000494 (1. Device: Playback)
+Descriptor Type: String
+Descriptor Index: 0x0
+Transfer Buffer Size: 0xff bytes
+LanguageId: 0x0
+
+000012: Control Transfer (UP), 2017-10-05 07:39:26.1488383 +0.0009510. (1. Device: Playback) Status: 0x00000000
+Pipe Handle: Control Pipe
+ 04 03 09 04                                       ....
+Setup Packet
+ 80 06 00 03 00 00 FF 00                           €.....ÿ.
+Recipient: Device
+Request Type: Standard
+Direction: Device->Host
+Request: 0x6 (GET_DESCRIPTOR)
+Value: 0x300
+Index: 0x0
+Length: 0xff
+
+000013: Get Descriptor Request (DOWN), 2017-10-05 07:39:26.1488872 +0.0000489 (1. Device: Playback)
+Descriptor Type: String
+Descriptor Index: 0x3
+Transfer Buffer Size: 0xff bytes
+LanguageId: 0x409
+
+000014: Control Transfer (UP), 2017-10-05 07:39:26.1498387 +0.0009515. (1. Device: Playback) Status: 0x00000000
+Pipe Handle: Control Pipe
+ 18 03 31 00 33 00 30 00 34 00 38 00 30 00 32 00   ..1.3.0.4.8.0.2.
+ 39 00 35 00 31 00 00 00                           9.5.1...
+Setup Packet
+ 80 06 03 03 09 04 FF 00                           €.....ÿ.
+Recipient: Device
+Request Type: Standard
+Direction: Device->Host
+Request: 0x6 (GET_DESCRIPTOR)
+Value: 0x303
+Index: 0x409
+Length: 0xff
+
+000016: Get Descriptor Request (DOWN), 2017-10-05 07:39:26.1505388 +0.0002539 (1. Device: Playback)
+Descriptor Type: Device
+Descriptor Index: 0x0
+Transfer Buffer Size: 0x12 bytes
+
+
+000017: Control Transfer (UP), 2017-10-05 07:39:26.1518336 +0.0012948. (1. Device: Playback) Status: 0x00000000
+Pipe Handle: Control Pipe
+ 12 01 00 02 00 00 00 20 CF 0F 08 10 00 01 01 02   ....... Ï.......
+ 03 01                                             ..
+Setup Packet
+ 80 06 00 01 00 00 12 00                           €.......
+Recipient: Device
+Request Type: Standard
+Direction: Device->Host
+Request: 0x6 (GET_DESCRIPTOR)
+Value: 0x100
+Index: 0x0
+Length: 0x12
+
+000018: Get Descriptor Request (DOWN), 2017-10-05 07:39:26.1527092 +0.0008756 (1. Device: Playback)
+Descriptor Type: String
+Descriptor Index: 0x0
+Transfer Buffer Size: 0xff bytes
+LanguageId: 0x0
+
+000019: Control Transfer (UP), 2017-10-05 07:39:26.1538630 +0.0011538. (1. Device: Playback) Status: 0x00000000
+Pipe Handle: Control Pipe
+ 04 03 09 04                                       ....
+Setup Packet
+ 80 06 00 03 00 00 FF 00                           €.....ÿ.
+Recipient: Device
+Request Type: Standard
+Direction: Device->Host
+Request: 0x6 (GET_DESCRIPTOR)
+Value: 0x300
+Index: 0x0
+Length: 0xff
+
+000020: Get Descriptor Request (DOWN), 2017-10-05 07:39:26.1538917 +0.0000287 (1. Device: Playback)
+Descriptor Type: String
+Descriptor Index: 0x2
+Transfer Buffer Size: 0xff bytes
+LanguageId: 0x409
+
+000021: Control Transfer (UP), 2017-10-05 07:39:26.1548430 +0.0009513. (1. Device: Playback) Status: 0x00000000
+Pipe Handle: Control Pipe
+ 20 03 4D 00 6F 00 76 00 65 00 73 00 74 00 69 00    .M.o.v.e.s.t.i.
+ 63 00 6B 00 20 00 6D 00 69 00 6E 00 69 00 00 00   c.k. .m.i.n.i...
+
+Setup Packet
+ 80 06 02 03 09 04 FF 00                           €.....ÿ.
+Recipient: Device
+Request Type: Standard
+Direction: Device->Host
+Request: 0x6 (GET_DESCRIPTOR)
+Value: 0x302
+Index: 0x409
+Length: 0xff
+000022: Get Descriptor Request (DOWN), 2017-10-05 07:39:26.1548899 +0.0000469 (1. Device: Playback)
+Descriptor Type: String
+Descriptor Index: 0x0
+Transfer Buffer Size: 0xff bytes
+LanguageId: 0x0
+
+000023: Control Transfer (UP), 2017-10-05 07:39:26.1558317 +0.0009418. (1. Device: Playback) Status: 0x00000000
+Pipe Handle: Control Pipe
+ 04 03 09 04                                       ....
+Setup Packet
+ 80 06 00 03 00 00 FF 00                           €.....ÿ.
+Recipient: Device
+Request Type: Standard
+Direction: Device->Host
+Request: 0x6 (GET_DESCRIPTOR)
+Value: 0x300
+Index: 0x0
+Length: 0xff
+
+000024: Get Descriptor Request (DOWN), 2017-10-05 07:39:26.1558772 +0.0000455 (1. Device: Playback)
+Descriptor Type: String
+Descriptor Index: 0x3
+Transfer Buffer Size: 0xff bytes
+LanguageId: 0x409
+
+000025: Control Transfer (UP), 2017-10-05 07:39:26.1568946 +0.0010174. (1. Device: Playback) Status: 0x00000000
+Pipe Handle: Control Pipe
+ 18 03 31 00 33 00 30 00 34 00 38 00 30 00 32 00   ..1.3.0.4.8.0.2.
+ 39 00 35 00 31 00 00 00                           9.5.1...
+Setup Packet
+ 80 06 03 03 09 04 FF 00                           €.....ÿ.
+Recipient: Device
+Request Type: Standard
+Direction: Device->Host
+Request: 0x6 (GET_DESCRIPTOR)
+Value: 0x303
+Index: 0x409
+Length: 0xff
+
+000026: Bulk or Interrupt Transfer (DOWN), 2017-10-05 07:39:26.1569644 +0.0000698 (1. Device: Playback)
+Pipe Handle: 0xbcbafac8 (Endpoint Address: 0x1)
+Send 0x8 bytes to the device
+ A4 02 47 00 FF 1E 00 00                           ¤.G.ÿ...
+
+000027: Bulk or Interrupt Transfer (UP), 2017-10-05 07:39:26.1578400 +0.0008756. (1. Device: Playback) Status: 0x00000000
+Pipe Handle: 0xbcbafa98 (Endpoint Address: 0x81)
+Get 0x7 bytes from the device
+ A4 03 40 00 47 00 A0                              ¤.@.G. 
+
+000030: Bulk or Interrupt Transfer (DOWN), 2017-10-05 07:39:26.1580194 +0.0000813 (1. Device: Playback)
+Pipe Handle: 0xbcbafac8 (Endpoint Address: 0x1)
+Send 0x7 bytes to the device
+ A4 01 4A 00 EF 00 00                              ¤.J.ï..
+
+000031: Bulk or Interrupt Transfer (UP), 2017-10-05 07:39:26.1588410 +0.0008216. (1. Device: Playback) Status: 0x00000000
+Pipe Handle: 0xbcbafa98 (Endpoint Address: 0x81)
+Get 0x5 bytes from the device
+ A4 01 6F 20 EA                                    ¤.o ê
+
+000034: Bulk or Interrupt Transfer (DOWN), 2017-10-05 07:39:26.1590086 +0.0000595 (1. Device: Playback)
+Pipe Handle: 0xbcbafac8 (Endpoint Address: 0x1)
+Send 0x8 bytes to the device
+ A4 02 4D 00 61 8A 00 00                           ¤.M.aŠ..
+
+000035: Bulk or Interrupt Transfer (UP), 2017-10-05 07:39:26.1598433 +0.0008347. (1. Device: Playback) Status: 0x00000000
+Pipe Handle: 0xbcbafa98 (Endpoint Address: 0x81)
+Get 0x8 bytes from the device
+ A4 04 61 9C 83 26 0F F7                           ¤.aœƒ&.÷
+
+000037: Bulk or Interrupt Transfer (DOWN), 2017-10-05 07:39:26.1599285 +0.0000659 (1. Device: Playback)
+Pipe Handle: 0xbcbafac8 (Endpoint Address: 0x1)
+Send 0x8 bytes to the device
+ A4 02 4D 00 C6 2D 00 00                           ¤.M.Æ-..
+
+000040: Bulk or Interrupt Transfer (UP), 2017-10-05 07:39:26.1608599 +0.0000198. (1. Device: Playback) Status: 0x00000000
+Pipe Handle: 0xbcbafa98 (Endpoint Address: 0x81)
+Get 0x9 bytes from the device
+ A4 05 C6 38 30 32 39 35 51                        ¤.Æ80295Q
+
+000042: Bulk or Interrupt Transfer (DOWN), 2017-10-05 07:39:41.9808080 +15.8198665 (1. Device: Playback)
+Pipe Handle: 0xbcbafac8 (Endpoint Address: 0x1)
+Send 0xf bytes to the device
+ A4 09 46 00 B9 A5 21 FB BD 72 C3 45 64 00 00      ¤.F.¹¥!û½rÃEd..
+
+000043: Bulk or Interrupt Transfer (UP), 2017-10-05 07:39:41.9818327 +0.0010247. (1. Device: Playback) Status: 0x00000000
+Pipe Handle: 0xbcbafa98 (Endpoint Address: 0x81)
+Get 0x7 bytes from the device
+ A4 03 40 00 46 00 A1                              ¤.@.F.¡
+
+000046: Bulk or Interrupt Transfer (DOWN), 2017-10-05 07:39:42.4824944 +0.5005712 (1. Device: Playback)
+Pipe Handle: 0xbcbafac8 (Endpoint Address: 0x1)
+Send 0xf bytes to the device
+ A4 09 46 01 E8 E4 32 68 1D 56 47 C5 75 00 00      ¤.F.èä2h.VGÅu..
+
+000048: Bulk or Interrupt Transfer (UP), 2017-10-05 07:39:42.4838122 +0.0009912. (1. Device: Playback) Status: 0x00000000
+Pipe Handle: 0xbcbafa98 (Endpoint Address: 0x81)
+Get 0x7 bytes from the device
+ A4 03 40 01 46 00 A0                              ¤.@.F. 
+
+000050: Bulk or Interrupt Transfer (DOWN), 2017-10-05 07:39:42.9829672 +0.4990285 (1. Device: Playback)
+Pipe Handle: 0xbcbafac8 (Endpoint Address: 0x1)
+Send 0xf bytes to the device
+ A4 09 46 02 00 00 00 00 00 00 00 00 E9 00 00      ¤.F.........é..
+
+000051: Bulk or Interrupt Transfer (UP), 2017-10-05 07:39:42.9838358 +0.0008686. (1. Device: Playback) Status: 0x00000000
+Pipe Handle: 0xbcbafa98 (Endpoint Address: 0x81)
+Get 0x7 bytes from the device
+ A4 03 40 02 46 00 A3                              ¤.@.F.£
+
+000054: Get Descriptor Request (DOWN), 2017-10-05 07:39:43.4893388 +0.5028142 (1. Device: Playback)
+Descriptor Type: Device
+Descriptor Index: 0x0
+Transfer Buffer Size: 0x12 bytes
+
+
+000055: Control Transfer (UP), 2017-10-05 07:39:43.4898345 +0.0004957. (1. Device: Playback) Status: 0x00000000
+Pipe Handle: Control Pipe
+ 12 01 00 02 00 00 00 20 CF 0F 08 10 00 01 01 02   ....... Ï.......
+ 03 01                                             ..
+Setup Packet
+ 80 06 00 01 00 00 12 00                           €.......
+Recipient: Device
+Request Type: Standard
+Direction: Device->Host
+Request: 0x6 (GET_DESCRIPTOR)
+Value: 0x100
+Index: 0x0
+Length: 0x12
+
+000056: Get Descriptor Request (DOWN), 2017-10-05 07:39:43.4906923 +0.0008578 (1. Device: Playback)
+Descriptor Type: String
+Descriptor Index: 0x0
+Transfer Buffer Size: 0xff bytes
+LanguageId: 0x0
+
+000057: Control Transfer (UP), 2017-10-05 07:39:43.4918135 +0.0011212. (1. Device: Playback) Status: 0x00000000
+Pipe Handle: Control Pipe
+ 04 03 09 04                                       ....
+Setup Packet
+ 80 06 00 03 00 00 FF 00                           €.....ÿ.
+Recipient: Device
+Request Type: Standard
+Direction: Device->Host
+Request: 0x6 (GET_DESCRIPTOR)
+Value: 0x300
+Index: 0x0
+Length: 0xff
+
+000058: Get Descriptor Request (DOWN), 2017-10-05 07:39:43.4918590 +0.0000455 (1. Device: Playback)
+Descriptor Type: String
+Descriptor Index: 0x2
+Transfer Buffer Size: 0xff bytes
+LanguageId: 0x409
+
+000059: Control Transfer (UP), 2017-10-05 07:39:43.4928138 +0.0009548. (1. Device: Playback) Status: 0x00000000
+Pipe Handle: Control Pipe
+ 20 03 4D 00 6F 00 76 00 65 00 73 00 74 00 69 00    .M.o.v.e.s.t.i.
+ 63 00 6B 00 20 00 6D 00 69 00 6E 00 69 00 00 00   c.k. .m.i.n.i...
+
+Setup Packet
+ 80 06 02 03 09 04 FF 00                           €.....ÿ.
+Recipient: Device
+Request Type: Standard
+Direction: Device->Host
+Request: 0x6 (GET_DESCRIPTOR)
+Value: 0x302
+Index: 0x409
+Length: 0xff
+000060: Get Descriptor Request (DOWN), 2017-10-05 07:39:43.4932513 +0.0004375 (1. Device: Playback)
+Descriptor Type: String
+Descriptor Index: 0x0
+Transfer Buffer Size: 0xff bytes
+LanguageId: 0x0
+
+000061: Control Transfer (UP), 2017-10-05 07:39:43.4938428 +0.0005915. (1. Device: Playback) Status: 0x00000000
+Pipe Handle: Control Pipe
+ 04 03 09 04                                       ....
+Setup Packet
+ 80 06 00 03 00 00 FF 00                           €.....ÿ.
+Recipient: Device
+Request Type: Standard
+Direction: Device->Host
+Request: 0x6 (GET_DESCRIPTOR)
+Value: 0x300
+Index: 0x0
+Length: 0xff
+
+000062: Get Descriptor Request (DOWN), 2017-10-05 07:39:43.4938796 +0.0000368 (1. Device: Playback)
+Descriptor Type: String
+Descriptor Index: 0x3
+Transfer Buffer Size: 0xff bytes
+LanguageId: 0x409
+
+000063: Control Transfer (UP), 2017-10-05 07:39:43.4948421 +0.0009625. (1. Device: Playback) Status: 0x00000000
+Pipe Handle: Control Pipe
+ 18 03 31 00 33 00 30 00 34 00 38 00 30 00 32 00   ..1.3.0.4.8.0.2.
+ 39 00 35 00 31 00 00 00                           9.5.1...
+Setup Packet
+ 80 06 03 03 09 04 FF 00                           €.....ÿ.
+Recipient: Device
+Request Type: Standard
+Direction: Device->Host
+Request: 0x6 (GET_DESCRIPTOR)
+Value: 0x303
+Index: 0x409
+Length: 0xff
+
+000064: Bulk or Interrupt Transfer (DOWN), 2017-10-05 07:39:54.0170699 +10.5222278 (1. Device: Playback)
+Pipe Handle: 0xbcbafac8 (Endpoint Address: 0x1)
+Send 0xa bytes to the device
+ A4 04 42 00 40 00 01 A3 00 00                     ¤.B.@..£..
+
+000065: Bulk or Interrupt Transfer (UP), 2017-10-05 07:39:54.0178473 +0.0007774. (1. Device: Playback) Status: 0x00000000
+Pipe Handle: 0xbcbafa98 (Endpoint Address: 0x81)
+Get 0x7 bytes from the device
+ A4 03 40 00 42 00 A5                              ¤.@.B.¥
+
+000068: Bulk or Interrupt Transfer (DOWN), 2017-10-05 07:39:54.0179800 +0.0000231 (1. Device: Playback)
+Pipe Handle: 0xbcbafac8 (Endpoint Address: 0x1)
+Send 0x8 bytes to the device
+ A4 02 63 00 00 C5 00 00                           ¤.c..Å..
+
+000069: Bulk or Interrupt Transfer (UP), 2017-10-05 07:39:54.0188441 +0.0008641. (1. Device: Playback) Status: 0x00000000
+Pipe Handle: 0xbcbafa98 (Endpoint Address: 0x81)
+Get 0x7 bytes from the device
+ A4 03 40 00 63 00 84                              ¤.@.c.„
+
+000071: Bulk or Interrupt Transfer (DOWN), 2017-10-05 07:39:54.0189307 +0.0000673 (1. Device: Playback)
+Pipe Handle: 0xbcbafac8 (Endpoint Address: 0x1)
+Send 0x8 bytes to the device
+ A4 02 44 00 FF 1D 00 00                           ¤.D.ÿ...
+
+000074: Bulk or Interrupt Transfer (UP), 2017-10-05 07:39:54.0198638 +0.0000198. (1. Device: Playback) Status: 0x00000000
+Pipe Handle: 0xbcbafa98 (Endpoint Address: 0x81)
+Get 0x7 bytes from the device
+ A4 03 40 00 44 00 A3                              ¤.@.D.£
+
+000075: Bulk or Interrupt Transfer (DOWN), 2017-10-05 07:39:54.0199946 +0.0001308 (1. Device: Playback)
+Pipe Handle: 0xbcbafac8 (Endpoint Address: 0x1)
+Send 0xb bytes to the device
+ A4 05 51 00 00 00 00 00 F0 00 00                  ¤.Q.....ð..
+
+000078: Bulk or Interrupt Transfer (UP), 2017-10-05 07:39:54.0208639 +0.0000162. (1. Device: Playback) Status: 0x00000000
+Pipe Handle: 0xbcbafa98 (Endpoint Address: 0x81)
+Get 0x7 bytes from the device
+ A4 03 40 00 51 00 B6                              ¤.@.Q.¶
+
+000079: Bulk or Interrupt Transfer (DOWN), 2017-10-05 07:39:54.0210201 +0.0001562 (1. Device: Playback)
+Pipe Handle: 0xbcbafac8 (Endpoint Address: 0x1)
+Send 0x8 bytes to the device
+ A4 02 45 00 39 DA 00 00                           ¤.E.9Ú..
+
+000082: Bulk or Interrupt Transfer (UP), 2017-10-05 07:39:54.0218651 +0.0000192. (1. Device: Playback) Status: 0x00000000
+Pipe Handle: 0xbcbafa98 (Endpoint Address: 0x81)
+Get 0x7 bytes from the device
+ A4 03 40 00 45 00 A2                              ¤.@.E.¢
+
+000083: Bulk or Interrupt Transfer (DOWN), 2017-10-05 07:39:54.0222150 +0.0003499 (1. Device: Playback)
+Pipe Handle: 0xbcbafac8 (Endpoint Address: 0x1)
+Send 0x8 bytes to the device
+ A4 02 6E 00 E0 28 00 00                           ¤.n.à(..
+
+000086: Bulk or Interrupt Transfer (UP), 2017-10-05 07:39:54.0228301 +0.0000095. (1. Device: Playback) Status: 0x00000000
+Pipe Handle: 0xbcbafa98 (Endpoint Address: 0x81)
+Get 0x7 bytes from the device
+ A4 03 40 00 6E 00 89                              ¤.@.n.‰
+
+000087: Bulk or Interrupt Transfer (DOWN), 2017-10-05 07:39:54.0230192 +0.0001891 (1. Device: Playback)
+Pipe Handle: 0xbcbafac8 (Endpoint Address: 0x1)
+Send 0x7 bytes to the device
+ A4 01 4B 00 EE 00 00                              ¤.K.î..
+
+000090: Bulk or Interrupt Transfer (UP), 2017-10-05 07:39:54.0238601 +0.0000173. (1. Device: Playback) Status: 0x00000000
+Pipe Handle: 0xbcbafa98 (Endpoint Address: 0x81)
+Get 0x7 bytes from the device
+ A4 03 40 00 4B 00 AC                              ¤.@.K.¬
+
+000092: Bulk or Interrupt Transfer (UP), 2017-10-05 07:39:54.1538671 +0.1294944. (1. Device: Playback) Status: 0x00000000
+Pipe Handle: 0xbcbafa98 (Endpoint Address: 0x81)
+Get 0x18 bytes from the device
+ A4 14 4E 00 19 2D 00 74 F6 00 40 20 E0 A0 3B 11   ¤.N..-.tö.@ à ;.
+ 05 10 00 68 00 61 3B 65                           ...h.a;e
+
+000093: Bulk or Interrupt Transfer (DOWN), 2017-10-05 07:39:54.1542622 +0.0003951 (1. Device: Playback)
+Pipe Handle: 0xbcbafac8 (Endpoint Address: 0x1)
+Send 0x9 bytes to the device
+ A4 03 42 01 00 00 E4 00 00                        ¤.B...ä..
+
+000096: Bulk or Interrupt Transfer (UP), 2017-10-05 07:39:54.1548787 +0.0000254. (1. Device: Playback) Status: 0x00000000
+Pipe Handle: 0xbcbafa98 (Endpoint Address: 0x81)
+Get 0x7 bytes from the device
+ A4 03 40 01 42 00 A4                              ¤.@.B.¤
+
+000097: Bulk or Interrupt Transfer (DOWN), 2017-10-05 07:39:54.1549561 +0.0000774 (1. Device: Playback)
+Pipe Handle: 0xbcbafac8 (Endpoint Address: 0x1)
+Send 0x8 bytes to the device
+ A4 02 44 01 FF 1C 00 00                           ¤.D.ÿ...
+
+000100: Bulk or Interrupt Transfer (UP), 2017-10-05 07:39:54.1558809 +0.0000271. (1. Device: Playback) Status: 0x00000000
+Pipe Handle: 0xbcbafa98 (Endpoint Address: 0x81)
+Get 0x7 bytes from the device
+ A4 03 40 01 44 00 A2                              ¤.@.D.¢
+
+000101: Bulk or Interrupt Transfer (DOWN), 2017-10-05 07:39:54.1563440 +0.0004631 (1. Device: Playback)
+Pipe Handle: 0xbcbafac8 (Endpoint Address: 0x1)
+Send 0xb bytes to the device
+ A4 05 51 01 A0 3B 11 00 7B 00 00                  ¤.Q. ;..{..
+
+000104: Bulk or Interrupt Transfer (UP), 2017-10-05 07:39:54.1568767 +0.0000326. (1. Device: Playback) Status: 0x00000000
+Pipe Handle: 0xbcbafa98 (Endpoint Address: 0x81)
+Get 0x7 bytes from the device
+ A4 03 40 01 51 00 B7                              ¤.@.Q.·
+
+000105: Bulk or Interrupt Transfer (DOWN), 2017-10-05 07:39:54.1571960 +0.0003193 (1. Device: Playback)
+Pipe Handle: 0xbcbafac8 (Endpoint Address: 0x1)
+Send 0x8 bytes to the device
+ A4 02 45 01 39 DB 00 00                           ¤.E.9Û..
+
+000108: Bulk or Interrupt Transfer (UP), 2017-10-05 07:39:54.1579082 +0.0000277. (1. Device: Playback) Status: 0x00000000
+Pipe Handle: 0xbcbafa98 (Endpoint Address: 0x81)
+Get 0x7 bytes from the device
+ A4 03 40 01 45 00 A3                              ¤.@.E.£
+
+000109: Bulk or Interrupt Transfer (DOWN), 2017-10-05 07:39:54.1579616 +0.0000534 (1. Device: Playback)
+Pipe Handle: 0xbcbafac8 (Endpoint Address: 0x1)
+Send 0x9 bytes to the device
+ A4 03 43 01 00 20 C5 00 00                        ¤.C.. Å..
+
+000112: Bulk or Interrupt Transfer (UP), 2017-10-05 07:39:54.1588988 +0.0000285. (1. Device: Playback) Status: 0x00000000
+Pipe Handle: 0xbcbafa98 (Endpoint Address: 0x81)
+Get 0x7 bytes from the device
+ A4 03 40 01 43 00 A5                              ¤.@.C.¥
+
+000113: Bulk or Interrupt Transfer (DOWN), 2017-10-05 07:39:54.1590580 +0.0001592 (1. Device: Playback)
+Pipe Handle: 0xbcbafac8 (Endpoint Address: 0x1)
+Send 0x8 bytes to the device
+ A4 02 6E 00 E0 28 00 00                           ¤.n.à(..
+
+000116: Bulk or Interrupt Transfer (UP), 2017-10-05 07:39:54.1598827 +0.0000207. (1. Device: Playback) Status: 0x00000000
+Pipe Handle: 0xbcbafa98 (Endpoint Address: 0x81)
+Get 0x7 bytes from the device
+ A4 03 40 00 6E 00 89                              ¤.@.n.‰
+
+000118: Bulk or Interrupt Transfer (DOWN), 2017-10-05 07:39:54.1601400 +0.0001439 (1. Device: Playback)
+Pipe Handle: 0xbcbafac8 (Endpoint Address: 0x1)
+Send 0x7 bytes to the device
+ A4 01 4B 01 EF 00 00                              ¤.K.ï..
+
+000119: Bulk or Interrupt Transfer (UP), 2017-10-05 07:39:54.1608535 +0.0007135. (1. Device: Playback) Status: 0x00000000
+Pipe Handle: 0xbcbafa98 (Endpoint Address: 0x81)
+Get 0x7 bytes from the device
+ A4 03 40 01 4B 00 AD                              ¤.@.K.­
+
+000122: Bulk or Interrupt Transfer (UP), 2017-10-05 07:39:54.3668618 +0.2057820. (1. Device: Playback) Status: 0x00000000
+Pipe Handle: 0xbcbafa98 (Endpoint Address: 0x81)
+Get 0x18 bytes from the device
+ A4 14 4E 00 E4 C8 79 01 1F BC 7B 03 E0 90 14 79   ¤.N.äÈy..¼{.à.y
+ 01 10 00 68 00 89 56 CA                           ...h.‰VÊ
+
+000124: Bulk or Interrupt Transfer (UP), 2017-10-05 07:39:55.2148808 +0.8478639. (1. Device: Playback) Status: 0x00000000
+Pipe Handle: 0xbcbafa98 (Endpoint Address: 0x81)
+Get 0x18 bytes from the device
+ A4 14 4E 00 10 24 FF 00 47 E2 00 00 E0 90 14 0B   ¤.N..$ÿ.Gâ..à..
+ 05 10 00 68 00 29 C3 68                           ...h.)Ãh
+
+000126: Bulk or Interrupt Transfer (UP), 2017-10-05 07:39:55.6008630 +0.3856612. (1. Device: Playback) Status: 0x00000000
+Pipe Handle: 0xbcbafa98 (Endpoint Address: 0x81)
+Get 0x18 bytes from the device
+ A4 14 4E 00 E5 C8 79 01 1F BC 7B 03 E0 90 14 79   ¤.N.åÈy..¼{.à.y
+ 01 10 00 68 00 89 F4 69                           ...h.‰ôi
+
+000128: Bulk or Interrupt Transfer (DOWN), 2017-10-05 07:39:56.5077789 +0.9068063 (1. Device: Playback)
+Pipe Handle: 0xbcbafac8 (Endpoint Address: 0x1)
+Send 0x7 bytes to the device
+ A4 01 4C 00 E9 00 00                              ¤.L.é..
+
+000129: Bulk or Interrupt Transfer (UP), 2017-10-05 07:39:56.5088656 +0.0010867. (1. Device: Playback) Status: 0x00000000
+Pipe Handle: 0xbcbafa98 (Endpoint Address: 0x81)
+Get 0x7 bytes from the device
+ A4 03 40 00 4C 00 AB                              ¤.@.L.«
+
+000132: Bulk or Interrupt Transfer (UP), 2017-10-05 07:39:56.5158249 +0.0069012. (1. Device: Playback) Status: 0x00000000
+Pipe Handle: 0xbcbafa98 (Endpoint Address: 0x81)
+Get 0x7 bytes from the device
+ A4 03 40 00 01 07 E1                              ¤.@...á
+
+000133: Bulk or Interrupt Transfer (DOWN), 2017-10-05 07:39:56.5161950 +0.0003701 (1. Device: Playback)
+Pipe Handle: 0xbcbafac8 (Endpoint Address: 0x1)
+Send 0x7 bytes to the device
+ A4 01 41 00 E4 00 00                              ¤.A.ä..
+
+000136: Bulk or Interrupt Transfer (UP), 2017-10-05 07:39:56.5168471 +0.0000171. (1. Device: Playback) Status: 0x00000000
+Pipe Handle: 0xbcbafa98 (Endpoint Address: 0x81)
+Get 0x7 bytes from the device
+ A4 03 40 00 41 00 A6                              ¤.@.A.¦
+
+000138: Bulk or Interrupt Transfer (DOWN), 2017-10-05 07:39:56.5198092 +0.0029063 (1. Device: Playback)
+Pipe Handle: 0xbcbafac8 (Endpoint Address: 0x1)
+Send 0xa bytes to the device
+ A4 04 42 00 40 01 01 A2 00 00                     ¤.B.@..¢..
+
+000139: Bulk or Interrupt Transfer (UP), 2017-10-05 07:39:56.5208465 +0.0010373. (1. Device: Playback) Status: 0x00000000
+Pipe Handle: 0xbcbafa98 (Endpoint Address: 0x81)
+Get 0x7 bytes from the device
+ A4 03 40 00 42 00 A5                              ¤.@.B.¥
+
+000142: Bulk or Interrupt Transfer (DOWN), 2017-10-05 07:39:56.5210775 +0.0001687 (1. Device: Playback)
+Pipe Handle: 0xbcbafac8 (Endpoint Address: 0x1)
+Send 0x8 bytes to the device
+ A4 02 63 00 00 C5 00 00                           ¤.c..Å..
+
+000143: Bulk or Interrupt Transfer (UP), 2017-10-05 07:39:56.5218485 +0.0007710. (1. Device: Playback) Status: 0x00000000
+Pipe Handle: 0xbcbafa98 (Endpoint Address: 0x81)
+Get 0x7 bytes from the device
+ A4 03 40 00 63 00 84                              ¤.@.c.„
+
+000146: Bulk or Interrupt Transfer (DOWN), 2017-10-05 07:39:56.5219715 +0.0000582 (1. Device: Playback)
+Pipe Handle: 0xbcbafac8 (Endpoint Address: 0x1)
+Send 0x8 bytes to the device
+ A4 02 44 00 FF 1D 00 00                           ¤.D.ÿ...
+
+000147: Bulk or Interrupt Transfer (UP), 2017-10-05 07:39:56.5228590 +0.0008875. (1. Device: Playback) Status: 0x00000000
+Pipe Handle: 0xbcbafa98 (Endpoint Address: 0x81)
+Get 0x7 bytes from the device
+ A4 03 40 00 44 00 A3                              ¤.@.D.£
+
+000150: Bulk or Interrupt Transfer (DOWN), 2017-10-05 07:39:56.5230529 +0.0001302 (1. Device: Playback)
+Pipe Handle: 0xbcbafac8 (Endpoint Address: 0x1)
+Send 0xb bytes to the device
+ A4 05 51 00 00 00 00 00 F0 00 00                  ¤.Q.....ð..
+
+000151: Bulk or Interrupt Transfer (UP), 2017-10-05 07:39:56.5239232 +0.0008703. (1. Device: Playback) Status: 0x00000000
+Pipe Handle: 0xbcbafa98 (Endpoint Address: 0x81)
+Get 0x7 bytes from the device
+ A4 03 40 00 51 00 B6                              ¤.@.Q.¶
+
+000154: Bulk or Interrupt Transfer (DOWN), 2017-10-05 07:39:56.5255764 +0.0001313 (1. Device: Playback)
+Pipe Handle: 0xbcbafac8 (Endpoint Address: 0x1)
+Send 0x8 bytes to the device
+ A4 02 45 00 35 D6 00 00                           ¤.E.5Ö..
+
+000156: Bulk or Interrupt Transfer (UP), 2017-10-05 07:39:56.5268433 +0.0009404. (1. Device: Playback) Status: 0x00000000
+Pipe Handle: 0xbcbafa98 (Endpoint Address: 0x81)
+Get 0x7 bytes from the device
+ A4 03 40 00 45 00 A2                              ¤.@.E.¢
+
+000158: Bulk or Interrupt Transfer (DOWN), 2017-10-05 07:39:56.5269861 +0.0000891 (1. Device: Playback)
+Pipe Handle: 0xbcbafac8 (Endpoint Address: 0x1)
+Send 0x8 bytes to the device
+ A4 02 6E 00 E0 28 00 00                           ¤.n.à(..
+
+000159: Bulk or Interrupt Transfer (UP), 2017-10-05 07:39:56.5278462 +0.0008601. (1. Device: Playback) Status: 0x00000000
+Pipe Handle: 0xbcbafa98 (Endpoint Address: 0x81)
+Get 0x7 bytes from the device
+ A4 03 40 00 6E 00 89                              ¤.@.n.‰
+
+000161: Bulk or Interrupt Transfer (DOWN), 2017-10-05 07:39:56.5279825 +0.0001100 (1. Device: Playback)
+Pipe Handle: 0xbcbafac8 (Endpoint Address: 0x1)
+Send 0x7 bytes to the device
+ A4 01 4B 00 EE 00 00                              ¤.K.î..
+
+000164: Bulk or Interrupt Transfer (UP), 2017-10-05 07:39:56.5288717 +0.0000289. (1. Device: Playback) Status: 0x00000000
+Pipe Handle: 0xbcbafa98 (Endpoint Address: 0x81)
+Get 0x7 bytes from the device
+ A4 03 40 00 4B 00 AC                              ¤.@.K.¬
+
+000166: Bulk or Interrupt Transfer (UP), 2017-10-05 07:39:56.5868305 +0.0579224. (1. Device: Playback) Status: 0x00000000
+Pipe Handle: 0xbcbafa98 (Endpoint Address: 0x81)
+Get 0x18 bytes from the device
+ A4 14 4E 00 E7 C8 79 01 1F BC 7B 03 E0 90 14 79   ¤.N.çÈy..¼{.à.y
+ 01 10 00 68 00 09 6B 74                           ...h..kt
+
+000168: Bulk or Interrupt Transfer (DOWN), 2017-10-05 07:39:56.8499617 +0.2630714 (1. Device: Playback)
+Pipe Handle: 0xbcbafac8 (Endpoint Address: 0x1)
+Send 0x7 bytes to the device
+ A4 01 4C 00 E9 00 00                              ¤.L.é..
+
+000169: Bulk or Interrupt Transfer (UP), 2017-10-05 07:39:56.8508490 +0.0008873. (1. Device: Playback) Status: 0x00000000
+Pipe Handle: 0xbcbafa98 (Endpoint Address: 0x81)
+Get 0x7 bytes from the device
+ A4 03 40 00 4C 00 AB                              ¤.@.L.«
+
+000172: Bulk or Interrupt Transfer (UP), 2017-10-05 07:39:56.8518322 +0.0009195. (1. Device: Playback) Status: 0x00000000
+Pipe Handle: 0xbcbafa98 (Endpoint Address: 0x81)
+Get 0x7 bytes from the device
+ A4 03 40 00 01 07 E1                              ¤.@...á
+
+000174: Bulk or Interrupt Transfer (DOWN), 2017-10-05 07:39:56.8519417 +0.0000738 (1. Device: Playback)
+Pipe Handle: 0xbcbafac8 (Endpoint Address: 0x1)
+Send 0x7 bytes to the device
+ A4 01 41 00 E4 00 00                              ¤.A.ä..
+
+000175: Bulk or Interrupt Transfer (UP), 2017-10-05 07:39:56.8528185 +0.0008768. (1. Device: Playback) Status: 0x00000000
+Pipe Handle: 0xbcbafa98 (Endpoint Address: 0x81)
+Get 0x7 bytes from the device
+ A4 03 40 00 41 00 A6                              ¤.@.A.¦
+
+000178: Bulk or Interrupt Transfer (DOWN), 2017-10-05 07:39:56.9424831 +0.0896048 (1. Device: Playback)
+Pipe Handle: 0xbcbafac8 (Endpoint Address: 0x1)
+Send 0xf bytes to the device
+ A4 09 4F 01 33 FF FF FF FF EC 4D FF 8E 00 00      ¤.O.3ÿÿÿÿìMÿŽ..
+
+000180: Bulk or Interrupt Transfer (DOWN), 2017-10-05 07:39:58.0065110 +1.0636665 (1. Device: Playback)
+Pipe Handle: 0xbcbafac8 (Endpoint Address: 0x1)
+Send 0xf bytes to the device
+ A4 09 4F 01 33 FF FF FF FF EB 4D FF 89 00 00      ¤.O.3ÿÿÿÿëMÿ‰..
+
+000182: Bulk or Interrupt Transfer (UP), 2017-10-05 07:39:58.0078704 +0.0010021. (1. Device: Playback) Status: 0x00000000
+Pipe Handle: 0xbcbafa98 (Endpoint Address: 0x81)
+Get 0x7 bytes from the device
+ A4 03 40 01 4F 1F B6                              ¤.@.O.¶
+
+000184: Bulk or Interrupt Transfer (DOWN), 2017-10-05 07:39:59.0545900 +1.0465525 (1. Device: Playback)
+Pipe Handle: 0xbcbafac8 (Endpoint Address: 0x1)
+Send 0xf bytes to the device
+ A4 09 4F 01 33 FF FF FF FF EB 4D FF 89 00 00      ¤.O.3ÿÿÿÿëMÿ‰..
+
+000186: Bulk or Interrupt Transfer (UP), 2017-10-05 07:39:59.0558345 +0.0009769. (1. Device: Playback) Status: 0x00000000
+Pipe Handle: 0xbcbafa98 (Endpoint Address: 0x81)
+Get 0x7 bytes from the device
+ A4 03 40 01 4F 1F B6                              ¤.@.O.¶
+
+000188: Bulk or Interrupt Transfer (UP), 2017-10-05 07:39:59.6538405 +0.5979409. (1. Device: Playback) Status: 0x00000000
+Pipe Handle: 0xbcbafa98 (Endpoint Address: 0x81)
+Get 0x18 bytes from the device
+ A4 14 4E 01 19 37 00 74 F6 00 40 20 E0 A0 3B 11   ¤.N..7.tö.@ à ;.
+ 05 10 00 68 00 64 1B 5B                           ...h.d.[
+
+000190: Bulk or Interrupt Transfer (UP), 2017-10-05 07:39:59.9038448 +0.2499300. (1. Device: Playback) Status: 0x00000000
+Pipe Handle: 0xbcbafa98 (Endpoint Address: 0x81)
+Get 0x18 bytes from the device
+ A4 14 4E 01 10 19 DA A8 00 00 FF 24 E0 A0 3B 11   ¤.N...Ú¨..ÿ$à ;.
+ 05 10 00 68 00 64 3B 17                           ...h.d;.
+
+000192: Bulk or Interrupt Transfer (UP), 2017-10-05 07:39:59.9068564 +0.0029646. (1. Device: Playback) Status: 0x00000000
+Pipe Handle: 0xbcbafa98 (Endpoint Address: 0x81)
+Get 0x7 bytes from the device
+ A4 03 40 01 01 05 E2                              ¤.@...â
+
+000194: Bulk or Interrupt Transfer (DOWN), 2017-10-05 07:40:00.0724160 +0.1655007 (1. Device: Playback)
+Pipe Handle: 0xbcbafac8 (Endpoint Address: 0x1)
+Send 0xf bytes to the device
+ A4 09 4F 01 33 FF FF FF FF EC 4D FF 8E 00 00      ¤.O.3ÿÿÿÿìMÿŽ..
+
+000196: Bulk or Interrupt Transfer (UP), 2017-10-05 07:40:00.1528506 +0.0799968. (1. Device: Playback) Status: 0x00000000
+Pipe Handle: 0xbcbafa98 (Endpoint Address: 0x81)
+Get 0x7 bytes from the device
+ A4 03 40 01 01 02 E5                              ¤.@...å
+
+000198: Bulk or Interrupt Transfer (UP), 2017-10-05 07:40:00.4038367 +0.2509328. (1. Device: Playback) Status: 0x00000000
+Pipe Handle: 0xbcbafa98 (Endpoint Address: 0x81)
+Get 0x18 bytes from the device
+ A4 14 4E 01 19 38 00 74 F6 00 40 20 E0 A0 3B 11   ¤.N..8.tö.@ à ;.
+ 05 10 00 68 00 65 7B 35                           ...h.e{5
+
+000200: Bulk or Interrupt Transfer (UP), 2017-10-05 07:40:00.4068479 +0.0029509. (1. Device: Playback) Status: 0x00000000
+Pipe Handle: 0xbcbafa98 (Endpoint Address: 0x81)
+Get 0x7 bytes from the device
+ A4 03 40 01 01 05 E2                              ¤.@...â
+
+000202: Bulk or Interrupt Transfer (UP), 2017-10-05 07:40:00.6538388 +0.2469473. (1. Device: Playback) Status: 0x00000000
+Pipe Handle: 0xbcbafa98 (Endpoint Address: 0x81)
+Get 0x18 bytes from the device
+ A4 14 4E 01 19 39 00 74 F6 00 40 20 E0 A0 3B 11   ¤.N..9.tö.@ à ;.
+ 05 10 00 68 00 66 9B D7                           ...h.f›×
+
+000204: Bulk or Interrupt Transfer (UP), 2017-10-05 07:40:00.9038466 +0.2498966. (1. Device: Playback) Status: 0x00000000
+Pipe Handle: 0xbcbafa98 (Endpoint Address: 0x81)
+Get 0x18 bytes from the device
+ A4 14 4E 01 10 19 DA A8 00 00 FF 24 E0 A0 3B 11   ¤.N...Ú¨..ÿ$à ;.
+ 05 10 00 68 00 66 BB 95                           ...h.f»•
+
+000206: Bulk or Interrupt Transfer (DOWN), 2017-10-05 07:40:01.1223592 +0.2184665 (1. Device: Playback)
+Pipe Handle: 0xbcbafac8 (Endpoint Address: 0x1)
+Send 0xf bytes to the device
+ A4 09 4F 01 33 FF FF FF FF EB 4D FF 89 00 00      ¤.O.3ÿÿÿÿëMÿ‰..
+
+000208: Bulk or Interrupt Transfer (UP), 2017-10-05 07:40:01.1538317 +0.0309839. (1. Device: Playback) Status: 0x00000000
+Pipe Handle: 0xbcbafa98 (Endpoint Address: 0x81)
+Get 0x18 bytes from the device
+ A4 14 4E 01 19 3A 00 74 F6 00 40 20 E0 A0 3B 11   ¤.N..:.tö.@ à ;.
+ 05 10 00 68 00 66 DB 94                           ...h.fÛ”
+
+000210: Bulk or Interrupt Transfer (UP), 2017-10-05 07:40:01.1568474 +0.0029559. (1. Device: Playback) Status: 0x00000000
+Pipe Handle: 0xbcbafa98 (Endpoint Address: 0x81)
+Get 0x7 bytes from the device
+ A4 03 40 01 01 05 E2                              ¤.@...â
+
+000212: Bulk or Interrupt Transfer (UP), 2017-10-05 07:40:01.4038394 +0.2469467. (1. Device: Playback) Status: 0x00000000
+Pipe Handle: 0xbcbafa98 (Endpoint Address: 0x81)
+Get 0x18 bytes from the device
+ A4 14 4E 01 10 19 DA A8 00 00 FF 24 E0 A0 3B 11   ¤.N...Ú¨..ÿ$à ;.
+ 05 10 00 68 00 67 FB D4                           ...h.gûÔ
+
+000214: Bulk or Interrupt Transfer (UP), 2017-10-05 07:40:01.6538348 +0.2499376. (1. Device: Playback) Status: 0x00000000
+Pipe Handle: 0xbcbafa98 (Endpoint Address: 0x81)
+Get 0x18 bytes from the device
+ A4 14 4E 01 19 3B 00 74 F6 00 40 20 E0 A0 3B 11   ¤.N..;.tö.@ à ;.
+ 05 10 00 68 00 67 1B 54                           ...h.g.T
+
+000216: Bulk or Interrupt Transfer (UP), 2017-10-05 07:40:01.9038356 +0.2499415. (1. Device: Playback) Status: 0x00000000
+Pipe Handle: 0xbcbafa98 (Endpoint Address: 0x81)
+Get 0x18 bytes from the device
+ A4 14 4E 01 10 19 DA A8 29 00 FF 24 E0 A0 3B 11   ¤.N...Ú¨).ÿ$à ;.
+ 05 10 00 68 00 67 3B 3D                           ...h.g;=
+
+000218: Bulk or Interrupt Transfer (UP), 2017-10-05 07:40:02.1538437 +0.2499469. (1. Device: Playback) Status: 0x00000000
+Pipe Handle: 0xbcbafa98 (Endpoint Address: 0x81)
+Get 0x18 bytes from the device
+ A4 14 4E 01 19 3C 00 75 F6 01 40 20 E0 A0 3B 11   ¤.N..<.uö.@ à ;.
+ 05 10 00 68 00 68 5B 1C                           ...h.h[.
+
+000220: Bulk or Interrupt Transfer (DOWN), 2017-10-05 07:40:02.1727014 +0.0188054 (1. Device: Playback)
+Pipe Handle: 0xbcbafac8 (Endpoint Address: 0x1)
+Send 0xf bytes to the device
+ A4 09 4F 01 33 FF FF FF FF EC 4D FF 8E 00 00      ¤.O.3ÿÿÿÿìMÿŽ..
+
+000222: Bulk or Interrupt Transfer (UP), 2017-10-05 07:40:02.4038349 +0.2299744. (1. Device: Playback) Status: 0x00000000
+Pipe Handle: 0xbcbafa98 (Endpoint Address: 0x81)
+Get 0x18 bytes from the device
+ A4 14 4E 01 10 19 DA A8 0D 01 FF 24 E0 A0 3B 11   ¤.N...Ú¨..ÿ$à ;.
+ 05 10 00 68 00 68 7B 57                           ...h.h{W
+
+000224: Bulk or Interrupt Transfer (UP), 2017-10-05 07:40:02.4068333 +0.0029389. (1. Device: Playback) Status: 0x00000000
+Pipe Handle: 0xbcbafa98 (Endpoint Address: 0x81)
+Get 0x7 bytes from the device
+ A4 03 40 01 01 05 E2                              ¤.@...â
+
+000226: Bulk or Interrupt Transfer (UP), 2017-10-05 07:40:02.6538332 +0.2469406. (1. Device: Playback) Status: 0x00000000
+Pipe Handle: 0xbcbafa98 (Endpoint Address: 0x81)
+Get 0x18 bytes from the device
+ A4 14 4E 01 19 3D 00 76 F6 01 40 20 E0 A0 3B 11   ¤.N..=.vö.@ à ;.
+ 05 10 00 68 00 68 9B DE                           ...h.h›Þ
+
+000228: Bulk or Interrupt Transfer (UP), 2017-10-05 07:40:02.9038332 +0.2499391. (1. Device: Playback) Status: 0x00000000
+Pipe Handle: 0xbcbafa98 (Endpoint Address: 0x81)
+Get 0x18 bytes from the device
+ A4 14 4E 01 10 19 DA A8 A1 00 FF 24 E0 A0 3B 11   ¤.N...Ú¨¡.ÿ$à ;.
+ 05 10 00 68 00 68 BB 3A                           ...h.h»:
+
+000230: Bulk or Interrupt Transfer (UP), 2017-10-05 07:40:03.1538512 +0.2499577. (1. Device: Playback) Status: 0x00000000
+Pipe Handle: 0xbcbafa98 (Endpoint Address: 0x81)
+Get 0x18 bytes from the device
+ A4 14 4E 01 19 3E 00 77 F6 01 40 20 E0 A0 3B 11   ¤.N..>.wö.@ à ;.
+ 05 10 00 68 00 68 DB 9C                           ...h.hÛœ
+
+000232: Bulk or Interrupt Transfer (DOWN), 2017-10-05 07:40:03.2222300 +0.0683243 (1. Device: Playback)
+Pipe Handle: 0xbcbafac8 (Endpoint Address: 0x1)
+Send 0xf bytes to the device
+ A4 09 4F 01 33 FF FF FF FF EC 4D FF 8E 00 00      ¤.O.3ÿÿÿÿìMÿŽ..
+
+000234: Bulk or Interrupt Transfer (UP), 2017-10-05 07:40:03.4038311 +0.1809812. (1. Device: Playback) Status: 0x00000000
+Pipe Handle: 0xbcbafa98 (Endpoint Address: 0x81)
+Get 0x18 bytes from the device
+ A4 14 4E 01 10 19 DA A8 19 00 FF 24 E0 A0 3B 11   ¤.N...Ú¨..ÿ$à ;.
+ 05 10 00 68 00 68 FB C2                           ...h.hûÂ
+
+000236: Bulk or Interrupt Transfer (UP), 2017-10-05 07:40:03.4068183 +0.0029235. (1. Device: Playback) Status: 0x00000000
+Pipe Handle: 0xbcbafa98 (Endpoint Address: 0x81)
+Get 0x7 bytes from the device
+ A4 03 40 01 01 05 E2                              ¤.@...â
+
+000238: Bulk or Interrupt Transfer (UP), 2017-10-05 07:40:03.6538494 +0.2469677. (1. Device: Playback) Status: 0x00000000
+Pipe Handle: 0xbcbafa98 (Endpoint Address: 0x81)
+Get 0x18 bytes from the device
+ A4 14 4E 01 19 3F 00 77 F6 00 40 20 E0 A0 3B 11   ¤.N..?.wö.@ à ;.
+ 05 10 00 68 00 68 1B 5C                           ...h.h.\
+
+000240: Bulk or Interrupt Transfer (UP), 2017-10-05 07:40:03.9038346 +0.2499383. (1. Device: Playback) Status: 0x00000000
+Pipe Handle: 0xbcbafa98 (Endpoint Address: 0x81)
+Get 0x18 bytes from the device
+ A4 14 4E 01 10 19 DA A8 05 00 FF 24 E0 A0 3B 11   ¤.N...Ú¨..ÿ$à ;.
+ 05 10 00 68 00 68 3B 1E                           ...h.h;.
+
+000242: Bulk or Interrupt Transfer (UP), 2017-10-05 07:40:04.1538375 +0.2499381. (1. Device: Playback) Status: 0x00000000
+Pipe Handle: 0xbcbafa98 (Endpoint Address: 0x81)
+Get 0x18 bytes from the device
+ A4 14 4E 01 19 40 00 77 F6 00 40 20 E0 A0 3B 11   ¤.N..@.wö.@ à ;.
+ 05 10 00 68 00 68 5B 63                           ...h.h[c
+
+000244: Bulk or Interrupt Transfer (DOWN), 2017-10-05 07:40:04.2724218 +0.1185234 (1. Device: Playback)
+Pipe Handle: 0xbcbafac8 (Endpoint Address: 0x1)
+Send 0xf bytes to the device
+ A4 09 4F 01 33 FF FF FF FF EB 4D FF 89 00 00      ¤.O.3ÿÿÿÿëMÿ‰..
+
+000246: Bulk or Interrupt Transfer (UP), 2017-10-05 07:40:04.4038249 +0.1309800. (1. Device: Playback) Status: 0x00000000
+Pipe Handle: 0xbcbafa98 (Endpoint Address: 0x81)
+Get 0x18 bytes from the device
+ A4 14 4E 01 10 19 DA A8 02 00 FF 24 E0 A0 3B 11   ¤.N...Ú¨..ÿ$à ;.
+ 05 10 00 68 00 68 7B 59                           ...h.h{Y
+
+000248: Bulk or Interrupt Transfer (UP), 2017-10-05 07:40:04.4069401 +0.0030708. (1. Device: Playback) Status: 0x00000000
+Pipe Handle: 0xbcbafa98 (Endpoint Address: 0x81)
+Get 0x7 bytes from the device
+ A4 03 40 01 01 05 E2                              ¤.@...â
+
+000250: Bulk or Interrupt Transfer (UP), 2017-10-05 07:40:04.6528325 +0.2457659. (1. Device: Playback) Status: 0x00000000
+Pipe Handle: 0xbcbafa98 (Endpoint Address: 0x81)
+Get 0x7 bytes from the device
+ A4 03 40 01 01 02 E5                              ¤.@...å
+
+000252: Bulk or Interrupt Transfer (UP), 2017-10-05 07:40:04.9038412 +0.2509472. (1. Device: Playback) Status: 0x00000000
+Pipe Handle: 0xbcbafa98 (Endpoint Address: 0x81)
+Get 0x18 bytes from the device
+ A4 14 4E 01 10 19 DA A8 02 00 FF 24 E0 A0 3B 11   ¤.N...Ú¨..ÿ$à ;.
+ 05 10 00 68 00 68 BB 99                           ...h.h»™
+
+000254: Bulk or Interrupt Transfer (UP), 2017-10-05 07:40:05.1538328 +0.2499254. (1. Device: Playback) Status: 0x00000000
+Pipe Handle: 0xbcbafa98 (Endpoint Address: 0x81)
+Get 0x18 bytes from the device
+ A4 14 4E 01 19 42 00 77 F6 00 40 20 E0 A0 3B 11   ¤.N..B.wö.@ à ;.
+ 05 10 00 68 00 68 DB E1                           ...h.hÛá
+
+000256: Bulk or Interrupt Transfer (DOWN), 2017-10-05 07:40:05.3221190 +0.1682180 (1. Device: Playback)
+Pipe Handle: 0xbcbafac8 (Endpoint Address: 0x1)
+Send 0xf bytes to the device
+ A4 09 4F 01 33 FF FF FF FF EC 4D FF 8E 00 00      ¤.O.3ÿÿÿÿìMÿŽ..
+
+000258: Bulk or Interrupt Transfer (UP), 2017-10-05 07:40:05.4038353 +0.0809947. (1. Device: Playback) Status: 0x00000000
+Pipe Handle: 0xbcbafa98 (Endpoint Address: 0x81)
+Get 0x18 bytes from the device
+ A4 14 4E 01 10 19 DA A8 00 00 FF 24 E0 A0 3B 11   ¤.N...Ú¨..ÿ$à ;.
+ 05 10 00 68 00 68 FB DB                           ...h.hûÛ
+
+000260: Bulk or Interrupt Transfer (UP), 2017-10-05 07:40:05.4068512 +0.0029547. (1. Device: Playback) Status: 0x00000000
+Pipe Handle: 0xbcbafa98 (Endpoint Address: 0x81)
+Get 0x7 bytes from the device
+ A4 03 40 01 01 05 E2                              ¤.@...â
+
+000262: Bulk or Interrupt Transfer (UP), 2017-10-05 07:40:05.6528428 +0.2459396. (1. Device: Playback) Status: 0x00000000
+Pipe Handle: 0xbcbafa98 (Endpoint Address: 0x81)
+Get 0x7 bytes from the device
+ A4 03 40 01 01 02 E5                              ¤.@...å
+
+000264: Bulk or Interrupt Transfer (UP), 2017-10-05 07:40:05.9038376 +0.2509445. (1. Device: Playback) Status: 0x00000000
+Pipe Handle: 0xbcbafa98 (Endpoint Address: 0x81)
+Get 0x18 bytes from the device
+ A4 14 4E 01 10 19 DA A8 00 00 FF 24 E0 A0 3B 11   ¤.N...Ú¨..ÿ$à ;.
+ 05 10 00 69 00 68 3B 1A                           ...i.h;.
+
+000266: Bulk or Interrupt Transfer (UP), 2017-10-05 07:40:06.1538507 +0.2499494. (1. Device: Playback) Status: 0x00000000
+Pipe Handle: 0xbcbafa98 (Endpoint Address: 0x81)
+Get 0x18 bytes from the device
+ A4 14 4E 01 19 44 00 77 F6 00 40 20 E0 A0 3B 11   ¤.N..D.wö.@ à ;.
+ 05 10 00 68 00 68 5B 67                           ...h.h[g
+
+000268: Bulk or Interrupt Transfer (DOWN), 2017-10-05 07:40:06.3231948 +0.1692952 (1. Device: Playback)
+Pipe Handle: 0xbcbafac8 (Endpoint Address: 0x1)
+Send 0xf bytes to the device
+ A4 09 4F 01 33 FF FF FF FF EB 4D FF 89 00 00      ¤.O.3ÿÿÿÿëMÿ‰..
+
+000270: Bulk or Interrupt Transfer (UP), 2017-10-05 07:40:06.4028370 +0.0789860. (1. Device: Playback) Status: 0x00000000
+Pipe Handle: 0xbcbafa98 (Endpoint Address: 0x81)
+Get 0x18 bytes from the device
+ A4 14 4E 01 10 19 DA A8 00 00 FF 24 E0 A0 3B 11   ¤.N...Ú¨..ÿ$à ;.
+ 05 10 00 68 00 68 7B 5B                           ...h.h{[
+
+000272: Bulk or Interrupt Transfer (UP), 2017-10-05 07:40:06.4068482 +0.0039489. (1. Device: Playback) Status: 0x00000000
+Pipe Handle: 0xbcbafa98 (Endpoint Address: 0x81)
+Get 0x7 bytes from the device
+ A4 03 40 01 01 05 E2                              ¤.@...â
+
+000274: Bulk or Interrupt Transfer (UP), 2017-10-05 07:40:06.6538324 +0.2469300. (1. Device: Playback) Status: 0x00000000
+Pipe Handle: 0xbcbafa98 (Endpoint Address: 0x81)
+Get 0x18 bytes from the device
+ A4 14 4E 01 51 FF 00 03 A0 3B 00 00 E0 A0 3B 11   ¤.N.Qÿ.. ;..à ;.
+ 05 10 00 68 00 68 9B 2D                           ...h.h›-
+
+000276: Bulk or Interrupt Transfer (UP), 2017-10-05 07:40:06.9038555 +0.2499614. (1. Device: Playback) Status: 0x00000000
+Pipe Handle: 0xbcbafa98 (Endpoint Address: 0x81)
+Get 0x18 bytes from the device
+ A4 14 4E 01 51 FF 00 03 A0 3B 00 00 E0 A0 3B 11   ¤.N.Qÿ.. ;..à ;.
+ 05 10 00 68 00 68 BB 0D                           ...h.h».
+
+000278: Bulk or Interrupt Transfer (UP), 2017-10-05 07:40:07.1538409 +0.2499373. (1. Device: Playback) Status: 0x00000000
+Pipe Handle: 0xbcbafa98 (Endpoint Address: 0x81)
+Get 0x18 bytes from the device
+ A4 14 4E 01 19 45 00 77 F6 00 40 20 E0 A0 3B 11   ¤.N..E.wö.@ à ;.
+ 05 10 00 68 00 68 DB E6                           ...h.hÛæ
+
+000280: Bulk or Interrupt Transfer (DOWN), 2017-10-05 07:40:07.3744430 +0.2205549 (1. Device: Playback)
+Pipe Handle: 0xbcbafac8 (Endpoint Address: 0x1)
+Send 0xf bytes to the device
+ A4 09 4F 01 33 FF FF FF FF EC 4D FF 8E 00 00      ¤.O.3ÿÿÿÿìMÿŽ..
+
+000282: Bulk or Interrupt Transfer (UP), 2017-10-05 07:40:07.4028549 +0.0280069. (1. Device: Playback) Status: 0x00000000
+Pipe Handle: 0xbcbafa98 (Endpoint Address: 0x81)
+Get 0x18 bytes from the device
+ A4 14 4E 01 10 19 DA A8 00 00 FF 24 E0 A0 3B 11   ¤.N...Ú¨..ÿ$à ;.
+ 05 10 00 68 00 67 FB D4                           ...h.gûÔ
+
+000284: Bulk or Interrupt Transfer (UP), 2017-10-05 07:40:07.4058530 +0.0029503. (1. Device: Playback) Status: 0x00000000
+Pipe Handle: 0xbcbafa98 (Endpoint Address: 0x81)
+Get 0x7 bytes from the device
+ A4 03 40 01 01 05 E2                              ¤.@...â
+
+000286: Bulk or Interrupt Transfer (UP), 2017-10-05 07:40:07.6538556 +0.2479000. (1. Device: Playback) Status: 0x00000000
+Pipe Handle: 0xbcbafa98 (Endpoint Address: 0x81)
+Get 0x18 bytes from the device
+ A4 14 4E 01 19 46 00 77 F6 00 40 20 E0 A0 3B 11   ¤.N..F.wö.@ à ;.
+ 05 10 00 68 00 67 1B 2A                           ...h.g.*
+
+000288: Bulk or Interrupt Transfer (UP), 2017-10-05 07:40:07.9038359 +0.2499253. (1. Device: Playback) Status: 0x00000000
+Pipe Handle: 0xbcbafa98 (Endpoint Address: 0x81)
+Get 0x18 bytes from the device
+ A4 14 4E 01 10 19 DA A8 00 00 FF 24 E0 A0 3B 11   ¤.N...Ú¨..ÿ$à ;.
+ 05 10 00 68 00 67 3B 14                           ...h.g;.
+
+000290: Bulk or Interrupt Transfer (UP), 2017-10-05 07:40:08.1538384 +0.2499399. (1. Device: Playback) Status: 0x00000000
+Pipe Handle: 0xbcbafa98 (Endpoint Address: 0x81)
+Get 0x18 bytes from the device
+ A4 14 4E 01 19 47 00 77 F6 00 40 20 E0 A0 3B 11   ¤.N..G.wö.@ à ;.
+ 05 10 00 68 00 66 5B 6A                           ...h.f[j
+
+000292: Bulk or Interrupt Transfer (UP), 2017-10-05 07:40:08.4038336 +0.2499572. (1. Device: Playback) Status: 0x00000000
+Pipe Handle: 0xbcbafa98 (Endpoint Address: 0x81)
+Get 0x18 bytes from the device
+ A4 14 4E 01 10 19 DA A8 0B 00 FF 24 E0 A0 3B 11   ¤.N...Ú¨..ÿ$à ;.
+ 05 10 01 6C 00 66 7B 5B                           ...l.f{[
+
+000294: Bulk or Interrupt Transfer (DOWN), 2017-10-05 07:40:08.4237847 +0.0198849 (1. Device: Playback)
+Pipe Handle: 0xbcbafac8 (Endpoint Address: 0x1)
+Send 0xf bytes to the device
+ A4 09 4F 01 33 FF FF FF FF EB 4D FF 89 00 00      ¤.O.3ÿÿÿÿëMÿ‰..
+
+000296: Bulk or Interrupt Transfer (UP), 2017-10-05 07:40:08.6528493 +0.2280033. (1. Device: Playback) Status: 0x00000000
+Pipe Handle: 0xbcbafa98 (Endpoint Address: 0x81)
+Get 0x18 bytes from the device
+ A4 14 4E 01 19 48 00 77 F6 00 40 20 E0 A0 3B 11   ¤.N..H.wö.@ à ;.
+ 05 10 00 68 00 66 9B A5                           ...h.f›¥
+
+000298: Bulk or Interrupt Transfer (UP), 2017-10-05 07:40:08.6558458 +0.0029334. (1. Device: Playback) Status: 0x00000000
+Pipe Handle: 0xbcbafa98 (Endpoint Address: 0x81)
+Get 0x7 bytes from the device
+ A4 03 40 01 01 05 E2                              ¤.@...â
+
+000300: Bulk or Interrupt Transfer (UP), 2017-10-05 07:40:08.9038387 +0.2479348. (1. Device: Playback) Status: 0x00000000
+Pipe Handle: 0xbcbafa98 (Endpoint Address: 0x81)
+Get 0x18 bytes from the device
+ A4 14 4E 01 10 19 DA A8 8D 00 FF 24 E0 A0 3B 11   ¤.N...Ú¨.ÿ$à ;.
+ 05 10 00 68 00 66 BB 18                           ...h.f».
+
+000302: Bulk or Interrupt Transfer (UP), 2017-10-05 07:40:09.1538356 +0.2494401. (1. Device: Playback) Status: 0x00000000
+Pipe Handle: 0xbcbafa98 (Endpoint Address: 0x81)
+Get 0x18 bytes from the device
+ A4 14 4E 01 19 49 00 77 F6 00 40 20 E0 A0 3B 11   ¤.N..I.wö.@ à ;.
+ 05 10 00 68 00 66 DB E4                           ...h.fÛä
+
+000304: Bulk or Interrupt Transfer (UP), 2017-10-05 07:40:09.4038659 +0.2499624. (1. Device: Playback) Status: 0x00000000
+Pipe Handle: 0xbcbafa98 (Endpoint Address: 0x81)
+Get 0x18 bytes from the device
+ A4 14 4E 01 10 19 DA A8 10 00 FF 24 E0 A0 3B 11   ¤.N...Ú¨..ÿ$à ;.
+ 05 10 00 69 00 65 FB C7                           ...i.eûÇ
+
+000306: Bulk or Interrupt Transfer (UP), 2017-10-05 07:40:09.6528689 +0.2488993. (1. Device: Playback) Status: 0x00000000
+Pipe Handle: 0xbcbafa98 (Endpoint Address: 0x81)
+Get 0x7 bytes from the device
+ A4 03 40 01 01 02 E5                              ¤.@...å
+
+000308: Bulk or Interrupt Transfer (UP), 2017-10-05 07:40:09.9038580 +0.2508874. (1. Device: Playback) Status: 0x00000000
+Pipe Handle: 0xbcbafa98 (Endpoint Address: 0x81)
+Get 0x18 bytes from the device
+ A4 14 4E 01 10 19 DA A8 02 00 FF 24 E0 A0 3B 11   ¤.N...Ú¨..ÿ$à ;.
+ 05 10 00 68 00 65 3B 14                           ...h.e;.
+
+000310: Bulk or Interrupt Transfer (UP), 2017-10-05 07:40:10.1528812 +0.2489486. (1. Device: Playback) Status: 0x00000000
+Pipe Handle: 0xbcbafa98 (Endpoint Address: 0x81)
+Get 0x7 bytes from the device
+ A4 03 40 01 01 02 E5                              ¤.@...å
+
+000312: Bulk or Interrupt Transfer (DOWN), 2017-10-05 07:40:10.1689839 +0.0159956 (1. Device: Playback)
+Pipe Handle: 0xbcbafac8 (Endpoint Address: 0x1)
+Send 0xf bytes to the device
+ A4 09 4F 01 33 FF FF FF FF EC 4D FF 8E 00 00      ¤.O.3ÿÿÿÿìMÿŽ..
+
+000314: Bulk or Interrupt Transfer (UP), 2017-10-05 07:40:10.4028544 +0.2329967. (1. Device: Playback) Status: 0x00000000
+Pipe Handle: 0xbcbafa98 (Endpoint Address: 0x81)
+Get 0x18 bytes from the device
+ A4 14 4E 01 10 19 DA A8 02 00 FF 24 E0 A0 3B 11   ¤.N...Ú¨..ÿ$à ;.
+ 05 10 00 68 00 64 7B 55                           ...h.d{U
+
+000316: Bulk or Interrupt Transfer (UP), 2017-10-05 07:40:10.4058695 +0.0028931. (1. Device: Playback) Status: 0x00000000
+Pipe Handle: 0xbcbafa98 (Endpoint Address: 0x81)
+Get 0x7 bytes from the device
+ A4 03 40 01 01 05 E2                              ¤.@...â
+
+000318: Bulk or Interrupt Transfer (UP), 2017-10-05 07:40:10.6528518 +0.2467839. (1. Device: Playback) Status: 0x00000000
+Pipe Handle: 0xbcbafa98 (Endpoint Address: 0x81)
+Get 0x7 bytes from the device
+ A4 03 40 01 01 02 E5                              ¤.@...å
+
+000320: Bulk or Interrupt Transfer (UP), 2017-10-05 07:40:10.9028355 +0.2499362. (1. Device: Playback) Status: 0x00000000
+Pipe Handle: 0xbcbafa98 (Endpoint Address: 0x81)
+Get 0x7 bytes from the device
+ A4 03 40 01 01 02 E5                              ¤.@...å
+
+000322: Bulk or Interrupt Transfer (UP), 2017-10-05 07:40:11.1538359 +0.2509325. (1. Device: Playback) Status: 0x00000000
+Pipe Handle: 0xbcbafa98 (Endpoint Address: 0x81)
+Get 0x18 bytes from the device
+ A4 14 4E 01 19 4C 00 77 F6 00 40 20 E0 A0 3B 11   ¤.N..L.wö.@ à ;.
+ 05 10 00 68 00 62 DB E5                           ...h.bÛå
+
+000324: Bulk or Interrupt Transfer (DOWN), 2017-10-05 07:40:11.2253343 +0.0714378 (1. Device: Playback)
+Pipe Handle: 0xbcbafac8 (Endpoint Address: 0x1)
+Send 0xf bytes to the device
+ A4 09 4F 01 33 FF FF FF FF EB 4D FF 89 00 00      ¤.O.3ÿÿÿÿëMÿ‰..
+
+000326: Bulk or Interrupt Transfer (UP), 2017-10-05 07:40:11.4028334 +0.1769864. (1. Device: Playback) Status: 0x00000000
+Pipe Handle: 0xbcbafa98 (Endpoint Address: 0x81)
+Get 0x18 bytes from the device
+ A4 14 4E 01 10 19 DA A8 4D 00 FF 24 E0 A0 3B 11   ¤.N...Ú¨M.ÿ$à ;.
+ 05 10 00 68 00 62 FB 9C                           ...h.bûœ
+
+000328: Bulk or Interrupt Transfer (UP), 2017-10-05 07:40:11.4058271 +0.0029110. (1. Device: Playback) Status: 0x00000000
+Pipe Handle: 0xbcbafa98 (Endpoint Address: 0x81)
+Get 0x7 bytes from the device
+ A4 03 40 01 01 05 E2                              ¤.@...â
+
+000330: Bulk or Interrupt Transfer (UP), 2017-10-05 07:40:11.6539064 +0.2479432. (1. Device: Playback) Status: 0x00000000
+Pipe Handle: 0xbcbafa98 (Endpoint Address: 0x81)
+Get 0x18 bytes from the device
+ A4 14 4E 01 19 4E 00 77 F6 00 40 20 E0 A0 3B 11   ¤.N..N.wö.@ à ;.
+ 05 10 00 68 00 61 1B 24                           ...h.a.$
+
+000332: Bulk or Interrupt Transfer (UP), 2017-10-05 07:40:11.9028333 +0.2485872. (1. Device: Playback) Status: 0x00000000
+Pipe Handle: 0xbcbafa98 (Endpoint Address: 0x81)
+Get 0x18 bytes from the device
+ A4 14 4E 01 10 19 DB A8 F9 01 FF 34 E0 A0 3B 11   ¤.N...Û¨ù.ÿ4à ;.
+ 05 10 00 68 00 61 3B FB                           ...h.a;û
+
+000334: Bulk or Interrupt Transfer (UP), 2017-10-05 07:40:12.1528388 +0.2499438. (1. Device: Playback) Status: 0x00000000
+Pipe Handle: 0xbcbafa98 (Endpoint Address: 0x81)
+Get 0x18 bytes from the device
+ A4 14 4E 01 19 4F 00 79 F6 02 40 30 E0 A0 3B 11   ¤.N..O.yö.@0à ;.
+ 05 10 00 68 00 60 5B 78                           ...h.`[x
+
+000336: Bulk or Interrupt Transfer (UP), 2017-10-05 07:40:12.4018713 +0.2489665. (1. Device: Playback) Status: 0x00000000
+Pipe Handle: 0xbcbafa98 (Endpoint Address: 0x81)
+Get 0x7 bytes from the device
+ A4 03 40 01 01 02 E5                              ¤.@...å
+
+000338: Bulk or Interrupt Transfer (DOWN), 2017-10-05 07:40:12.4642315 +0.0622814 (1. Device: Playback)
+Pipe Handle: 0xbcbafac8 (Endpoint Address: 0x1)
+Send 0xf bytes to the device
+ A4 09 4F 01 33 FF FF FF FF EC 4D FF 8E 00 00      ¤.O.3ÿÿÿÿìMÿŽ..
+
+000340: Bulk or Interrupt Transfer (UP), 2017-10-05 07:40:12.6528485 +0.1879988. (1. Device: Playback) Status: 0x00000000
+Pipe Handle: 0xbcbafa98 (Endpoint Address: 0x81)
+Get 0x18 bytes from the device
+ A4 14 4E 01 19 50 00 88 F6 0F 40 30 E0 A0 3B 11   ¤.N..P.ˆö.@0à ;.
+ 05 10 00 68 00 5F 9B 64                           ...h._›d
+
+000342: Bulk or Interrupt Transfer (UP), 2017-10-05 07:40:12.6558639 +0.0029510. (1. Device: Playback) Status: 0x00000000
+Pipe Handle: 0xbcbafa98 (Endpoint Address: 0x81)
+Get 0x7 bytes from the device
+ A4 03 40 01 01 05 E2                              ¤.@...â
+
+000344: Bulk or Interrupt Transfer (UP), 2017-10-05 07:40:12.9028696 +0.2469543. (1. Device: Playback) Status: 0x00000000
+Pipe Handle: 0xbcbafa98 (Endpoint Address: 0x81)
+Get 0x18 bytes from the device
+ A4 14 4E 01 10 19 DF AA FE 08 FF 34 E0 A0 3B 11   ¤.N...ßªþ.ÿ4à ;.
+ 05 10 00 68 00 5E BB 4C                           ...h.^»L
+
+000346: Bulk or Interrupt Transfer (UP), 2017-10-05 07:40:13.1528539 +0.2498923. (1. Device: Playback) Status: 0x00000000
+Pipe Handle: 0xbcbafa98 (Endpoint Address: 0x81)
+Get 0x18 bytes from the device
+ A4 14 4E 01 19 51 00 9E F6 16 40 30 E0 A0 3B 11   ¤.N..Q.žö.@0à ;.
+ 05 10 00 68 00 5D DB 28                           ...h.]Û(
+
+000348: Bulk or Interrupt Transfer (UP), 2017-10-05 07:40:13.4028555 +0.2499371. (1. Device: Playback) Status: 0x00000000
+Pipe Handle: 0xbcbafa98 (Endpoint Address: 0x81)
+Get 0x18 bytes from the device
+ A4 14 4E 01 10 19 E1 AB 14 0A FF 34 E0 A0 3B 11   ¤.N...á«..ÿ4à ;.
+ 05 10 00 68 00 5D FB D8                           ...h.]ûØ
+
+000350: Bulk or Interrupt Transfer (DOWN), 2017-10-05 07:40:13.4968521 +0.0939323 (1. Device: Playback)
+Pipe Handle: 0xbcbafac8 (Endpoint Address: 0x1)
+Send 0xf bytes to the device
+ A4 09 4F 01 33 FF FF FF FF EC 4D FF 8E 00 00      ¤.O.3ÿÿÿÿìMÿŽ..
+
+000352: Bulk or Interrupt Transfer (UP), 2017-10-05 07:40:13.6518372 +0.1539981. (1. Device: Playback) Status: 0x00000000
+Pipe Handle: 0xbcbafa98 (Endpoint Address: 0x81)
+Get 0x7 bytes from the device
+ A4 03 40 01 01 02 E5                              ¤.@...å
+
+000354: Bulk or Interrupt Transfer (UP), 2017-10-05 07:40:13.9018393 +0.2499563. (1. Device: Playback) Status: 0x00000000
+Pipe Handle: 0xbcbafa98 (Endpoint Address: 0x81)
+Get 0x7 bytes from the device
+ A4 03 40 01 01 02 E5                              ¤.@...å
+
+000356: Bulk or Interrupt Transfer (UP), 2017-10-05 07:40:14.1528863 +0.2509998. (1. Device: Playback) Status: 0x00000000
+Pipe Handle: 0xbcbafa98 (Endpoint Address: 0x81)
+Get 0x18 bytes from the device
+ A4 14 4E 01 10 19 E3 AC 1A 0F FF 34 E0 A0 3B 11   ¤.N...ã¬..ÿ4à ;.
+ 05 10 00 68 00 5B 5B 70                           ...h.[[p
+
+000358: Bulk or Interrupt Transfer (UP), 2017-10-05 07:40:14.1558327 +0.0028729. (1. Device: Playback) Status: 0x00000000
+Pipe Handle: 0xbcbafa98 (Endpoint Address: 0x81)
+Get 0x7 bytes from the device
+ A4 03 40 01 01 05 E2                              ¤.@...â
+
+000360: Bulk or Interrupt Transfer (UP), 2017-10-05 07:40:14.4028569 +0.2468742. (1. Device: Playback) Status: 0x00000000
+Pipe Handle: 0xbcbafa98 (Endpoint Address: 0x81)
+Get 0x18 bytes from the device
+ A4 14 4E 01 10 19 E5 AE 1A 0F FF 34 E0 A0 3B 11   ¤.N...å®..ÿ4à ;.
+ 05 10 00 68 00 5B 7B 54                           ...h.[{T
+
+000362: Bulk or Interrupt Transfer (DOWN), 2017-10-05 07:40:14.5570159 +0.1540898 (1. Device: Playback)
+Pipe Handle: 0xbcbafac8 (Endpoint Address: 0x1)
+Send 0xf bytes to the device
+ A4 09 4F 01 33 FF FF FF FF ED 4D FF 8F 00 00      ¤.O.3ÿÿÿÿíMÿ..
+
+000364: Bulk or Interrupt Transfer (UP), 2017-10-05 07:40:14.6528479 +0.0949867. (1. Device: Playback) Status: 0x00000000
+Pipe Handle: 0xbcbafa98 (Endpoint Address: 0x81)
+Get 0x18 bytes from the device
+ A4 14 4E 01 19 54 00 65 F7 63 40 30 E0 A0 3B 11   ¤.N..T.e÷c@0à ;.
+ 05 10 00 68 00 5B 9B E4                           ...h.[›ä
+
+000366: Bulk or Interrupt Transfer (UP), 2017-10-05 07:40:14.6558427 +0.0029415. (1. Device: Playback) Status: 0x00000000
+Pipe Handle: 0xbcbafa98 (Endpoint Address: 0x81)
+Get 0x7 bytes from the device
+ A4 03 40 01 01 05 E2                              ¤.@...â
+
+000368: Bulk or Interrupt Transfer (UP), 2017-10-05 07:40:14.9028557 +0.2469683. (1. Device: Playback) Status: 0x00000000
+Pipe Handle: 0xbcbafa98 (Endpoint Address: 0x81)
+Get 0x18 bytes from the device
+ A4 14 4E 01 10 19 E7 B1 BF 14 FF 34 E0 A0 3B 11   ¤.N...ç±¿.ÿ4à ;.
+ 05 10 00 68 00 5B BB 37                           ...h.[»7
+
+000370: Bulk or Interrupt Transfer (UP), 2017-10-05 07:40:15.1528659 +0.2499558. (1. Device: Playback) Status: 0x00000000
+Pipe Handle: 0xbcbafa98 (Endpoint Address: 0x81)
+Get 0x18 bytes from the device
+ A4 14 4E 01 F0 00 00 00 00 00 00 00 E0 A0 3B 11   ¤.N.ð.......à ;.
+ 05 10 00 68 00 5A DB 99                           ...h.ZÛ™
+
+000372: Bulk or Interrupt Transfer (UP), 2017-10-05 07:40:15.4028524 +0.2499066. (1. Device: Playback) Status: 0x00000000
+Pipe Handle: 0xbcbafa98 (Endpoint Address: 0x81)
+Get 0x18 bytes from the device
+ A4 14 4E 01 FA 00 02 01 00 00 FF 00 E0 A0 3B 11   ¤.N.ú.....ÿ.à ;.
+ 05 10 00 68 00 5A FB 4F                           ...h.ZûO
+
+000374: Bulk or Interrupt Transfer (UP), 2017-10-05 07:40:15.6528618 +0.2499560. (1. Device: Playback) Status: 0x00000000
+Pipe Handle: 0xbcbafa98 (Endpoint Address: 0x81)
+Get 0x18 bytes from the device
+ A4 14 4E 01 19 55 2B E8 F7 83 40 30 E0 A0 3B 11   ¤.N..U+è÷ƒ@0à ;.
+ 05 10 00 68 00 5A 1B 22                           ...h.Z."
+
+000376: Bulk or Interrupt Transfer (DOWN), 2017-10-05 07:40:15.7277351 +0.0748129 (1. Device: Playback)
+Pipe Handle: 0xbcbafac8 (Endpoint Address: 0x1)
+Send 0xf bytes to the device
+ A4 09 4F 01 33 FF FF FF FF ED 4D FF 8F 00 00      ¤.O.3ÿÿÿÿíMÿ..
+
+000378: Bulk or Interrupt Transfer (UP), 2017-10-05 07:40:15.9028408 +0.1739905. (1. Device: Playback) Status: 0x00000000
+Pipe Handle: 0xbcbafa98 (Endpoint Address: 0x81)
+Get 0x18 bytes from the device
+ A4 14 4E 01 10 19 EB B7 E7 18 FF 34 E0 A0 3B 11   ¤.N...ë·ç.ÿ4à ;.
+ 05 10 00 68 00 5A 3B E8                           ...h.Z;è
+
+000380: Bulk or Interrupt Transfer (UP), 2017-10-05 07:40:15.9058359 +0.0029364. (1. Device: Playback) Status: 0x00000000
+Pipe Handle: 0xbcbafa98 (Endpoint Address: 0x81)
+Get 0x7 bytes from the device
+ A4 03 40 01 01 05 E2                              ¤.@...â
+
+000382: Bulk or Interrupt Transfer (UP), 2017-10-05 07:40:16.1528355 +0.2462264. (1. Device: Playback) Status: 0x00000000
+Pipe Handle: 0xbcbafa98 (Endpoint Address: 0x81)
+Get 0x18 bytes from the device
+ A4 14 4E 01 19 56 2B 6B F8 83 40 30 E0 A0 3B 11   ¤.N..V+køƒ@0à ;.
+ 05 10 00 69 00 5A 5B EC                           ...i.Z[ì
+
+000384: Bulk or Interrupt Transfer (UP), 2017-10-05 07:40:16.4018490 +0.2489560. (1. Device: Playback) Status: 0x00000000
+Pipe Handle: 0xbcbafa98 (Endpoint Address: 0x81)
+Get 0x7 bytes from the device
+ A4 03 40 01 01 02 E5                              ¤.@...å
+
+000386: Bulk or Interrupt Transfer (UP), 2017-10-05 07:40:16.6528468 +0.2509425. (1. Device: Playback) Status: 0x00000000
+Pipe Handle: 0xbcbafa98 (Endpoint Address: 0x81)
+Get 0x18 bytes from the device
+ A4 14 4E 01 19 57 34 F2 F8 87 40 30 E0 A0 3B 11   ¤.N..W4òø‡@0à ;.
+ 05 10 00 68 00 59 9B AD                           ...h.Y›­
+
+000388: Bulk or Interrupt Transfer (DOWN), 2017-10-05 07:40:16.7762116 +0.1233182 (1. Device: Playback)
+Pipe Handle: 0xbcbafac8 (Endpoint Address: 0x1)
+Send 0xf bytes to the device
+ A4 09 4F 01 33 FF FF FF FF EF 4D FF 8D 00 00      ¤.O.3ÿÿÿÿïMÿ..
+
+000390: Bulk or Interrupt Transfer (UP), 2017-10-05 07:40:16.9028386 +0.1259831. (1. Device: Playback) Status: 0x00000000
+Pipe Handle: 0xbcbafa98 (Endpoint Address: 0x81)
+Get 0x18 bytes from the device
+ A4 14 4E 01 10 19 EF BE 3F 1B FF 34 E0 A0 3B 11   ¤.N...ï¾?.ÿ4à ;.
+ 05 10 00 68 00 59 BB BD                           ...h.Y»½
+
+000392: Bulk or Interrupt Transfer (UP), 2017-10-05 07:40:16.9058424 +0.0029476. (1. Device: Playback) Status: 0x00000000
+Pipe Handle: 0xbcbafa98 (Endpoint Address: 0x81)
+Get 0x7 bytes from the device
+ A4 03 40 01 01 05 E2                              ¤.@...â
+
+000394: Bulk or Interrupt Transfer (UP), 2017-10-05 07:40:17.1528349 +0.2468772. (1. Device: Playback) Status: 0x00000000
+Pipe Handle: 0xbcbafa98 (Endpoint Address: 0x81)
+Get 0x18 bytes from the device
+ A4 14 4E 01 19 58 37 7C F9 8A 40 30 E0 A0 3B 11   ¤.N..X7|ùŠ@0à ;.
+ 05 10 01 6A 00 59 DB 60                           ...j.YÛ`
+
+000396: Bulk or Interrupt Transfer (UP), 2017-10-05 07:40:17.4018442 +0.2489534. (1. Device: Playback) Status: 0x00000000
+Pipe Handle: 0xbcbafa98 (Endpoint Address: 0x81)
+Get 0x7 bytes from the device
+ A4 03 40 01 01 02 E5                              ¤.@...å
+
+000398: Bulk or Interrupt Transfer (UP), 2017-10-05 07:40:17.6528496 +0.2509585. (1. Device: Playback) Status: 0x00000000
+Pipe Handle: 0xbcbafa98 (Endpoint Address: 0x81)
+Get 0x18 bytes from the device
+ A4 14 4E 01 10 19 F1 C1 3E 1C FF 34 E0 A0 3B 11   ¤.N...ñÁ>.ÿ4à ;.
+ 05 10 00 68 00 58 1B 7B                           ...h.X.{
+
+000400: Bulk or Interrupt Transfer (DOWN), 2017-10-05 07:40:17.8593937 +0.2064919 (1. Device: Playback)
+Pipe Handle: 0xbcbafac8 (Endpoint Address: 0x1)
+Send 0xf bytes to the device
+ A4 09 4F 01 33 FF FF FF FF EF 4D FF 8D 00 00      ¤.O.3ÿÿÿÿïMÿ..
+
+000402: Bulk or Interrupt Transfer (UP), 2017-10-05 07:40:17.9028512 +0.0429960. (1. Device: Playback) Status: 0x00000000
+Pipe Handle: 0xbcbafa98 (Endpoint Address: 0x81)
+Get 0x18 bytes from the device
+ A4 14 4E 01 10 19 F3 C5 14 1D FF 34 E0 A0 3B 11   ¤.N...óÅ..ÿ4à ;.
+ 05 10 00 68 00 58 3B 76                           ...h.X;v
+
+000404: Bulk or Interrupt Transfer (UP), 2017-10-05 07:40:17.9058426 +0.0029462. (1. Device: Playback) Status: 0x00000000
+Pipe Handle: 0xbcbafa98 (Endpoint Address: 0x81)
+Get 0x7 bytes from the device
+ A4 03 40 01 01 05 E2                              ¤.@...â
+
+000406: Bulk or Interrupt Transfer (UP), 2017-10-05 07:40:18.1528522 +0.2468473. (1. Device: Playback) Status: 0x00000000
+Pipe Handle: 0xbcbafa98 (Endpoint Address: 0x81)
+Get 0x18 bytes from the device
+ A4 14 4E 01 19 5A 3B 95 FA 8D 40 30 E0 A0 3B 11   ¤.N..Z;•ú@0à ;.
+ 05 10 00 68 00 58 5B 01                           ...h.X[.
+
+000408: Bulk or Interrupt Transfer (UP), 2017-10-05 07:40:18.4028401 +0.2499404. (1. Device: Playback) Status: 0x00000000
+Pipe Handle: 0xbcbafa98 (Endpoint Address: 0x81)
+Get 0x18 bytes from the device
+ A4 14 4E 01 10 19 F5 C9 9C 1D FF 34 E0 A0 3B 11   ¤.N...õÉœ.ÿ4à ;.
+ 05 10 00 68 00 58 7B B4                           ...h.X{´
+
+000410: Bulk or Interrupt Transfer (UP), 2017-10-05 07:40:18.6518469 +0.2489392. (1. Device: Playback) Status: 0x00000000
+Pipe Handle: 0xbcbafa98 (Endpoint Address: 0x81)
+Get 0x7 bytes from the device
+ A4 03 40 01 01 02 E5                              ¤.@...å
+
+000412: Bulk or Interrupt Transfer (DOWN), 2017-10-05 07:40:18.8772322 +0.2253118 (1. Device: Playback)
+Pipe Handle: 0xbcbafac8 (Endpoint Address: 0x1)
+Send 0xf bytes to the device
+ A4 09 4F 01 33 FF FF FF FF EE 4D FF 8C 00 00      ¤.O.3ÿÿÿÿîMÿŒ..
+
+000414: Bulk or Interrupt Transfer (UP), 2017-10-05 07:40:18.9028386 +0.0249784. (1. Device: Playback) Status: 0x00000000
+Pipe Handle: 0xbcbafa98 (Endpoint Address: 0x81)
+Get 0x18 bytes from the device
+ A4 14 4E 01 10 19 F7 CD 27 1E FF 34 E0 A0 3B 11   ¤.N...÷Í'.ÿ4à ;.
+ 05 10 00 68 00 58 BB CA                           ...h.X»Ê
+
+000416: Bulk or Interrupt Transfer (UP), 2017-10-05 07:40:18.9058493 +0.0029481. (1. Device: Playback) Status: 0x00000000
+Pipe Handle: 0xbcbafa98 (Endpoint Address: 0x81)
+Get 0x7 bytes from the device
+ A4 03 40 01 01 05 E2                              ¤.@...â
+
+000418: Bulk or Interrupt Transfer (UP), 2017-10-05 07:40:19.1528514 +0.2469487. (1. Device: Playback) Status: 0x00000000
+Pipe Handle: 0xbcbafa98 (Endpoint Address: 0x81)
+Get 0x18 bytes from the device
+ A4 14 4E 01 19 5C 3E B4 FB 90 40 30 E0 A0 3B 11   ¤.N..\>´û@0à ;.
+ 05 10 00 68 00 58 DB BF                           ...h.XÛ¿
+
+000420: Bulk or Interrupt Transfer (UP), 2017-10-05 07:40:19.4028524 +0.2499538. (1. Device: Playback) Status: 0x00000000
+Pipe Handle: 0xbcbafa98 (Endpoint Address: 0x81)
+Get 0x18 bytes from the device
+ A4 14 4E 01 10 19 F9 D0 88 1E FF 34 E0 A0 3B 11   ¤.N...ùÐˆ.ÿ4à ;.
+ 05 10 01 6A 00 58 FB 35                           ...j.Xû5
+
+000422: Bulk or Interrupt Transfer (UP), 2017-10-05 07:40:19.6528534 +0.2499532. (1. Device: Playback) Status: 0x00000000
+Pipe Handle: 0xbcbafa98 (Endpoint Address: 0x81)
+Get 0x18 bytes from the device
+ A4 14 4E 01 19 5D 3F 45 FC 91 40 30 E0 A0 3B 11   ¤.N..]?Eü‘@0à ;.
+ 05 10 00 68 00 58 1B 88                           ...h.X.ˆ
+
+000424: Bulk or Interrupt Transfer (UP), 2017-10-05 07:40:19.9028358 +0.2499349. (1. Device: Playback) Status: 0x00000000
+Pipe Handle: 0xbcbafa98 (Endpoint Address: 0x81)
+Get 0x18 bytes from the device
+ A4 14 4E 01 10 19 FB D4 DE 1E FF 34 E0 A0 3B 11   ¤.N...ûÔÞ.ÿ4à ;.
+ 05 10 00 68 00 57 3B A9                           ...h.W;©
+
+000426: Bulk or Interrupt Transfer (DOWN), 2017-10-05 07:40:19.9596341 +0.0567355 (1. Device: Playback)
+Pipe Handle: 0xbcbafac8 (Endpoint Address: 0x1)
+Send 0xf bytes to the device
+ A4 09 4F 01 33 FF FF FF FF EF 4D FF 8D 00 00      ¤.O.3ÿÿÿÿïMÿ..
+
+000428: Bulk or Interrupt Transfer (UP), 2017-10-05 07:40:20.1528531 +0.1929858. (1. Device: Playback) Status: 0x00000000
+Pipe Handle: 0xbcbafa98 (Endpoint Address: 0x81)
+Get 0x18 bytes from the device
+ A4 14 4E 01 19 5E 3F D6 FC 91 40 30 E0 A0 3B 11   ¤.N..^?Öü‘@0à ;.
+ 05 10 00 68 00 57 5B 57                           ...h.W[W
+
+000430: Bulk or Interrupt Transfer (UP), 2017-10-05 07:40:20.1558496 +0.0029491. (1. Device: Playback) Status: 0x00000000
+Pipe Handle: 0xbcbafa98 (Endpoint Address: 0x81)
+Get 0x7 bytes from the device
+ A4 03 40 01 01 05 E2                              ¤.@...â
+
+000432: Bulk or Interrupt Transfer (UP), 2017-10-05 07:40:20.4028407 +0.2469464. (1. Device: Playback) Status: 0x00000000
+Pipe Handle: 0xbcbafa98 (Endpoint Address: 0x81)
+Get 0x18 bytes from the device
+ A4 14 4E 01 10 19 FD D8 24 1F FF 34 E0 A0 3B 11   ¤.N...ýØ$.ÿ4à ;.
+ 05 10 00 68 00 57 7B 18                           ...h.W{.
+
+000434: Bulk or Interrupt Transfer (UP), 2017-10-05 07:40:20.6528546 +0.2499516. (1. Device: Playback) Status: 0x00000000
+Pipe Handle: 0xbcbafa98 (Endpoint Address: 0x81)
+Get 0x18 bytes from the device
+ A4 14 4E 01 19 5F 41 67 FD 91 40 30 E0 A0 3B 11   ¤.N.._Agý‘@0à ;.
+ 05 10 00 68 00 57 9B 58                           ...h.W›X
+
+000436: Bulk or Interrupt Transfer (UP), 2017-10-05 07:40:20.9028358 +0.2499329. (1. Device: Playback) Status: 0x00000000
+Pipe Handle: 0xbcbafa98 (Endpoint Address: 0x81)
+Get 0x18 bytes from the device
+ A4 14 4E 01 10 19 FF DC 77 1F FF 34 E0 A0 3B 11   ¤.N...ÿÜw.ÿ4à ;.
+ 05 10 00 68 00 57 BB 8D                           ...h.W»
+
+000438: Bulk or Interrupt Transfer (UP), 2017-10-05 07:40:21.1528552 +0.2499557. (1. Device: Playback) Status: 0x00000000
+Pipe Handle: 0xbcbafa98 (Endpoint Address: 0x81)
+Get 0x18 bytes from the device
+ A4 14 4E 01 19 60 40 F3 FD 8C 40 30 E0 A0 3B 11   ¤.N..`@óýŒ@0à ;.
+ 05 10 00 68 00 57 DB AF                           ...h.WÛ¯
+
+000440: Bulk or Interrupt Transfer (DOWN), 2017-10-05 07:40:21.2215026 +0.0685985 (1. Device: Playback)
+Pipe Handle: 0xbcbafac8 (Endpoint Address: 0x1)
+Send 0xf bytes to the device
+ A4 09 4F 01 33 FF FF FF FF EF 4D FF 8D 00 00      ¤.O.3ÿÿÿÿïMÿ..
+
+000442: Bulk or Interrupt Transfer (UP), 2017-10-05 07:40:21.4028572 +0.1810085. (1. Device: Playback) Status: 0x00000000
+Pipe Handle: 0xbcbafa98 (Endpoint Address: 0x81)
+Get 0x18 bytes from the device
+ A4 14 4E 01 10 19 01 E0 8B 1F FF 34 E0 A0 3B 11   ¤.N....à‹.ÿ4à ;.
+ 05 10 00 68 00 57 FB F3                           ...h.Wûó
+
+000444: Bulk or Interrupt Transfer (UP), 2017-10-05 07:40:21.4058430 +0.0028638. (1. Device: Playback) Status: 0x00000000
+Pipe Handle: 0xbcbafa98 (Endpoint Address: 0x81)
+Get 0x7 bytes from the device
+ A4 03 40 01 01 05 E2                              ¤.@...â
+
+000446: Bulk or Interrupt Transfer (UP), 2017-10-05 07:40:21.6528398 +0.2469549. (1. Device: Playback) Status: 0x00000000
+Pipe Handle: 0xbcbafa98 (Endpoint Address: 0x81)
+Get 0x18 bytes from the device
+ A4 14 4E 01 19 61 41 7F FE 8C 40 30 E0 A0 3B 11   ¤.N..aAþŒ@0à ;.
+ 05 10 00 68 00 57 1B E0                           ...h.W.à
+
+000448: Bulk or Interrupt Transfer (UP), 2017-10-05 07:40:21.9028523 +0.2499475. (1. Device: Playback) Status: 0x00000000
+Pipe Handle: 0xbcbafa98 (Endpoint Address: 0x81)
+Get 0x18 bytes from the device
+ A4 14 4E 01 10 19 03 E4 BA 1F FF 34 E0 A0 3B 11   ¤.N....äº.ÿ4à ;.
+ 05 10 00 68 00 57 3B 04                           ...h.W;.
+
+000450: Bulk or Interrupt Transfer (UP), 2017-10-05 07:40:22.1528488 +0.2499448. (1. Device: Playback) Status: 0x00000000
+Pipe Handle: 0xbcbafa98 (Endpoint Address: 0x81)
+Get 0x18 bytes from the device
+ A4 14 4E 01 19 62 43 0F FF 90 40 30 E0 A0 3B 11   ¤.N..bC.ÿ@0à ;.
+ 05 10 00 68 00 57 5B CC                           ...h.W[Ì
+
+000452: Bulk or Interrupt Transfer (UP), 2017-10-05 07:40:22.4028353 +0.2499231. (1. Device: Playback) Status: 0x00000000
+Pipe Handle: 0xbcbafa98 (Endpoint Address: 0x81)
+Get 0x18 bytes from the device
+ A4 14 4E 01 10 19 05 E9 23 20 FF 34 E0 A0 3B 11   ¤.N....é# ÿ4à ;.
+ 05 10 00 68 00 57 7B E9                           ...h.W{é
+
+000454: Bulk or Interrupt Transfer (DOWN), 2017-10-05 07:40:22.4131515 +0.0102550 (1. Device: Playback)
+Pipe Handle: 0xbcbafac8 (Endpoint Address: 0x1)
+Send 0xf bytes to the device
+ A4 09 4F 01 33 FF FF FF FF F0 4D FF 92 00 00      ¤.O.3ÿÿÿÿðMÿ’..
+
+000456: Bulk or Interrupt Transfer (UP), 2017-10-05 07:40:22.6518380 +0.2379839. (1. Device: Playback) Status: 0x00000000
+Pipe Handle: 0xbcbafa98 (Endpoint Address: 0x81)
+Get 0x18 bytes from the device
+ A4 14 4E 01 19 63 43 A0 FF 91 40 30 E0 A0 3B 11   ¤.N..cC ÿ‘@0à ;.
+ 05 10 00 68 00 57 9B A3                           ...h.W›£
+
+000458: Bulk or Interrupt Transfer (UP), 2017-10-05 07:40:22.6558369 +0.0039352. (1. Device: Playback) Status: 0x00000000
+Pipe Handle: 0xbcbafa98 (Endpoint Address: 0x81)
+Get 0x7 bytes from the device
+ A4 03 40 01 01 05 E2                              ¤.@...â
+
+000460: Bulk or Interrupt Transfer (UP), 2017-10-05 07:40:22.9028813 +0.2469844. (1. Device: Playback) Status: 0x00000000
+Pipe Handle: 0xbcbafa98 (Endpoint Address: 0x81)
+Get 0x18 bytes from the device
+ A4 14 4E 01 10 19 07 ED 66 20 FF 34 E0 A0 3B 11   ¤.N....íf ÿ4à ;.
+ 05 10 00 68 00 57 BB 6A                           ...h.W»j
+
+000462: Bulk or Interrupt Transfer (UP), 2017-10-05 07:40:23.1528536 +0.2499058. (1. Device: Playback) Status: 0x00000000
+Pipe Handle: 0xbcbafa98 (Endpoint Address: 0x81)
+Get 0x18 bytes from the device
+ A4 14 4E 01 50 FF FF 01 59 00 F0 0A E0 A0 3B 11   ¤.N.Pÿÿ.Y.ð.à ;.
+ 05 10 00 68 00 57 DB 96                           ...h.WÛ–
+
+000464: Bulk or Interrupt Transfer (DOWN), 2017-10-05 07:40:23.1716301 +0.0187267 (1. Device: Playback)
+Pipe Handle: 0xbcbafac8 (Endpoint Address: 0x1)
+Send 0xf bytes to the device
+ A4 09 4F 01 FC 00 00 64 00 00 64 00 1F 00 00      ¤.O.ü..d..d....
+
+000466: Bulk or Interrupt Transfer (UP), 2017-10-05 07:40:23.4018380 +0.2299671. (1. Device: Playback) Status: 0x00000000
+Pipe Handle: 0xbcbafa98 (Endpoint Address: 0x81)
+Get 0x18 bytes from the device
+ A4 14 4E 01 50 FF FF 01 59 00 F0 0A E0 A0 3B 11   ¤.N.Pÿÿ.Y.ð.à ;.
+ 05 10 00 68 00 57 FB B6                           ...h.Wû¶
+
+000468: Bulk or Interrupt Transfer (UP), 2017-10-05 07:40:23.4058503 +0.0039475. (1. Device: Playback) Status: 0x00000000
+Pipe Handle: 0xbcbafa98 (Endpoint Address: 0x81)
+Get 0x7 bytes from the device
+ A4 03 40 01 01 05 E2                              ¤.@...â
+
+000470: Bulk or Interrupt Transfer (DOWN), 2017-10-05 07:40:23.4259330 +0.0200327 (1. Device: Playback)
+Pipe Handle: 0xbcbafac8 (Endpoint Address: 0x1)
+Send 0xf bytes to the device
+ A4 09 4F 01 33 FF FF FF FF F1 4D FF 93 00 00      ¤.O.3ÿÿÿÿñMÿ“..
+
+000472: Bulk or Interrupt Transfer (DOWN), 2017-10-05 07:40:23.5047830 +0.0779206 (1. Device: Playback)
+Pipe Handle: 0xbcbafac8 (Endpoint Address: 0x1)
+Send 0xf bytes to the device
+ A4 09 4F 01 FC 00 00 64 00 00 64 00 1F 00 00      ¤.O.ü..d..d....
+
+000473: Bulk or Interrupt Transfer (UP), 2017-10-05 07:40:23.5058700 +0.0010870. (1. Device: Playback) Status: 0x00000000
+Pipe Handle: 0xbcbafa98 (Endpoint Address: 0x81)
+Get 0x7 bytes from the device
+ A4 03 40 01 4F 1F B6                              ¤.@.O.¶
+
+000476: Bulk or Interrupt Transfer (UP), 2017-10-05 07:40:23.6518388 +0.1458869. (1. Device: Playback) Status: 0x00000000
+Pipe Handle: 0xbcbafa98 (Endpoint Address: 0x81)
+Get 0x18 bytes from the device
+ A4 14 4E 01 19 64 44 38 00 98 40 30 E0 A0 3B 11   ¤.N..dD8.˜@0à ;.
+ 05 10 00 68 00 57 1B 4D                           ...h.W.M
+
+000478: Bulk or Interrupt Transfer (UP), 2017-10-05 07:40:23.6558505 +0.0039472. (1. Device: Playback) Status: 0x00000000
+Pipe Handle: 0xbcbafa98 (Endpoint Address: 0x81)
+Get 0x7 bytes from the device
+ A4 03 40 01 01 05 E2                              ¤.@...â
+
+000480: Bulk or Interrupt Transfer (DOWN), 2017-10-05 07:40:23.8381927 +0.1822967 (1. Device: Playback)
+Pipe Handle: 0xbcbafac8 (Endpoint Address: 0x1)
+Send 0xf bytes to the device
+ A4 09 4F 01 FC 00 00 64 00 00 64 00 1F 00 00      ¤.O.ü..d..d....
+
+000482: Bulk or Interrupt Transfer (UP), 2017-10-05 07:40:23.9018507 +0.0629851. (1. Device: Playback) Status: 0x00000000
+Pipe Handle: 0xbcbafa98 (Endpoint Address: 0x81)
+Get 0x18 bytes from the device
+ A4 14 4E 01 10 19 0B F5 D5 20 FF 34 E0 A0 3B 11   ¤.N....õÕ ÿ4à ;.
+ 05 10 00 68 00 57 3B 4D                           ...h.W;M
+
+000484: Bulk or Interrupt Transfer (UP), 2017-10-05 07:40:23.9048475 +0.0029509. (1. Device: Playback) Status: 0x00000000
+Pipe Handle: 0xbcbafa98 (Endpoint Address: 0x81)
+Get 0x7 bytes from the device
+ A4 03 40 01 01 05 E2                              ¤.@...â
+
+000486: Bulk or Interrupt Transfer (UP), 2017-10-05 07:40:24.1528505 +0.2479586. (1. Device: Playback) Status: 0x00000000
+Pipe Handle: 0xbcbafa98 (Endpoint Address: 0x81)
+Get 0x18 bytes from the device
+ A4 14 4E 01 19 65 45 D5 00 9D 40 30 E0 A0 3B 11   ¤.N..eEÕ.@0à ;.
+ 05 10 00 68 00 57 5B E5                           ...h.W[å
+
+000488: Bulk or Interrupt Transfer (UP), 2017-10-05 07:40:24.4028547 +0.2499321. (1. Device: Playback) Status: 0x00000000
+Pipe Handle: 0xbcbafa98 (Endpoint Address: 0x81)
+Get 0x18 bytes from the device
+ A4 14 4E 01 10 19 0D F9 2E 21 FF 34 E0 A0 3B 11   ¤.N....ù.!ÿ4à ;.
+ 05 10 00 68 00 57 7B FD                           ...h.W{ý
+
+000490: Bulk or Interrupt Transfer (DOWN), 2017-10-05 07:40:24.4593230 +0.0564205 (1. Device: Playback)
+Pipe Handle: 0xbcbafac8 (Endpoint Address: 0x1)
+Send 0xf bytes to the device
+ A4 09 4F 01 33 FF FF FF FF F2 4D FF 90 00 00      ¤.O.3ÿÿÿÿòMÿ..
+
+000492: Bulk or Interrupt Transfer (UP), 2017-10-05 07:40:24.6518539 +0.1919912. (1. Device: Playback) Status: 0x00000000
+Pipe Handle: 0xbcbafa98 (Endpoint Address: 0x81)
+Get 0x7 bytes from the device
+ A4 03 40 01 01 02 E5                              ¤.@...å
+
+000494: Bulk or Interrupt Transfer (UP), 2017-10-05 07:40:24.9018527 +0.2499519. (1. Device: Playback) Status: 0x00000000
+Pipe Handle: 0xbcbafa98 (Endpoint Address: 0x81)
+Get 0x18 bytes from the device
+ A4 14 4E 01 10 19 0F FE 47 21 FF 34 E0 A0 3B 11   ¤.N....þG!ÿ4à ;.
+ 05 10 00 68 00 57 BB 51                           ...h.W»Q
+
+000496: Bulk or Interrupt Transfer (UP), 2017-10-05 07:40:24.9048515 +0.0029493. (1. Device: Playback) Status: 0x00000000
+Pipe Handle: 0xbcbafa98 (Endpoint Address: 0x81)
+Get 0x7 bytes from the device
+ A4 03 40 01 01 05 E2                              ¤.@...â
+
+000498: Bulk or Interrupt Transfer (UP), 2017-10-05 07:40:25.1528394 +0.2479365. (1. Device: Playback) Status: 0x00000000
+Pipe Handle: 0xbcbafa98 (Endpoint Address: 0x81)
+Get 0x18 bytes from the device
+ A4 14 4E 01 19 67 45 0C 02 9B 40 30 E0 A0 3B 11   ¤.N..gE..›@0à ;.
+ 05 10 00 68 00 58 DB B5                           ...h.XÛµ
+
+000500: Bulk or Interrupt Transfer (UP), 2017-10-05 07:40:25.4028572 +0.2499524. (1. Device: Playback) Status: 0x00000000
+Pipe Handle: 0xbcbafa98 (Endpoint Address: 0x81)
+Get 0x18 bytes from the device
+ A4 14 4E 01 10 19 11 02 3C 21 FF 34 E0 A0 3B 11   ¤.N.....<!ÿ4à ;.
+ 05 10 00 68 00 58 FB 87                           ...h.Xû‡
+
+000502: Bulk or Interrupt Transfer (DOWN), 2017-10-05 07:40:25.5422422 +0.1393074 (1. Device: Playback)
+Pipe Handle: 0xbcbafac8 (Endpoint Address: 0x1)
+Send 0xf bytes to the device
+ A4 09 4F 01 33 FF FF FF FF F3 4D FF 91 00 00      ¤.O.3ÿÿÿÿóMÿ‘..
+
+000504: Bulk or Interrupt Transfer (UP), 2017-10-05 07:40:25.6518374 +0.1089783. (1. Device: Playback) Status: 0x00000000
+Pipe Handle: 0xbcbafa98 (Endpoint Address: 0x81)
+Get 0x18 bytes from the device
+ A4 14 4E 01 19 68 45 A2 02 96 40 30 E0 A0 3B 11   ¤.N..hE¢.–@0à ;.
+ 05 10 00 68 00 59 1B D8                           ...h.Y.Ø
+
+000506: Bulk or Interrupt Transfer (UP), 2017-10-05 07:40:25.6558198 +0.0039195. (1. Device: Playback) Status: 0x00000000
+Pipe Handle: 0xbcbafa98 (Endpoint Address: 0x81)
+Get 0x7 bytes from the device
+ A4 03 40 01 01 05 E2                              ¤.@...â
+
+000508: Bulk or Interrupt Transfer (UP), 2017-10-05 07:40:25.9028364 +0.2469049. (1. Device: Playback) Status: 0x00000000
+Pipe Handle: 0xbcbafa98 (Endpoint Address: 0x81)
+Get 0x18 bytes from the device
+ A4 14 4E 01 10 19 13 06 34 21 FF 34 E0 A0 3B 11   ¤.N.....4!ÿ4à ;.
+ 05 10 00 68 00 59 3B 48                           ...h.Y;H
+
+000510: Bulk or Interrupt Transfer (UP), 2017-10-05 07:40:26.1528578 +0.2499580. (1. Device: Playback) Status: 0x00000000
+Pipe Handle: 0xbcbafa98 (Endpoint Address: 0x81)
+Get 0x18 bytes from the device
+ A4 14 4E 01 19 69 46 35 03 93 40 30 E0 A0 3B 11   ¤.N..iF5.“@0à ;.
+ 05 10 00 68 00 59 5B 09                           ...h.Y[.
+
+000512: Bulk or Interrupt Transfer (UP), 2017-10-05 07:40:26.4028393 +0.2499340. (1. Device: Playback) Status: 0x00000000
+Pipe Handle: 0xbcbafa98 (Endpoint Address: 0x81)
+Get 0x18 bytes from the device
+ A4 14 4E 01 10 19 15 0A 26 21 FF 34 E0 A0 3B 11   ¤.N.....&!ÿ4à ;.
+ 05 10 00 68 00 59 7B 10                           ...h.Y{.
+
+000514: Bulk or Interrupt Transfer (DOWN), 2017-10-05 07:40:26.5423799 +0.1394774 (1. Device: Playback)
+Pipe Handle: 0xbcbafac8 (Endpoint Address: 0x1)
+Send 0xf bytes to the device
+ A4 09 4F 01 33 FF FF FF FF F4 4D FF 96 00 00      ¤.O.3ÿÿÿÿôMÿ–..
+
+000516: Bulk or Interrupt Transfer (UP), 2017-10-05 07:40:26.6518556 +0.1089918. (1. Device: Playback) Status: 0x00000000
+Pipe Handle: 0xbcbafa98 (Endpoint Address: 0x81)
+Get 0x18 bytes from the device
+ A4 14 4E 01 19 6A 44 C6 03 91 40 30 E0 A0 3B 11   ¤.N..jDÆ.‘@0à ;.
+ 05 10 00 68 00 59 9B 39                           ...h.Y›9
+
+000518: Bulk or Interrupt Transfer (UP), 2017-10-05 07:40:26.6548384 +0.0029345. (1. Device: Playback) Status: 0x00000000
+Pipe Handle: 0xbcbafa98 (Endpoint Address: 0x81)
+Get 0x7 bytes from the device
+ A4 03 40 01 01 05 E2                              ¤.@...â
+
+000520: Bulk or Interrupt Transfer (UP), 2017-10-05 07:40:26.9028436 +0.2479446. (1. Device: Playback) Status: 0x00000000
+Pipe Handle: 0xbcbafa98 (Endpoint Address: 0x81)
+Get 0x18 bytes from the device
+ A4 14 4E 01 10 19 17 0F 4D 21 FF 34 E0 A0 3B 11   ¤.N.....M!ÿ4à ;.
+ 05 10 00 68 00 59 BB BC                           ...h.Y»¼
+
+000522: Bulk or Interrupt Transfer (UP), 2017-10-05 07:40:27.1518479 +0.2489627. (1. Device: Playback) Status: 0x00000000
+Pipe Handle: 0xbcbafa98 (Endpoint Address: 0x81)
+Get 0x7 bytes from the device
+ A4 03 40 01 01 02 E5                              ¤.@...å
+
+000524: Bulk or Interrupt Transfer (UP), 2017-10-05 07:40:27.4028371 +0.2509426. (1. Device: Playback) Status: 0x00000000
+Pipe Handle: 0xbcbafa98 (Endpoint Address: 0x81)
+Get 0x18 bytes from the device
+ A4 14 4E 01 10 19 19 13 76 21 FF 34 E0 A0 3B 11   ¤.N.....v!ÿ4à ;.
+ 05 10 00 68 00 59 FB D5                           ...h.YûÕ
+
+000526: Bulk or Interrupt Transfer (DOWN), 2017-10-05 07:40:27.6261067 +0.2232067 (1. Device: Playback)
+Pipe Handle: 0xbcbafac8 (Endpoint Address: 0x1)
+Send 0xf bytes to the device
+ A4 09 4F 01 33 FF FF FF FF F6 4D FF 94 00 00      ¤.O.3ÿÿÿÿöMÿ”..
+
+000528: Bulk or Interrupt Transfer (UP), 2017-10-05 07:40:27.6518553 +0.0249876. (1. Device: Playback) Status: 0x00000000
+Pipe Handle: 0xbcbafa98 (Endpoint Address: 0x81)
+Get 0x18 bytes from the device
+ A4 14 4E 01 19 6C 46 F6 04 9B 40 30 E0 A0 3B 11   ¤.N..lFö.›@0à ;.
+ 05 10 00 68 00 59 1B 80                           ...h.Y.€
+
+000530: Bulk or Interrupt Transfer (UP), 2017-10-05 07:40:27.6548401 +0.0029315. (1. Device: Playback) Status: 0x00000000
+Pipe Handle: 0xbcbafa98 (Endpoint Address: 0x81)
+Get 0x7 bytes from the device
+ A4 03 40 01 01 05 E2                              ¤.@...â
+
+000532: Bulk or Interrupt Transfer (UP), 2017-10-05 07:40:27.9028579 +0.2478631. (1. Device: Playback) Status: 0x00000000
+Pipe Handle: 0xbcbafa98 (Endpoint Address: 0x81)
+Get 0x18 bytes from the device
+ A4 14 4E 01 10 19 1B 17 A8 21 FF 34 E0 A0 3B 11   ¤.N.....¨!ÿ4à ;.
+ 05 10 00 68 00 59 3B CD                           ...h.Y;Í
+
+000534: Bulk or Interrupt Transfer (UP), 2017-10-05 07:40:28.1528559 +0.2499483. (1. Device: Playback) Status: 0x00000000
+Pipe Handle: 0xbcbafa98 (Endpoint Address: 0x81)
+Get 0x18 bytes from the device
+ A4 14 4E 01 19 6D 46 94 05 9E 40 30 E0 A0 3B 11   ¤.N..mF”.ž@0à ;.
+ 05 10 00 68 00 59 5B A7                           ...h.Y[§
+
+000536: Bulk or Interrupt Transfer (UP), 2017-10-05 07:40:28.4018590 +0.2489554. (1. Device: Playback) Status: 0x00000000
+Pipe Handle: 0xbcbafa98 (Endpoint Address: 0x81)
+Get 0x7 bytes from the device
+ A4 03 40 01 01 02 E5                              ¤.@...å
+
+000538: Bulk or Interrupt Transfer (DOWN), 2017-10-05 07:40:28.6264577 +0.2245445 (1. Device: Playback)
+Pipe Handle: 0xbcbafac8 (Endpoint Address: 0x1)
+Send 0xf bytes to the device
+ A4 09 4F 01 33 FF FF FF FF F8 4D FF 9A 00 00      ¤.O.3ÿÿÿÿøMÿš..
+
+000540: Bulk or Interrupt Transfer (UP), 2017-10-05 07:40:28.6518416 +0.0249727. (1. Device: Playback) Status: 0x00000000
+Pipe Handle: 0xbcbafa98 (Endpoint Address: 0x81)
+Get 0x18 bytes from the device
+ A4 14 4E 01 19 6E 46 32 06 9E 40 30 E0 A0 3B 11   ¤.N..nF2.ž@0à ;.
+ 05 10 00 68 00 59 9B C1                           ...h.Y›Á
+
+000542: Bulk or Interrupt Transfer (UP), 2017-10-05 07:40:28.6548180 +0.0029118. (1. Device: Playback) Status: 0x00000000
+Pipe Handle: 0xbcbafa98 (Endpoint Address: 0x81)
+Get 0x7 bytes from the device
+ A4 03 40 01 01 05 E2                              ¤.@...â
+
+000544: Bulk or Interrupt Transfer (DOWN), 2017-10-05 07:40:28.8711940 +0.2163090 (1. Device: Playback)
+Pipe Handle: 0xbcbafac8 (Endpoint Address: 0x1)
+Send 0xf bytes to the device
+ A4 09 4F 01 FC 00 00 64 00 00 64 00 1F 00 00      ¤.O.ü..d..d....
+
+000546: Bulk or Interrupt Transfer (UP), 2017-10-05 07:40:28.9018586 +0.0299941. (1. Device: Playback) Status: 0x00000000
+Pipe Handle: 0xbcbafa98 (Endpoint Address: 0x81)
+Get 0x18 bytes from the device
+ A4 14 4E 01 10 19 1F 20 D7 21 FF 34 E0 A0 3B 11   ¤.N.... ×!ÿ4à ;.
+ 05 10 00 69 00 59 BB 00                           ...i.Y».
+
+000548: Bulk or Interrupt Transfer (UP), 2017-10-05 07:40:28.9048699 +0.0029499. (1. Device: Playback) Status: 0x00000000
+Pipe Handle: 0xbcbafa98 (Endpoint Address: 0x81)
+Get 0x7 bytes from the device
+ A4 03 40 01 01 05 E2                              ¤.@...â
+
+000550: Bulk or Interrupt Transfer (UP), 2017-10-05 07:40:29.1528362 +0.2479222. (1. Device: Playback) Status: 0x00000000
+Pipe Handle: 0xbcbafa98 (Endpoint Address: 0x81)
+Get 0x18 bytes from the device
+ A4 14 4E 01 19 6F 46 CD 06 9B 40 30 E0 A0 3B 11   ¤.N..oFÍ.›@0à ;.
+ 05 10 00 68 00 59 DB 7A                           ...h.YÛz
+
+000552: Bulk or Interrupt Transfer (UP), 2017-10-05 07:40:29.4028387 +0.2499359. (1. Device: Playback) Status: 0x00000000
+Pipe Handle: 0xbcbafa98 (Endpoint Address: 0x81)
+Get 0x18 bytes from the device
+ A4 14 4E 01 10 19 21 24 C1 21 FF 34 E0 A0 3B 11   ¤.N...!$Á!ÿ4à ;.
+ 05 10 01 6D 00 59 FB 69                           ...m.Yûi
+
+000554: Bulk or Interrupt Transfer (UP), 2017-10-05 07:40:29.6528510 +0.2499463. (1. Device: Playback) Status: 0x00000000
+Pipe Handle: 0xbcbafa98 (Endpoint Address: 0x81)
+Get 0x18 bytes from the device
+ A4 14 4E 01 19 70 46 65 07 98 40 30 E0 A0 3B 11   ¤.N..pFe.˜@0à ;.
+ 05 10 00 68 00 59 1B 0F                           ...h.Y..
+
+000556: Bulk or Interrupt Transfer (DOWN), 2017-10-05 07:40:29.8303174 +0.1773916 (1. Device: Playback)
+Pipe Handle: 0xbcbafac8 (Endpoint Address: 0x1)
+Send 0xf bytes to the device
+ A4 09 4F 01 33 FF FF FF FF FA 4D FF 98 00 00      ¤.O.3ÿÿÿÿúMÿ˜..
+
+000558: Bulk or Interrupt Transfer (UP), 2017-10-05 07:40:29.9018583 +0.0710082. (1. Device: Playback) Status: 0x00000000
+Pipe Handle: 0xbcbafa98 (Endpoint Address: 0x81)
+Get 0x7 bytes from the device
+ A4 03 40 01 01 02 E5                              ¤.@...å
+
+000560: Bulk or Interrupt Transfer (UP), 2017-10-05 07:40:30.1518383 +0.2499090. (1. Device: Playback) Status: 0x00000000
+Pipe Handle: 0xbcbafa98 (Endpoint Address: 0x81)
+Get 0x18 bytes from the device
+ A4 14 4E 01 10 19 23 28 E8 21 FF 34 E0 A0 3B 11   ¤.N...#(è!ÿ4à ;.
+ 05 10 00 68 00 59 5B EA                           ...h.Y[ê
+
+000562: Bulk or Interrupt Transfer (UP), 2017-10-05 07:40:30.1548427 +0.0029386. (1. Device: Playback) Status: 0x00000000
+Pipe Handle: 0xbcbafa98 (Endpoint Address: 0x81)
+Get 0x7 bytes from the device
+ A4 03 40 01 01 05 E2                              ¤.@...â
+
+000564: Bulk or Interrupt Transfer (UP), 2017-10-05 07:40:30.4028527 +0.2479645. (1. Device: Playback) Status: 0x00000000
+Pipe Handle: 0xbcbafa98 (Endpoint Address: 0x81)
+Get 0x18 bytes from the device
+ A4 14 4E 01 10 19 25 2D 17 22 FF 34 E0 A0 3B 11   ¤.N...%-."ÿ4à ;.
+ 05 10 00 68 00 59 7B 35                           ...h.Y{5
+
+000566: Bulk or Interrupt Transfer (UP), 2017-10-05 07:40:30.6528691 +0.2499617. (1. Device: Playback) Status: 0x00000000
+Pipe Handle: 0xbcbafa98 (Endpoint Address: 0x81)
+Get 0x18 bytes from the device
+ A4 14 4E 01 19 72 47 A6 08 A3 40 30 E0 A0 3B 11   ¤.N..rG¦.£@0à ;.
+ 05 10 00 68 00 59 9B 7B                           ...h.Y›{
+
+000568: Bulk or Interrupt Transfer (DOWN), 2017-10-05 07:40:30.8757447 +0.2226789 (1. Device: Playback)
+Pipe Handle: 0xbcbafac8 (Endpoint Address: 0x1)
+Send 0xf bytes to the device
+ A4 09 4F 01 33 FF FF FF FF FC 4D FF 9E 00 00      ¤.O.3ÿÿÿÿüMÿž..
+
+000570: Bulk or Interrupt Transfer (UP), 2017-10-05 07:40:30.9018695 +0.0250130. (1. Device: Playback) Status: 0x00000000
+Pipe Handle: 0xbcbafa98 (Endpoint Address: 0x81)
+Get 0x18 bytes from the device
+ A4 14 4E 01 10 19 27 31 25 22 FF 34 E0 A0 3B 11   ¤.N...'1%"ÿ4à ;.
+ 05 10 00 68 00 5A BB DA                           ...h.Z»Ú
+
+000572: Bulk or Interrupt Transfer (UP), 2017-10-05 07:40:30.9048506 +0.0029252. (1. Device: Playback) Status: 0x00000000
+Pipe Handle: 0xbcbafa98 (Endpoint Address: 0x81)
+Get 0x7 bytes from the device
+ A4 03 40 01 01 05 E2                              ¤.@...â
+
+000574: Bulk or Interrupt Transfer (UP), 2017-10-05 07:40:31.1518534 +0.2469554. (1. Device: Playback) Status: 0x00000000
+Pipe Handle: 0xbcbafa98 (Endpoint Address: 0x81)
+Get 0x7 bytes from the device
+ A4 03 40 01 01 02 E5                              ¤.@...å
+
+000576: Bulk or Interrupt Transfer (UP), 2017-10-05 07:40:31.4018553 +0.2499446. (1. Device: Playback) Status: 0x00000000
+Pipe Handle: 0xbcbafa98 (Endpoint Address: 0x81)
+Get 0x7 bytes from the device
+ A4 03 40 01 01 02 E5                              ¤.@...å
+
+000578: Bulk or Interrupt Transfer (UP), 2017-10-05 07:40:31.6528548 +0.2509430. (1. Device: Playback) Status: 0x00000000
+Pipe Handle: 0xbcbafa98 (Endpoint Address: 0x81)
+Get 0x18 bytes from the device
+ A4 14 4E 01 FB 00 03 02 00 04 02 00 E0 A0 3B 11   ¤.N.û.......à ;.
+ 05 10 00 68 00 5A 1B 55                           ...h.Z.U
+
+000580: Bulk or Interrupt Transfer (UP), 2017-10-05 07:40:31.9028481 +0.2499360. (1. Device: Playback) Status: 0x00000000
+Pipe Handle: 0xbcbafa98 (Endpoint Address: 0x81)
+Get 0x18 bytes from the device
+ A4 14 4E 01 10 19 2B 3A 0C 22 FF 34 E0 A0 3B 11   ¤.N...+:."ÿ4à ;.
+ 05 10 01 6A 00 5B 3B 76                           ...j.[;v
+
+000582: Bulk or Interrupt Transfer (DOWN), 2017-10-05 07:40:31.9124244 +0.0095056 (1. Device: Playback)
+Pipe Handle: 0xbcbafac8 (Endpoint Address: 0x1)
+Send 0xf bytes to the device
+ A4 09 4F 01 33 FF FF FF FF FE 4D FF 9C 00 00      ¤.O.3ÿÿÿÿþMÿœ..
+
+000584: Bulk or Interrupt Transfer (UP), 2017-10-05 07:40:32.1518717 +0.2390198. (1. Device: Playback) Status: 0x00000000
+Pipe Handle: 0xbcbafa98 (Endpoint Address: 0x81)
+Get 0x18 bytes from the device
+ A4 14 4E 01 19 74 47 E6 09 9E 40 30 E0 A0 3B 11   ¤.N..tGæ.ž@0à ;.
+ 05 10 00 68 00 5B 5B C3                           ...h.[[Ã
+
+000586: Bulk or Interrupt Transfer (UP), 2017-10-05 07:40:32.1548405 +0.0029065. (1. Device: Playback) Status: 0x00000000
+Pipe Handle: 0xbcbafa98 (Endpoint Address: 0x81)
+Get 0x7 bytes from the device
+ A4 03 40 01 01 05 E2                              ¤.@...â
+
+000588: Bulk or Interrupt Transfer (UP), 2017-10-05 07:40:32.4028427 +0.2479450. (1. Device: Playback) Status: 0x00000000
+Pipe Handle: 0xbcbafa98 (Endpoint Address: 0x81)
+Get 0x18 bytes from the device
+ A4 14 4E 01 10 19 2D 3E 04 22 FF 34 E0 A0 3B 11   ¤.N...->."ÿ4à ;.
+ 05 10 00 68 00 5B 7B 3F                           ...h.[{?
+
+000590: Bulk or Interrupt Transfer (UP), 2017-10-05 07:40:32.6528406 +0.2499451. (1. Device: Playback) Status: 0x00000000
+Pipe Handle: 0xbcbafa98 (Endpoint Address: 0x81)
+Get 0x18 bytes from the device
+ A4 14 4E 01 19 75 47 85 0A 9F 40 30 E0 A0 3B 11   ¤.N..uG….Ÿ@0à ;.
+ 05 10 00 68 00 5B 9B 63                           ...h.[›c
+
+000592: Bulk or Interrupt Transfer (UP), 2017-10-05 07:40:32.9028462 +0.2499463. (1. Device: Playback) Status: 0x00000000
+Pipe Handle: 0xbcbafa98 (Endpoint Address: 0x81)
+Get 0x18 bytes from the device
+ A4 14 4E 01 10 19 2F 43 DD 21 FF 34 E0 A0 3B 11   ¤.N.../CÝ!ÿ4à ;.
+ 05 10 00 68 00 5C BB 5D                           ...h.\»]
+
+000594: Bulk or Interrupt Transfer (DOWN), 2017-10-05 07:40:32.9589027 +0.0559333 (1. Device: Playback)
+Pipe Handle: 0xbcbafac8 (Endpoint Address: 0x1)
+Send 0xf bytes to the device
+ A4 09 4F 01 33 FF FF FF FF 01 4E FF 60 00 00      ¤.O.3ÿÿÿÿ.Nÿ`..
+
+000596: Bulk or Interrupt Transfer (UP), 2017-10-05 07:40:33.1518476 +0.1919805. (1. Device: Playback) Status: 0x00000000
+Pipe Handle: 0xbcbafa98 (Endpoint Address: 0x81)
+Get 0x18 bytes from the device
+ A4 14 4E 01 19 76 47 25 0B A0 40 30 E0 A0 3B 11   ¤.N..vG%. @0à ;.
+ 05 10 00 68 00 5C DB B9                           ...h.\Û¹
+
+000598: Bulk or Interrupt Transfer (UP), 2017-10-05 07:40:33.1548415 +0.0029436. (1. Device: Playback) Status: 0x00000000
+Pipe Handle: 0xbcbafa98 (Endpoint Address: 0x81)
+Get 0x7 bytes from the device
+ A4 03 40 01 01 05 E2                              ¤.@...â
+
+000600: Bulk or Interrupt Transfer (UP), 2017-10-05 07:40:33.4028614 +0.2479514. (1. Device: Playback) Status: 0x00000000
+Pipe Handle: 0xbcbafa98 (Endpoint Address: 0x81)
+Get 0x18 bytes from the device
+ A4 14 4E 01 10 19 31 47 0C 22 FF 34 E0 A0 3B 11   ¤.N...1G."ÿ4à ;.
+ 05 10 00 68 00 5C FB D5                           ...h.\ûÕ
+
+000602: Bulk or Interrupt Transfer (UP), 2017-10-05 07:40:33.6529030 +0.2499271. (1. Device: Playback) Status: 0x00000000
+Pipe Handle: 0xbcbafa98 (Endpoint Address: 0x81)
+Get 0x18 bytes from the device
+ A4 14 4E 01 19 77 47 CC 0B A7 40 30 E0 A0 3B 11   ¤.N..wGÌ.§@0à ;.
+ 05 10 00 68 00 5C 1B 96                           ...h.\.–
+
+000604: Bulk or Interrupt Transfer (UP), 2017-10-05 07:40:33.9029260 +0.2499686. (1. Device: Playback) Status: 0x00000000
+Pipe Handle: 0xbcbafa98 (Endpoint Address: 0x81)
+Get 0x18 bytes from the device
+ A4 14 4E 01 10 19 33 4B 3E 22 FF 34 E0 A0 3B 11   ¤.N...3K>"ÿ4à ;.
+ 05 10 00 68 00 5D 3B 28                           ...h.];(
+
+000606: Bulk or Interrupt Transfer (DOWN), 2017-10-05 07:40:33.9909205 +0.0879464 (1. Device: Playback)
+Pipe Handle: 0xbcbafac8 (Endpoint Address: 0x1)
+Send 0xf bytes to the device
+ A4 09 4F 01 FC 00 00 64 00 00 64 00 1F 00 00      ¤.O.ü..d..d....
+
+000608: Bulk or Interrupt Transfer (DOWN), 2017-10-05 07:40:33.9967600 +0.0049087 (1. Device: Playback)
+Pipe Handle: 0xbcbafac8 (Endpoint Address: 0x1)
+Send 0xf bytes to the device
+ A4 09 4F 01 33 FF FF FF FF 04 4E FF 65 00 00      ¤.O.3ÿÿÿÿ.Nÿe..
+
+000609: Bulk or Interrupt Transfer (UP), 2017-10-05 07:40:33.9978504 +0.0010904. (1. Device: Playback) Status: 0x00000000
+Pipe Handle: 0xbcbafa98 (Endpoint Address: 0x81)
+Get 0x7 bytes from the device
+ A4 03 40 01 4F 1F B6                              ¤.@.O.¶
+
+000612: Bulk or Interrupt Transfer (UP), 2017-10-05 07:40:34.1518463 +0.1539199. (1. Device: Playback) Status: 0x00000000
+Pipe Handle: 0xbcbafa98 (Endpoint Address: 0x81)
+Get 0x18 bytes from the device
+ A4 14 4E 01 19 78 48 77 0C AB 40 30 E0 A0 3B 11   ¤.N..xHw.«@0à ;.
+ 05 10 00 68 00 5D 5B 67                           ...h.][g
+
+000614: Bulk or Interrupt Transfer (UP), 2017-10-05 07:40:34.1548268 +0.0029090. (1. Device: Playback) Status: 0x00000000
+Pipe Handle: 0xbcbafa98 (Endpoint Address: 0x81)
+Get 0x7 bytes from the device
+ A4 03 40 01 01 05 E2                              ¤.@...â
+
+000616: Bulk or Interrupt Transfer (UP), 2017-10-05 07:40:34.4028801 +0.2479818. (1. Device: Playback) Status: 0x00000000
+Pipe Handle: 0xbcbafa98 (Endpoint Address: 0x81)
+Get 0x18 bytes from the device
+ A4 14 4E 01 10 19 35 50 3B 22 FF 34 E0 A0 3B 11   ¤.N...5P;"ÿ4à ;.
+ 05 10 01 6A 00 5D 7B 73                           ...j.]{s
+
+000618: Bulk or Interrupt Transfer (UP), 2017-10-05 07:40:34.6518439 +0.2488970. (1. Device: Playback) Status: 0x00000000
+Pipe Handle: 0xbcbafa98 (Endpoint Address: 0x81)
+Get 0x7 bytes from the device
+ A4 03 40 01 01 02 E5                              ¤.@...å
+
+000620: Bulk or Interrupt Transfer (UP), 2017-10-05 07:40:34.9028791 +0.2509740. (1. Device: Playback) Status: 0x00000000
+Pipe Handle: 0xbcbafa98 (Endpoint Address: 0x81)
+Get 0x18 bytes from the device
+ A4 14 4E 01 19 79 46 19 0D A2 40 30 E0 A0 3B 11   ¤.N..yF..¢@0à ;.
+ 05 10 00 68 00 5D BB EE                           ...h.]»î
+
+000622: Bulk or Interrupt Transfer (DOWN), 2017-10-05 07:40:35.0421901 +0.1392638 (1. Device: Playback)
+Pipe Handle: 0xbcbafac8 (Endpoint Address: 0x1)
+Send 0xf bytes to the device
+ A4 09 4F 01 33 FF FF FF FF 08 4E FF 69 00 00      ¤.O.3ÿÿÿÿ.Nÿi..
+
+000624: Bulk or Interrupt Transfer (UP), 2017-10-05 07:40:35.1518378 +0.1089524. (1. Device: Playback) Status: 0x00000000
+Pipe Handle: 0xbcbafa98 (Endpoint Address: 0x81)
+Get 0x18 bytes from the device
+ A4 14 4E 01 19 7A 47 BE 0D A5 40 30 E0 A0 3B 11   ¤.N..zG¾.¥@0à ;.
+ 05 10 00 68 00 5E DB 2F                           ...h.^Û/
+
+000626: Bulk or Interrupt Transfer (UP), 2017-10-05 07:40:35.1548354 +0.0029333. (1. Device: Playback) Status: 0x00000000
+Pipe Handle: 0xbcbafa98 (Endpoint Address: 0x81)
+Get 0x7 bytes from the device
+ A4 03 40 01 01 05 E2                              ¤.@...â
+
+000628: Bulk or Interrupt Transfer (UP), 2017-10-05 07:40:35.4028385 +0.2479347. (1. Device: Playback) Status: 0x00000000
+Pipe Handle: 0xbcbafa98 (Endpoint Address: 0x81)
+Get 0x18 bytes from the device
+ A4 14 4E 01 10 19 39 58 20 22 FF 34 E0 A0 3B 11   ¤.N...9X "ÿ4à ;.
+ 05 10 00 68 00 5E FB EC                           ...h.^ûì
+
+000630: Bulk or Interrupt Transfer (UP), 2017-10-05 07:40:35.6518416 +0.2489327. (1. Device: Playback) Status: 0x00000000
+Pipe Handle: 0xbcbafa98 (Endpoint Address: 0x81)
+Get 0x7 bytes from the device
+ A4 03 40 01 01 02 E5                              ¤.@...å
+
+000632: Bulk or Interrupt Transfer (UP), 2017-10-05 07:40:35.9028403 +0.2509316. (1. Device: Playback) Status: 0x00000000
+Pipe Handle: 0xbcbafa98 (Endpoint Address: 0x81)
+Get 0x18 bytes from the device
+ A4 14 4E 01 10 19 3B 5D 57 22 FF 34 E0 A0 3B 11   ¤.N...;]W"ÿ4à ;.
+ 05 10 00 68 00 5E 3B 5C                           ...h.^;\
+
+000634: Bulk or Interrupt Transfer (DOWN), 2017-10-05 07:40:36.0786813 +0.1757756 (1. Device: Playback)
+Pipe Handle: 0xbcbafac8 (Endpoint Address: 0x1)
+Send 0xf bytes to the device
+ A4 09 4F 01 33 FF FF FF FF 0C 4E FF 6D 00 00      ¤.O.3ÿÿÿÿ.Nÿm..
+
+000636: Bulk or Interrupt Transfer (UP), 2017-10-05 07:40:36.1518512 +0.0730059. (1. Device: Playback) Status: 0x00000000
+Pipe Handle: 0xbcbafa98 (Endpoint Address: 0x81)
+Get 0x18 bytes from the device
+ A4 14 4E 01 19 7C 47 17 0F AE 40 30 E0 A0 3B 11   ¤.N..|G..®@0à ;.
+ 05 10 00 68 00 5E 5B 09                           ...h.^[.
+
+000638: Bulk or Interrupt Transfer (UP), 2017-10-05 07:40:36.1548524 +0.0029543. (1. Device: Playback) Status: 0x00000000
+Pipe Handle: 0xbcbafa98 (Endpoint Address: 0x81)
+Get 0x7 bytes from the device
+ A4 03 40 01 01 05 E2                              ¤.@...â
+
+000640: Bulk or Interrupt Transfer (UP), 2017-10-05 07:40:36.4028398 +0.2479301. (1. Device: Playback) Status: 0x00000000
+Pipe Handle: 0xbcbafa98 (Endpoint Address: 0x81)
+Get 0x18 bytes from the device
+ A4 14 4E 01 10 19 3D 61 65 22 FF 34 E0 A0 3B 11   ¤.N...=ae"ÿ4à ;.
+ 05 10 00 68 00 5F 7B 15                           ...h._{.
+
+000642: Bulk or Interrupt Transfer (UP), 2017-10-05 07:40:36.6528407 +0.2499433. (1. Device: Playback) Status: 0x00000000
+Pipe Handle: 0xbcbafa98 (Endpoint Address: 0x81)
+Get 0x18 bytes from the device
+ A4 14 4E 01 19 7D 46 C0 0F A9 40 30 E0 A0 3B 11   ¤.N..}FÀ.©@0à ;.
+ 05 10 00 68 00 5F 9B 18                           ...h._›.
+
+000644: Bulk or Interrupt Transfer (UP), 2017-10-05 07:40:36.9028554 +0.2499667. (1. Device: Playback) Status: 0x00000000
+Pipe Handle: 0xbcbafa98 (Endpoint Address: 0x81)
+Get 0x18 bytes from the device
+ A4 14 4E 01 10 19 3F 66 47 22 FF 34 E0 A0 3B 11   ¤.N...?fG"ÿ4à ;.
+ 05 10 00 69 00 5F BB F3                           ...i._»ó
+
+000646: Bulk or Interrupt Transfer (DOWN), 2017-10-05 07:40:37.1255896 +0.2226820 (1. Device: Playback)
+Pipe Handle: 0xbcbafac8 (Endpoint Address: 0x1)
+Send 0xf bytes to the device
+ A4 09 4F 01 33 FF FF FF FF 10 4E FF 71 00 00      ¤.O.3ÿÿÿÿ.Nÿq..
+
+000648: Bulk or Interrupt Transfer (UP), 2017-10-05 07:40:37.1518518 +0.0259818. (1. Device: Playback) Status: 0x00000000
+Pipe Handle: 0xbcbafa98 (Endpoint Address: 0x81)
+Get 0x18 bytes from the device
+ A4 14 4E 01 19 7E 48 66 10 A6 40 30 E0 A0 3B 11   ¤.N..~Hf.¦@0à ;.
+ 05 10 00 68 00 5F DB E3                           ...h._Ûã
+
+000650: Bulk or Interrupt Transfer (UP), 2017-10-05 07:40:37.1548492 +0.0029337. (1. Device: Playback) Status: 0x00000000
+Pipe Handle: 0xbcbafa98 (Endpoint Address: 0x81)
+Get 0x7 bytes from the device
+ A4 03 40 01 01 05 E2                              ¤.@...â
+
+000652: Bulk or Interrupt Transfer (UP), 2017-10-05 07:40:37.4028390 +0.2479303. (1. Device: Playback) Status: 0x00000000
+Pipe Handle: 0xbcbafa98 (Endpoint Address: 0x81)
+Get 0x18 bytes from the device
+ A4 14 4E 01 10 19 41 6A 22 22 FF 34 E0 A0 3B 11   ¤.N...Aj""ÿ4à ;.
+ 05 10 00 69 00 5F FB A4                           ...i._û¤
+
+000654: Bulk or Interrupt Transfer (UP), 2017-10-05 07:40:37.6518388 +0.2489355. (1. Device: Playback) Status: 0x00000000
+Pipe Handle: 0xbcbafa98 (Endpoint Address: 0x81)
+Get 0x7 bytes from the device
+ A4 03 40 01 01 02 E5                              ¤.@...å
+
+000656: Bulk or Interrupt Transfer (UP), 2017-10-05 07:40:37.9028380 +0.2509369. (1. Device: Playback) Status: 0x00000000
+Pipe Handle: 0xbcbafa98 (Endpoint Address: 0x81)
+Get 0x18 bytes from the device
+ A4 14 4E 01 19 7F 49 0A 11 A4 40 30 E0 A0 3B 11   ¤.N..I..¤@0à ;.
+ 05 10 00 68 00 5F 3B 6C                           ...h._;l
+
+000658: Bulk or Interrupt Transfer (UP), 2017-10-05 07:40:38.1528461 +0.2499452. (1. Device: Playback) Status: 0x00000000
+Pipe Handle: 0xbcbafa98 (Endpoint Address: 0x81)
+Get 0x18 bytes from the device
+ A4 14 4E 01 19 80 47 B3 11 A9 40 30 E0 A0 3B 11   ¤.N..€G³.©@0à ;.
+ 05 10 00 68 00 5F 5B 49                           ...h._[I
+
+000660: Bulk or Interrupt Transfer (DOWN), 2017-10-05 07:40:38.1629191 +0.0100065 (1. Device: Playback)
+Pipe Handle: 0xbcbafac8 (Endpoint Address: 0x1)
+Send 0xf bytes to the device
+ A4 09 4F 01 33 FF FF FF FF 14 4E FF 75 00 00      ¤.O.3ÿÿÿÿ.Nÿu..
+
+000662: Bulk or Interrupt Transfer (UP), 2017-10-05 07:40:38.4018534 +0.2379814. (1. Device: Playback) Status: 0x00000000
+Pipe Handle: 0xbcbafa98 (Endpoint Address: 0x81)
+Get 0x18 bytes from the device
+ A4 14 4E 01 10 19 45 73 07 22 FF 34 E0 A0 3B 11   ¤.N...Es."ÿ4à ;.
+ 05 10 00 68 00 60 7B 22                           ...h.`{"
+
+000664: Bulk or Interrupt Transfer (UP), 2017-10-05 07:40:38.4048473 +0.0029271. (1. Device: Playback) Status: 0x00000000
+Pipe Handle: 0xbcbafa98 (Endpoint Address: 0x81)
+Get 0x7 bytes from the device
+ A4 03 40 01 01 05 E2                              ¤.@...â
+
+000666: Bulk or Interrupt Transfer (UP), 2017-10-05 07:40:38.6528434 +0.2479371. (1. Device: Playback) Status: 0x00000000
+Pipe Handle: 0xbcbafa98 (Endpoint Address: 0x81)
+Get 0x18 bytes from the device
+ A4 14 4E 01 19 81 47 65 12 B2 40 30 E0 A0 3B 11   ¤.N..Ge.²@0à ;.
+ 05 10 00 68 00 60 9B 79                           ...h.`›y
+
+000668: Bulk or Interrupt Transfer (UP), 2017-10-05 07:40:38.9028469 +0.2499495. (1. Device: Playback) Status: 0x00000000
+Pipe Handle: 0xbcbafa98 (Endpoint Address: 0x81)
+Get 0x18 bytes from the device
+ A4 14 4E 01 10 19 47 77 17 22 FF 34 E0 A0 3B 11   ¤.N...Gw."ÿ4à ;.
+ 05 10 00 68 00 60 BB F4                           ...h.`»ô
+
+000670: Bulk or Interrupt Transfer (DOWN), 2017-10-05 07:40:39.0095692 +0.1066745 (1. Device: Playback)
+Pipe Handle: 0xbcbafac8 (Endpoint Address: 0x1)
+Send 0xf bytes to the device
+ A4 09 4F 01 FC 00 00 64 00 00 64 00 1F 00 00      ¤.O.ü..d..d....
+
+000672: Bulk or Interrupt Transfer (UP), 2017-10-05 07:40:39.1518370 +0.1419868. (1. Device: Playback) Status: 0x00000000
+Pipe Handle: 0xbcbafa98 (Endpoint Address: 0x81)
+Get 0x18 bytes from the device
+ A4 14 4E 01 19 82 46 19 13 B4 40 30 E0 A0 3B 11   ¤.N..‚F..´@0à ;.
+ 05 10 00 68 00 5F DB 7F                           ...h._Û
+
+000674: Bulk or Interrupt Transfer (UP), 2017-10-05 07:40:39.1548380 +0.0029390. (1. Device: Playback) Status: 0x00000000
+Pipe Handle: 0xbcbafa98 (Endpoint Address: 0x81)
+Get 0x7 bytes from the device
+ A4 03 40 01 01 05 E2                              ¤.@...â
+
+000676: Bulk or Interrupt Transfer (DOWN), 2017-10-05 07:40:39.2090979 +0.0541954 (1. Device: Playback)
+Pipe Handle: 0xbcbafac8 (Endpoint Address: 0x1)
+Send 0xf bytes to the device
+ A4 09 4F 01 33 FF FF FF FF 17 4E FF 76 00 00      ¤.O.3ÿÿÿÿ.Nÿv..
+
+000678: Bulk or Interrupt Transfer (UP), 2017-10-05 07:40:39.4018425 +0.1919867. (1. Device: Playback) Status: 0x00000000
+Pipe Handle: 0xbcbafa98 (Endpoint Address: 0x81)
+Get 0x18 bytes from the device
+ A4 14 4E 01 10 19 49 7B 17 22 FF 34 E0 A0 3B 11   ¤.N...I{."ÿ4à ;.
+ 05 10 00 68 00 5F FB 89                           ...h._û‰
+
+000680: Bulk or Interrupt Transfer (UP), 2017-10-05 07:40:39.4048415 +0.0029303. (1. Device: Playback) Status: 0x00000000
+Pipe Handle: 0xbcbafa98 (Endpoint Address: 0x81)
+Get 0x7 bytes from the device
+ A4 03 40 01 01 05 E2                              ¤.@...â
+
+000682: Bulk or Interrupt Transfer (UP), 2017-10-05 07:40:39.6518520 +0.2469485. (1. Device: Playback) Status: 0x00000000
+Pipe Handle: 0xbcbafa98 (Endpoint Address: 0x81)
+Get 0x7 bytes from the device
+ A4 03 40 01 01 02 E5                              ¤.@...å
+
+000684: Bulk or Interrupt Transfer (UP), 2017-10-05 07:40:39.9028545 +0.2509386. (1. Device: Playback) Status: 0x00000000
+Pipe Handle: 0xbcbafa98 (Endpoint Address: 0x81)
+Get 0x18 bytes from the device
+ A4 14 4E 01 51 FF 00 03 A0 3B 00 00 E0 A0 3B 11   ¤.N.Qÿ.. ;..à ;.
+ 05 10 00 68 00 5F 3B BA                           ...h._;º
+
+000686: Bulk or Interrupt Transfer (UP), 2017-10-05 07:40:40.1528396 +0.2499362. (1. Device: Playback) Status: 0x00000000
+Pipe Handle: 0xbcbafa98 (Endpoint Address: 0x81)
+Get 0x18 bytes from the device
+ A4 14 4E 01 19 83 46 C9 13 B0 40 30 E0 A0 3B 11   ¤.N..ƒFÉ.°@0à ;.
+ 05 10 00 68 00 5F 5B 2A                           ...h._[*
+
+000688: Bulk or Interrupt Transfer (DOWN), 2017-10-05 07:40:40.2449536 +0.0920500 (1. Device: Playback)
+Pipe Handle: 0xbcbafac8 (Endpoint Address: 0x1)
+Send 0xf bytes to the device
+ A4 09 4F 01 33 FF FF FF FF 1A 4E FF 7B 00 00      ¤.O.3ÿÿÿÿ.Nÿ{..
+
+000690: Bulk or Interrupt Transfer (UP), 2017-10-05 07:40:40.4018529 +0.1559889. (1. Device: Playback) Status: 0x00000000
+Pipe Handle: 0xbcbafa98 (Endpoint Address: 0x81)
+Get 0x18 bytes from the device
+ A4 14 4E 01 10 19 4D 84 20 22 FF 34 E0 A0 3B 11   ¤.N...M„ "ÿ4à ;.
+ 05 10 00 68 00 5F 7B C5                           ...h._{Å
+
+000692: Bulk or Interrupt Transfer (UP), 2017-10-05 07:40:40.4048524 +0.0029232. (1. Device: Playback) Status: 0x00000000
+Pipe Handle: 0xbcbafa98 (Endpoint Address: 0x81)
+Get 0x7 bytes from the device
+ A4 03 40 01 01 05 E2                              ¤.@...â
+
+000694: Bulk or Interrupt Transfer (UP), 2017-10-05 07:40:40.6528482 +0.2479421. (1. Device: Playback) Status: 0x00000000
+Pipe Handle: 0xbcbafa98 (Endpoint Address: 0x81)
+Get 0x18 bytes from the device
+ A4 14 4E 01 19 84 47 77 14 AE 40 30 E0 A0 3B 11   ¤.N..„Gw.®@0à ;.
+ 05 10 00 68 00 5F 9B 4B                           ...h._›K
+
+000696: Bulk or Interrupt Transfer (UP), 2017-10-05 07:40:40.9028534 +0.2499440. (1. Device: Playback) Status: 0x00000000
+Pipe Handle: 0xbcbafa98 (Endpoint Address: 0x81)
+Get 0x18 bytes from the device
+ A4 14 4E 01 10 19 4F 89 17 22 FF 34 E0 A0 3B 11   ¤.N...O‰."ÿ4à ;.
+ 05 10 00 68 00 60 BB 02                           ...h.`».
+
+000698: Bulk or Interrupt Transfer (UP), 2017-10-05 07:40:41.1528592 +0.2499415. (1. Device: Playback) Status: 0x00000000
+Pipe Handle: 0xbcbafa98 (Endpoint Address: 0x81)
+Get 0x18 bytes from the device
+ A4 14 4E 01 19 85 47 2B 15 B4 40 30 E0 A0 3B 11   ¤.N..…G+.´@0à ;.
+ 05 10 00 68 00 60 DB 72                           ...h.`Ûr
+
+000700: Bulk or Interrupt Transfer (DOWN), 2017-10-05 07:40:41.3090813 +0.1561732 (1. Device: Playback)
+Pipe Handle: 0xbcbafac8 (Endpoint Address: 0x1)
+Send 0xf bytes to the device
+ A4 09 4F 01 33 FF FF FF FF 1D 4E FF 7C 00 00      ¤.O.3ÿÿÿÿ.Nÿ|..
+
+000702: Bulk or Interrupt Transfer (UP), 2017-10-05 07:40:41.4018704 +0.0920119. (1. Device: Playback) Status: 0x00000000
+Pipe Handle: 0xbcbafa98 (Endpoint Address: 0x81)
+Get 0x18 bytes from the device
+ A4 14 4E 01 10 19 51 8D 22 22 FF 34 E0 A0 3B 11   ¤.N...Q""ÿ4à ;.
+ 05 10 00 68 00 60 FB 6D                           ...h.`ûm
+
+000704: Bulk or Interrupt Transfer (UP), 2017-10-05 07:40:41.4048208 +0.0028677. (1. Device: Playback) Status: 0x00000000
+Pipe Handle: 0xbcbafa98 (Endpoint Address: 0x81)
+Get 0x7 bytes from the device
+ A4 03 40 01 01 05 E2                              ¤.@...â
+
+000706: Bulk or Interrupt Transfer (UP), 2017-10-05 07:40:41.6528716 +0.2479902. (1. Device: Playback) Status: 0x00000000
+Pipe Handle: 0xbcbafa98 (Endpoint Address: 0x81)
+Get 0x18 bytes from the device
+ A4 14 4E 01 19 86 48 E7 15 BC 40 30 E0 A0 3B 11   ¤.N..†Hç.¼@0à ;.
+ 05 10 00 68 00 60 1B 7A                           ...h.`.z
+
+000708: Bulk or Interrupt Transfer (UP), 2017-10-05 07:40:41.9018731 +0.2489361. (1. Device: Playback) Status: 0x00000000
+Pipe Handle: 0xbcbafa98 (Endpoint Address: 0x81)
+Get 0x7 bytes from the device
+ A4 03 40 01 01 02 E5                              ¤.@...å
+
+000710: Bulk or Interrupt Transfer (UP), 2017-10-05 07:40:42.1528547 +0.2509168. (1. Device: Playback) Status: 0x00000000
+Pipe Handle: 0xbcbafa98 (Endpoint Address: 0x81)
+Get 0x18 bytes from the device
+ A4 14 4E 01 10 19 53 91 3B 22 FF 34 E0 A0 3B 11   ¤.N...S‘;"ÿ4à ;.
+ 05 10 01 6A 00 60 5B C9                           ...j.`[É
+
+000712: Bulk or Interrupt Transfer (DOWN), 2017-10-05 07:40:42.3781630 +0.2251890 (1. Device: Playback)
+Pipe Handle: 0xbcbafac8 (Endpoint Address: 0x1)
+Send 0xf bytes to the device
+ A4 09 4F 01 33 FF FF FF FF 1F 4E FF 7E 00 00      ¤.O.3ÿÿÿÿ.Nÿ~..
+
+000714: Bulk or Interrupt Transfer (UP), 2017-10-05 07:40:42.4018587 +0.0230027. (1. Device: Playback) Status: 0x00000000
+Pipe Handle: 0xbcbafa98 (Endpoint Address: 0x81)
+Get 0x18 bytes from the device
+ A4 14 4E 01 10 19 55 96 60 22 FF 34 E0 A0 3B 11   ¤.N...U–`"ÿ4à ;.
+ 05 10 00 69 00 60 7B B1                           ...i.`{±
+
+000716: Bulk or Interrupt Transfer (UP), 2017-10-05 07:40:42.4048409 +0.0029319. (1. Device: Playback) Status: 0x00000000
+Pipe Handle: 0xbcbafa98 (Endpoint Address: 0x81)
+Get 0x7 bytes from the device
+ A4 03 40 01 01 05 E2                              ¤.@...â
+
+000718: Bulk or Interrupt Transfer (UP), 2017-10-05 07:40:42.6508607 +0.2459745. (1. Device: Playback) Status: 0x00000000
+Pipe Handle: 0xbcbafa98 (Endpoint Address: 0x81)
+Get 0x7 bytes from the device
+ A4 03 40 01 01 02 E5                              ¤.@...å
+
+000720: Bulk or Interrupt Transfer (UP), 2017-10-05 07:40:42.9028383 +0.2519301. (1. Device: Playback) Status: 0x00000000
+Pipe Handle: 0xbcbafa98 (Endpoint Address: 0x81)
+Get 0x18 bytes from the device
+ A4 14 4E 01 19 88 47 60 17 BA 40 30 E0 A0 3B 11   ¤.N..ˆG`.º@0à ;.
+ 05 10 00 68 00 61 BB 59                           ...h.a»Y
+
+000722: Bulk or Interrupt Transfer (UP), 2017-10-05 07:40:43.1528430 +0.2499405. (1. Device: Playback) Status: 0x00000000
+Pipe Handle: 0xbcbafa98 (Endpoint Address: 0x81)
+Get 0x18 bytes from the device
+ A4 14 4E 01 19 89 48 15 18 B5 40 30 E0 A0 3B 11   ¤.N..‰H..µ@0à ;.
+ 05 10 00 68 00 62 DB 41                           ...h.bÛA
+
+000724: Bulk or Interrupt Transfer (UP), 2017-10-05 07:40:43.4018786 +0.2489903. (1. Device: Playback) Status: 0x00000000
+Pipe Handle: 0xbcbafa98 (Endpoint Address: 0x81)
+Get 0x7 bytes from the device
+ A4 03 40 01 01 02 E5                              ¤.@...å
+
+000726: Bulk or Interrupt Transfer (DOWN), 2017-10-05 07:40:43.4253425 +0.0233354 (1. Device: Playback)
+Pipe Handle: 0xbcbafac8 (Endpoint Address: 0x1)
+Send 0xf bytes to the device
+ A4 09 4F 01 33 FF FF FF FF 23 4E FF 42 00 00      ¤.O.3ÿÿÿÿ#NÿB..
+
+000728: Bulk or Interrupt Transfer (UP), 2017-10-05 07:40:43.6518458 +0.2260061. (1. Device: Playback) Status: 0x00000000
+Pipe Handle: 0xbcbafa98 (Endpoint Address: 0x81)
+Get 0x18 bytes from the device
+ A4 14 4E 01 10 19 59 9E 28 22 FF 34 E0 A0 3B 11   ¤.N...Yž("ÿ4à ;.
+ 05 10 00 68 00 63 1B 9F                           ...h.c.Ÿ
+
+000730: Bulk or Interrupt Transfer (UP), 2017-10-05 07:40:43.6548557 +0.0029362. (1. Device: Playback) Status: 0x00000000
+Pipe Handle: 0xbcbafa98 (Endpoint Address: 0x81)
+Get 0x7 bytes from the device
+ A4 03 40 01 01 05 E2                              ¤.@...â
+
+000732: Bulk or Interrupt Transfer (UP), 2017-10-05 07:40:43.9028585 +0.2479090. (1. Device: Playback) Status: 0x00000000
+Pipe Handle: 0xbcbafa98 (Endpoint Address: 0x81)
+Get 0x18 bytes from the device
+ A4 14 4E 01 10 19 5B A3 41 22 FF 34 E0 A0 3B 11   ¤.N...[£A"ÿ4à ;.
+ 05 10 00 68 00 64 3B EE                           ...h.d;î
+
+000734: Bulk or Interrupt Transfer (DOWN), 2017-10-05 07:40:44.0569778 +0.1540718 (1. Device: Playback)
+Pipe Handle: 0xbcbafac8 (Endpoint Address: 0x1)
+Send 0xf bytes to the device
+ A4 09 4F 01 FC 00 00 64 00 00 63 00 18 00 00      ¤.O.ü..d..c....
+
+000736: Bulk or Interrupt Transfer (UP), 2017-10-05 07:40:44.1518420 +0.0939798. (1. Device: Playback) Status: 0x00000000
+Pipe Handle: 0xbcbafa98 (Endpoint Address: 0x81)
+Get 0x7 bytes from the device
+ A4 03 40 01 01 02 E5                              ¤.@...å
+
+000738: Bulk or Interrupt Transfer (UP), 2017-10-05 07:40:44.4018467 +0.2499315. (1. Device: Playback) Status: 0x00000000
+Pipe Handle: 0xbcbafa98 (Endpoint Address: 0x81)
+Get 0x18 bytes from the device
+ A4 14 4E 01 19 8B 47 90 19 C0 40 30 E0 A0 3B 11   ¤.N..‹G.À@0à ;.
+ 05 10 00 68 00 65 7B 1A                           ...h.e{.
+
+000740: Bulk or Interrupt Transfer (UP), 2017-10-05 07:40:44.4048585 +0.0029624. (1. Device: Playback) Status: 0x00000000
+Pipe Handle: 0xbcbafa98 (Endpoint Address: 0x81)
+Get 0x7 bytes from the device
+ A4 03 40 01 01 05 E2                              ¤.@...â
+
+000742: Bulk or Interrupt Transfer (DOWN), 2017-10-05 07:40:44.4587634 +0.0538414 (1. Device: Playback)
+Pipe Handle: 0xbcbafac8 (Endpoint Address: 0x1)
+Send 0xf bytes to the device
+ A4 09 4F 01 33 FF FF FF FF 26 4E FF 47 00 00      ¤.O.3ÿÿÿÿ&NÿG..
+
+000744: Bulk or Interrupt Transfer (UP), 2017-10-05 07:40:44.6518547 +0.1919856. (1. Device: Playback) Status: 0x00000000
+Pipe Handle: 0xbcbafa98 (Endpoint Address: 0x81)
+Get 0x7 bytes from the device
+ A4 03 40 01 01 02 E5                              ¤.@...å
+
+000746: Bulk or Interrupt Transfer (UP), 2017-10-05 07:40:44.9018563 +0.2499546. (1. Device: Playback) Status: 0x00000000
+Pipe Handle: 0xbcbafa98 (Endpoint Address: 0x81)
+Get 0x7 bytes from the device
+ A4 03 40 01 01 02 E5                              ¤.@...å
+
+000748: Bulk or Interrupt Transfer (UP), 2017-10-05 07:40:45.1518560 +0.2499516. (1. Device: Playback) Status: 0x00000000
+Pipe Handle: 0xbcbafa98 (Endpoint Address: 0x81)
+Get 0x18 bytes from the device
+ A4 14 4E 01 10 19 5F AC 73 22 FF 34 E0 A0 3B 11   ¤.N..._¬s"ÿ4à ;.
+ 05 10 01 6A 00 67 DB 37                           ...j.gÛ7
+
+000750: Bulk or Interrupt Transfer (UP), 2017-10-05 07:40:45.1548206 +0.0029012. (1. Device: Playback) Status: 0x00000000
+Pipe Handle: 0xbcbafa98 (Endpoint Address: 0x81)
+Get 0x7 bytes from the device
+ A4 03 40 01 01 05 E2                              ¤.@...â
+
+000752: Bulk or Interrupt Transfer (UP), 2017-10-05 07:40:45.4018394 +0.2468936. (1. Device: Playback) Status: 0x00000000
+Pipe Handle: 0xbcbafa98 (Endpoint Address: 0x81)
+Get 0x7 bytes from the device
+ A4 03 40 01 01 02 E5                              ¤.@...å
+
+000754: Bulk or Interrupt Transfer (DOWN), 2017-10-05 07:40:45.5416329 +0.1397214 (1. Device: Playback)
+Pipe Handle: 0xbcbafac8 (Endpoint Address: 0x1)
+Send 0xf bytes to the device
+ A4 09 4F 01 33 FF FF FF FF 29 4E FF 48 00 00      ¤.O.3ÿÿÿÿ)NÿH..
+
+000756: Bulk or Interrupt Transfer (UP), 2017-10-05 07:40:45.6518586 +0.1099966. (1. Device: Playback) Status: 0x00000000
+Pipe Handle: 0xbcbafa98 (Endpoint Address: 0x81)
+Get 0x7 bytes from the device
+ A4 03 40 01 01 02 E5                              ¤.@...å
+
+000758: Bulk or Interrupt Transfer (UP), 2017-10-05 07:40:45.9018410 +0.2498321. (1. Device: Playback) Status: 0x00000000
+Pipe Handle: 0xbcbafa98 (Endpoint Address: 0x81)
+Get 0x18 bytes from the device
+ A4 14 4E 01 10 19 61 B0 36 22 FF 34 E0 A0 3B 11   ¤.N...a°6"ÿ4à ;.
+ 05 10 00 68 00 69 3B BD                           ...h.i;½
+
+000760: Bulk or Interrupt Transfer (UP), 2017-10-05 07:40:45.9048743 +0.0029025. (1. Device: Playback) Status: 0x00000000
+Pipe Handle: 0xbcbafa98 (Endpoint Address: 0x81)
+Get 0x7 bytes from the device
+ A4 03 40 01 01 05 E2                              ¤.@...â
+
+000762: Bulk or Interrupt Transfer (UP), 2017-10-05 07:40:46.1518602 +0.2469350. (1. Device: Playback) Status: 0x00000000
+Pipe Handle: 0xbcbafa98 (Endpoint Address: 0x81)
+Get 0x7 bytes from the device
+ A4 03 40 01 01 02 E5                              ¤.@...å
+
+000764: Bulk or Interrupt Transfer (UP), 2017-10-05 07:40:46.4018604 +0.2499334. (1. Device: Playback) Status: 0x00000000
+Pipe Handle: 0xbcbafa98 (Endpoint Address: 0x81)
+Get 0x7 bytes from the device
+ A4 03 40 01 01 02 E5                              ¤.@...å
+
+000766: Bulk or Interrupt Transfer (DOWN), 2017-10-05 07:40:46.6257956 +0.2238628 (1. Device: Playback)
+Pipe Handle: 0xbcbafac8 (Endpoint Address: 0x1)
+Send 0xf bytes to the device
+ A4 09 4F 01 33 FF FF FF FF 2C 4E FF 4D 00 00      ¤.O.3ÿÿÿÿ,NÿM..
+
+000768: Bulk or Interrupt Transfer (UP), 2017-10-05 07:40:46.6518737 +0.0250143. (1. Device: Playback) Status: 0x00000000
+Pipe Handle: 0xbcbafa98 (Endpoint Address: 0x81)
+Get 0x18 bytes from the device
+ A4 14 4E 01 19 8F 44 76 1C A7 40 30 E0 A0 3B 11   ¤.N..Dv.§@0à ;.
+ 05 10 00 68 00 69 9B 75                           ...h.i›u
+
+000770: Bulk or Interrupt Transfer (UP), 2017-10-05 07:40:46.6548278 +0.0028982. (1. Device: Playback) Status: 0x00000000
+Pipe Handle: 0xbcbafa98 (Endpoint Address: 0x81)
+Get 0x7 bytes from the device
+ A4 03 40 01 01 05 E2                              ¤.@...â
+
+000772: Bulk or Interrupt Transfer (UP), 2017-10-05 07:40:46.9018427 +0.2468956. (1. Device: Playback) Status: 0x00000000
+Pipe Handle: 0xbcbafa98 (Endpoint Address: 0x81)
+Get 0x7 bytes from the device
+ A4 03 40 01 01 02 E5                              ¤.@...å
+
+000774: Bulk or Interrupt Transfer (UP), 2017-10-05 07:40:47.1518778 +0.2496323. (1. Device: Playback) Status: 0x00000000
+Pipe Handle: 0xbcbafa98 (Endpoint Address: 0x81)
+Get 0x7 bytes from the device
+ A4 03 40 01 01 02 E5                              ¤.@...å
+
+000776: Bulk or Interrupt Transfer (UP), 2017-10-05 07:40:47.4028519 +0.2509199. (1. Device: Playback) Status: 0x00000000
+Pipe Handle: 0xbcbafa98 (Endpoint Address: 0x81)
+Get 0x18 bytes from the device
+ A4 14 4E 01 10 19 67 BD 5B 20 FF 34 E0 A0 3B 11   ¤.N...g½[ ÿ4à ;.
+ 05 10 00 68 00 6A FB 1A                           ...h.jû.
+
+000778: Bulk or Interrupt Transfer (DOWN), 2017-10-05 07:40:47.6285045 +0.2255979 (1. Device: Playback)
+Pipe Handle: 0xbcbafac8 (Endpoint Address: 0x1)
+Send 0xf bytes to the device
+ A4 09 4F 01 33 FF FF FF FF 2D 4E FF 4C 00 00      ¤.O.3ÿÿÿÿ-NÿL..
+
+000780: Bulk or Interrupt Transfer (UP), 2017-10-05 07:40:47.6518760 +0.0230209. (1. Device: Playback) Status: 0x00000000
+Pipe Handle: 0xbcbafa98 (Endpoint Address: 0x81)
+Get 0x7 bytes from the device
+ A4 03 40 01 01 02 E5                              ¤.@...å
+
+000782: Bulk or Interrupt Transfer (UP), 2017-10-05 07:40:47.9018756 +0.2499479. (1. Device: Playback) Status: 0x00000000
+Pipe Handle: 0xbcbafa98 (Endpoint Address: 0x81)
+Get 0x7 bytes from the device
+ A4 03 40 01 01 02 E5                              ¤.@...å
+
+000784: Bulk or Interrupt Transfer (UP), 2017-10-05 07:40:48.1518912 +0.2499678. (1. Device: Playback) Status: 0x00000000
+Pipe Handle: 0xbcbafa98 (Endpoint Address: 0x81)
+Get 0x18 bytes from the device
+ A4 14 4E 01 19 92 43 F4 1D 5A 40 30 E0 A0 3B 11   ¤.N..’Cô.Z@0à ;.
+ 05 10 00 68 00 6A 5B D2                           ...h.j[Ò
+
+000786: Bulk or Interrupt Transfer (UP), 2017-10-05 07:40:48.1548368 +0.0028962. (1. Device: Playback) Status: 0x00000000
+Pipe Handle: 0xbcbafa98 (Endpoint Address: 0x81)
+Get 0x7 bytes from the device
+ A4 03 40 01 01 05 E2                              ¤.@...â
+
+000788: Bulk or Interrupt Transfer (UP), 2017-10-05 07:40:48.4018545 +0.2469727. (1. Device: Playback) Status: 0x00000000
+Pipe Handle: 0xbcbafa98 (Endpoint Address: 0x81)
+Get 0x7 bytes from the device
+ A4 03 40 01 01 02 E5                              ¤.@...å
+
+000790: Bulk or Interrupt Transfer (UP), 2017-10-05 07:40:48.6518578 +0.2499376. (1. Device: Playback) Status: 0x00000000
+Pipe Handle: 0xbcbafa98 (Endpoint Address: 0x81)
+Get 0x7 bytes from the device
+ A4 03 40 01 01 02 E5                              ¤.@...å
+
+000792: Bulk or Interrupt Transfer (DOWN), 2017-10-05 07:40:48.7231685 +0.0712525 (1. Device: Playback)
+Pipe Handle: 0xbcbafac8 (Endpoint Address: 0x1)
+Send 0xf bytes to the device
+ A4 09 4F 01 33 FF FF FF FF 2F 4E FF 4E 00 00      ¤.O.3ÿÿÿÿ/NÿN..
+
+000794: Bulk or Interrupt Transfer (UP), 2017-10-05 07:40:48.9018812 +0.1780282. (1. Device: Playback) Status: 0x00000000
+Pipe Handle: 0xbcbafa98 (Endpoint Address: 0x81)
+Get 0x18 bytes from the device
+ A4 14 4E 01 FA 00 02 01 00 00 FF 00 E0 A0 3B 11   ¤.N.ú.....ÿ.à ;.
+ 05 10 00 68 00 6B BB 3E                           ...h.k»>
+
+000796: Bulk or Interrupt Transfer (UP), 2017-10-05 07:40:48.9048548 +0.0029275. (1. Device: Playback) Status: 0x00000000
+Pipe Handle: 0xbcbafa98 (Endpoint Address: 0x81)
+Get 0x7 bytes from the device
+ A4 03 40 01 01 05 E2                              ¤.@...â
+
+000798: Bulk or Interrupt Transfer (DOWN), 2017-10-05 07:40:49.0702372 +0.1652997 (1. Device: Playback)
+Pipe Handle: 0xbcbafac8 (Endpoint Address: 0x1)
+Send 0xf bytes to the device
+ A4 09 4F 01 FC 00 00 64 00 00 60 00 1B 00 00      ¤.O.ü..d..`....
+
+000800: Bulk or Interrupt Transfer (UP), 2017-10-05 07:40:49.1518488 +0.0809913. (1. Device: Playback) Status: 0x00000000
+Pipe Handle: 0xbcbafa98 (Endpoint Address: 0x81)
+Get 0x18 bytes from the device
+ A4 14 4E 01 19 94 43 75 1E 3E 40 30 E0 A0 3B 11   ¤.N..”Cu.>@0à ;.
+ 05 10 00 68 00 6B DB B3                           ...h.kÛ³
+
+000802: Bulk or Interrupt Transfer (UP), 2017-10-05 07:40:49.1548525 +0.0029534. (1. Device: Playback) Status: 0x00000000
+Pipe Handle: 0xbcbafa98 (Endpoint Address: 0x81)
+Get 0x7 bytes from the device
+ A4 03 40 01 01 05 E2                              ¤.@...â
+
+000804: Bulk or Interrupt Transfer (UP), 2017-10-05 07:40:49.4028580 +0.2479569. (1. Device: Playback) Status: 0x00000000
+Pipe Handle: 0xbcbafa98 (Endpoint Address: 0x81)
+Get 0x18 bytes from the device
+ A4 14 4E 01 10 19 71 CF E9 18 FF 34 E0 A0 3B 11   ¤.N...qÏé.ÿ4à ;.
+ 05 10 00 69 00 6B FB F4                           ...i.kûô
+
+000806: Bulk or Interrupt Transfer (UP), 2017-10-05 07:40:49.6528409 +0.2499267. (1. Device: Playback) Status: 0x00000000
+Pipe Handle: 0xbcbafa98 (Endpoint Address: 0x81)
+Get 0x18 bytes from the device
+ A4 14 4E 01 19 95 43 B0 1E 3B 40 30 E0 A0 3B 11   ¤.N..•C°.;@0à ;.
+ 05 10 00 68 00 6B 1B B2                           ...h.k.²
+
+000808: Bulk or Interrupt Transfer (DOWN), 2017-10-05 07:40:49.7591603 +0.1062538 (1. Device: Playback)
+Pipe Handle: 0xbcbafac8 (Endpoint Address: 0x1)
+Send 0xf bytes to the device
+ A4 09 4F 01 33 FF FF FF FF 2F 4E FF 4E 00 00      ¤.O.3ÿÿÿÿ/NÿN..
+
+000810: Bulk or Interrupt Transfer (UP), 2017-10-05 07:40:49.9018462 +0.1419833. (1. Device: Playback) Status: 0x00000000
+Pipe Handle: 0xbcbafa98 (Endpoint Address: 0x81)
+Get 0x18 bytes from the device
+ A4 14 4E 01 10 19 73 D2 EF 17 FF 34 E0 A0 3B 11   ¤.N...sÒï.ÿ4à ;.
+ 05 10 00 68 00 6B 3B 23                           ...h.k;#
+
+000812: Bulk or Interrupt Transfer (UP), 2017-10-05 07:40:49.9048525 +0.0028196. (1. Device: Playback) Status: 0x00000000
+Pipe Handle: 0xbcbafa98 (Endpoint Address: 0x81)
+Get 0x7 bytes from the device
+ A4 03 40 01 01 05 E2                              ¤.@...â
+
+000814: Bulk or Interrupt Transfer (UP), 2017-10-05 07:40:50.1528463 +0.2479482. (1. Device: Playback) Status: 0x00000000
+Pipe Handle: 0xbcbafa98 (Endpoint Address: 0x81)
+Get 0x18 bytes from the device
+ A4 14 4E 01 19 96 43 E5 1E 35 40 30 E0 A0 3B 11   ¤.N..–Cå.5@0à ;.
+ 05 10 00 68 00 6B 5B AA                           ...h.k[ª
+
+000816: Bulk or Interrupt Transfer (UP), 2017-10-05 07:40:50.4028359 +0.2499343. (1. Device: Playback) Status: 0x00000000
+Pipe Handle: 0xbcbafa98 (Endpoint Address: 0x81)
+Get 0x18 bytes from the device
+ A4 14 4E 01 10 19 75 D5 27 17 FF 34 E0 A0 3B 11   ¤.N...uÕ'.ÿ4à ;.
+ 05 10 00 68 00 6B 7B AA                           ...h.k{ª
+
+000818: Bulk or Interrupt Transfer (UP), 2017-10-05 07:40:50.6518379 +0.2489600. (1. Device: Playback) Status: 0x00000000
+Pipe Handle: 0xbcbafa98 (Endpoint Address: 0x81)
+Get 0x7 bytes from the device
+ A4 03 40 01 01 02 E5                              ¤.@...å
+
+000820: Bulk or Interrupt Transfer (DOWN), 2017-10-05 07:40:50.8415641 +0.1892850 (1. Device: Playback)
+Pipe Handle: 0xbcbafac8 (Endpoint Address: 0x1)
+Send 0xf bytes to the device
+ A4 09 4F 01 33 FF FF FF FF 2F 4E FF 4E 00 00      ¤.O.3ÿÿÿÿ/NÿN..
+
+000822: Bulk or Interrupt Transfer (UP), 2017-10-05 07:40:50.9018471 +0.0600087. (1. Device: Playback) Status: 0x00000000
+Pipe Handle: 0xbcbafa98 (Endpoint Address: 0x81)
+Get 0x18 bytes from the device
+ A4 14 4E 01 19 97 2F 18 1F 33 40 30 E0 A0 3B 11   ¤.N..—/..3@0à ;.
+ 05 10 00 68 00 6B BB DD                           ...h.k»Ý
+
+000824: Bulk or Interrupt Transfer (UP), 2017-10-05 07:40:50.9048269 +0.0029396. (1. Device: Playback) Status: 0x00000000
+Pipe Handle: 0xbcbafa98 (Endpoint Address: 0x81)
+Get 0x7 bytes from the device
+ A4 03 40 01 01 05 E2                              ¤.@...â
+
+000826: Bulk or Interrupt Transfer (UP), 2017-10-05 07:40:51.1528427 +0.2479935. (1. Device: Playback) Status: 0x00000000
+Pipe Handle: 0xbcbafa98 (Endpoint Address: 0x81)
+Get 0x18 bytes from the device
+ A4 14 4E 01 19 98 12 46 1F 2E 40 30 E0 A0 3B 11   ¤.N..˜.F..@0à ;.
+ 05 10 00 68 00 6B DB CC                           ...h.kÛÌ
+
+000828: Bulk or Interrupt Transfer (UP), 2017-10-05 07:40:51.4028404 +0.2499552. (1. Device: Playback) Status: 0x00000000
+Pipe Handle: 0xbcbafa98 (Endpoint Address: 0x81)
+Get 0x18 bytes from the device
+ A4 14 4E 01 10 19 79 DA 8F 15 FF 34 E0 A0 3B 11   ¤.N...yÚ.ÿ4à ;.
+ 05 10 00 68 00 6B FB 83                           ...h.kûƒ
+
+000830: Bulk or Interrupt Transfer (DOWN), 2017-10-05 07:40:51.5985457 +0.1953443 (1. Device: Playback)
+Pipe Handle: 0xbcbafac8 (Endpoint Address: 0x1)
+Send 0x7 bytes to the device
+ A4 01 4C 01 E8 00 00                              ¤.L.è..
+
+000832: Bulk or Interrupt Transfer (UP), 2017-10-05 07:40:51.5998289 +0.0009960. (1. Device: Playback) Status: 0x00000000
+Pipe Handle: 0xbcbafa98 (Endpoint Address: 0x81)
+Get 0x7 bytes from the device
+ A4 03 40 01 4C 00 AA                              ¤.@.L.ª
+
+000834: Bulk or Interrupt Transfer (UP), 2017-10-05 07:40:51.6518405 +0.0519817. (1. Device: Playback) Status: 0x00000000
+Pipe Handle: 0xbcbafa98 (Endpoint Address: 0x81)
+Get 0x18 bytes from the device
+ A4 14 4E 01 19 99 0C 71 1F 2B 40 30 E0 A0 3B 11   ¤.N..™.q.+@0à ;.
+ 05 10 00 68 00 6B 1B 21                           ...h.k.!
+
+000836: Bulk or Interrupt Transfer (UP), 2017-10-05 07:40:51.6528311 +0.0009496. (1. Device: Playback) Status: 0x00000000
+Pipe Handle: 0xbcbafa98 (Endpoint Address: 0x81)
+Get 0x7 bytes from the device
+ A4 03 40 01 01 07 E0                              ¤.@...à
+
+000838: Bulk or Interrupt Transfer (DOWN), 2017-10-05 07:40:51.6529465 +0.0000936 (1. Device: Playback)
+Pipe Handle: 0xbcbafac8 (Endpoint Address: 0x1)
+Send 0x7 bytes to the device
+ A4 01 41 01 E5 00 00                              ¤.A.å..
+
+000839: Bulk or Interrupt Transfer (UP), 2017-10-05 07:40:51.6538226 +0.0008761. (1. Device: Playback) Status: 0x00000000
+Pipe Handle: 0xbcbafa98 (Endpoint Address: 0x81)
+Get 0x7 bytes from the device
+ A4 03 40 01 41 00 A7                              ¤.@.A.§
+
+000842: Abort Pipe (DOWN), 2017-10-05 07:40:54.6551250 +3.0011619 (1. Device: Playback)
+Pipe Handle: 0xbcbafa98 (Endpoint Address: 0x81)
+
+
+000843: Bulk or Interrupt Transfer (UP), 2017-10-05 07:40:54.6558712 +0.0007462. (1. Device: Playback) Status: 0xc0010000
+Pipe Handle: 0xbcbafa98 (Endpoint Address: 0x81)
+Get 0x0 bytes from the device
+000844: Abort Pipe (UP), 2017-10-05 07:40:54.6559027 +0.0000315. (1. Device: Playback) Status: 0x00000000
+Pipe Handle: 0xbcbafa98 (Endpoint Address: 0x81)
+
+
+ 
