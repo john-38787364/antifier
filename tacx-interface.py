@@ -4,9 +4,10 @@ import time
 import T1932_calibration
 import ant
 import sys
-import serial, binascii
+import binascii
 import struct
 import platform, glob
+#import serial
   
 def list_serial_ports():
   system_name = platform.system()
@@ -38,33 +39,65 @@ try:
   dev.set_configuration() #set active configuration
 except AttributeError:
   print "Could not find trainer USB connection"
-  #sys.exit()
+  sys.exit()
 
-#Find ANT+ USB stick
-ant_stick_found = False
-for p in list_serial_ports():
-  ser = serial.Serial(p, 19200, rtscts=True,dsrdtr=True)
-  ser.timeout = 0.1
-  ser.write(binascii.unhexlify("a4014a00ef0000")) #probe with reset command
-  reply = binascii.hexlify(ser.read(size=256))
-  if reply == "a4016f20ea":#found ANT+ stick
-    serial_port=p
-    ant_stick_found = True
-  else: ser.close()
-  if ant_stick_found == True  : break
+#Find ANT+ USB stick on serial (linux)
+#ant_stick_found = False
+#for p in list_serial_ports():
+  #dev_ant = serial.Serial(p, 19200, rtscts=True,dsrdtr=True)
+  #dev_ant.timeout = 0.1
+  #dev_ant.write(binascii.unhexlify("a4014a00ef0000")) #probe with reset command
+  #reply = binascii.hexlify(dev_ant.read(size=256))
+  #if reply == "a4016f20ea":#found ANT+ stick
+    #serial_port=p
+    #ant_stick_found = True
+  #else: dev_ant.close()
+  #if ant_stick_found == True  : break
 
-if ant_stick_found == False:
-  print "Could not find serial port"
-  sys.exit
-  
-#try:
-  #ser = serial.Serial('/dev/ttyUSB0', 19200, rtscts=True,dsrdtr=True)#set up serial communication with ANT+ dongle
-#except serial.serialutil.SerialException:
+#if ant_stick_found == False:
   #print "Could not find serial port"
   #sys.exit
+  
+  #find ANT+ USB stick with win32usb-lib (Windows)
+  
+found_available_ant_stick= True
+try:
+  dev_ant = usb.core.find(idVendor=0x0fcf, idProduct=0x1009) #get ANT+ stick (garmin)
+  dev_ant.set_configuration() #set active configuration
+  try:#check if in use
+    stringl=["a4 01 4a 00 ef 00 00"]#reset system
+    ant.send(stringl, dev_ant)
+  except usb.core.USBError:
+    print "Garmin Device is in use"
+    found_available_ant_stick = False
+except AttributeError:
+  print "No Garmin Device found"
+  found_available_ant_stick = False
 
-ant.calibrate(ser)#calibrate ANT+ dongle
-ant.master_channel_config(ser)#calibrate ANT+ channels
+if found_available_ant_stick == False:
+  found_available_ant_stick = True
+  try:
+    dev_ant = usb.core.find(idVendor=0x0fcf, idProduct=0x1008) #get ANT+ stick (suunto)
+    dev_ant.set_configuration() #set active configuration   
+    try:#check if in use
+      stringl=["a4 01 4a 00 ef 00 00"]#reset system
+      ant.send(stringl, dev_ant)
+    except usb.core.USBError:
+      print "Suunto Device is in use"
+      found_available_ant_stick = False
+  except AttributeError:  
+    print "No Suunto Device found"
+    found_available_ant_stick = False
+
+if found_available_ant_stick == False:
+  print "No available ANT+ device"
+  sys.exit()
+
+
+
+ant.calibrate(dev_ant)#calibrate ANT+ dongle
+ant.master_channel_config(dev_ant)#calibrate ANT+ channel FE-C
+#ant.second_channel_config(dev_ant)#calibrate ANT+ channel HR
 
 resistance=1#set initial resistance level
 speed,cadence,power,heart_rate=(0,)*4#initialise values
@@ -91,6 +124,7 @@ trainerdata = "a4 09 4e 00 19 00 5a b0 47 1b 01 30 6d 00 00"
 
 try:
   while True:
+    reply = {}
     last_measured_time = time.time() * 1000
     ####################GET DATA FROM TRAINER####################
     data = dev.read(0x82,64) #get data from device
@@ -100,8 +134,10 @@ try:
     fs = int(data[33])<<8 | int(data[32])
     speed = round(fs/2.8054/100,1)#speed kph
     force = fromcomp((data[39]<<8)|data[38],16)
+    print "FORCE",force
     try:#try to identify force value from list of possible resistance values
       force = T1932_calibration.possfov.index(force)+1
+      print "FORCE INDEX", force
       power = T1932_calibration.calcpower(speed,force)
     except ValueError:
       pass # do nothing if force value from trainer not recognised
@@ -112,10 +148,12 @@ try:
     ####################SEND DATA TO TRAINER####################
     #send resistance data to trainer
     level = list(sorted(T1932_calibration.reslist))[-1] #set resistance level to hardest as default
+    print "GRADE", grade*2,"%"
     for g in sorted(T1932_calibration.reslist):
       if g >= grade*2:#find resistance value immediately above grade set by zwift (Zwift ANT+ grade is half that displayed on screen)
         level = g
         break
+    print "RESISTANCE LEVEL", T1932_calibration.reslist[level]
     r6=int(T1932_calibration.reslist[level])>>8 & 0xff #byte6
     r5=int(T1932_calibration.reslist[level]) & 0xff #byte 5
     #echo pedal cadence back to trainer
@@ -156,13 +194,13 @@ try:
       newdata = '{0}{1}{2}'.format(newdata[:21], hex(int(distance_travelled))[2:].zfill(2), newdata[23:]) # set distance travelled  
       hexspeed = hex(int(speed*1000))[2:].zfill(4)
       newdata = '{0}{1}{2}{3}{4}'.format(newdata[:24], hexspeed[2:], ' ' , hexspeed[:2], newdata[29:]) # set speed
-      newdata = '{0}{1}{2}'.format(newdata[:36], calc_checksum(newdata), newdata[38:])#recalculate checksum
-      #print "FE DATA",newdata
+      newdata = '{0}{1}{2}'.format(newdata[:36], ant.calc_checksum(newdata), newdata[38:])#recalculate checksum
+      print "FE DATA",newdata
     
     else:#send specific trainer data
       if eventcounter >= 256:
         eventcounter = 0
-      newdata = '{0}{1}{2}'.format(data[:15], hex(eventcounter)[2:].zfill(2), data[17:]) # increment event count
+      newdata = '{0}{1}{2}'.format(trainerdata[:15], hex(eventcounter)[2:].zfill(2), trainerdata[17:]) # increment event count
       if cadence >= 254:
         cadence=253
       newdata = '{0}{1}{2}'.format(newdata[:18], hex(cadence)[2:].zfill(2), newdata[20:])#instant cadence
@@ -180,12 +218,15 @@ try:
       bits_0_to_3 = bin(int(hexinstant_power_msb,16))[2:].zfill(4)
       power_msb_trainer_status_byte = '0000' + bits_0_to_3
       newdata = '{0}{1}{2}'.format(newdata[:30], hex(int(power_msb_trainer_status_byte))[2:].zfill(2), newdata[32:])#set mixed trainer data power msb byte
-      newdata = '{0}{1}{2}'.format(newdata[:36], calc_checksum(newdata), newdata[38:])#recalculate checksum
-      #print "TRAINER DATA",newdata
-      
-    reply = send([newdata], ser)
+      newdata = '{0}{1}{2}'.format(newdata[:36], ant.calc_checksum(newdata), newdata[38:])#recalculate checksum
+      print "TRAINER DATA",newdata
+    reply = ant.send([newdata], dev_ant)
     if "grade" in reply:
       grade = reply['grade']
+      
+    ####################HR#######################
+    hrdata = "a4 09 4e 01 75 7e b6 75 aa 06 02 48 cc 00 00"
+    #ant.send([hrdata], dev_ant)
     ####################wait ####################
     
     #add wait so we only send every 250ms
@@ -197,6 +238,6 @@ try:
 except KeyboardInterrupt: # interrupt power data sending with ctrl c, make sure script continues to reset device
     pass
 
-ant.send(["a4 01 4a 00 ef 00 00"],ser)#reset ANT+ dongle
+ant.send(["a4 01 4a 00 ef 00 00"],dev_ant)#reset ANT+ dongle
 
-ser.close()
+#ser.close()

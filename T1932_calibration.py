@@ -8,8 +8,8 @@ def calcpower(speed, resistance):
 # {grade key : resistance value}
 # only grade key is editable, do not edit resistance value- these are hard coded by the trainer
 # reslist={-3:1900,-2:2030,-1:2150,0:2300,1:2400,2:2550,3:2700,4:2900,5.5:3070,5:3200,6:3350,6.5:3460,7:3600,8:3750}
-reslist={-3:1900,-2:2030,-1:2150,0:2300,1:2400,2:2550,3:2700,4:2900,5.5:3070,5:3200,6:3350,6.5:3460,7:3600,8:3750}
-possfov=[1039,1299,1559,1819,2078,2338,2598,2858,3118,3378,3767,4027,4287,4677]#possible force values to be recv from device
+reslist={ -1:1900, 0:2030,1:2150,1.7:2300,2.5:2400,3.2:2550,4:2700,4.7:2900,  5.4:3070,6.1:3200,6.8:3350,8:3460,9:3600,10:3750}
+possfov=[    1039,   1299,  1559,    1819,    2078,    2338,  2598,    2858,      3118,    3378,    3767,  4027,  4287,   4677]#possible force values to be recv from device
 
 factors={
 1:[4.5,-20],
