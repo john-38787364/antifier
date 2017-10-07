@@ -1,7 +1,6 @@
 import serial, time
 import binascii
-import sys,re
-import struct
+import re
 
 def add_little_endian(val1,val2):#add two strings together in little endian fashion e.g. "1b 01"
   intval = (int(val1[3:],16) * 256 + int(val1[0:2],16)) + (int(val2[3:],16) * 256 + int(val2[0:2],16))

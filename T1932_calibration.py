@@ -4,7 +4,11 @@ def calcpower(speed, resistance):
     if power<0: power=0
     return power
   
-reslist=[1900,2030,2150,2300,2400,2550,2700,2900,3070,3200,3350,3460,3600,3750]#possible resistance values to be sent to device
+# grade passed by zwift will be converted to Tacx resistance value specified by key immediately above it 
+# {grade key : resistance value}
+# only grade key is editable, do not edit resistance value- these are hard coded by the trainer
+# reslist={-3:1900,-2:2030,-1:2150,0:2300,1:2400,2:2550,3:2700,4:2900,5.5:3070,5:3200,6:3350,6.5:3460,7:3600,8:3750}
+reslist={-3:1900,-2:2030,-1:2150,0:2300,1:2400,2:2550,3:2700,4:2900,5.5:3070,5:3200,6:3350,6.5:3460,7:3600,8:3750}
 possfov=[1039,1299,1559,1819,2078,2338,2598,2858,3118,3378,3767,4027,4287,4677]#possible force values to be recv from device
 
 factors={
