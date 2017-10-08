@@ -97,7 +97,7 @@ if found_available_ant_stick == False:
 
 ant.calibrate(dev_ant)#calibrate ANT+ dongle
 ant.master_channel_config(dev_ant)#calibrate ANT+ channel FE-C
-#ant.second_channel_config(dev_ant)#calibrate ANT+ channel HR
+ant.second_channel_config(dev_ant)#calibrate ANT+ channel HR
 
 resistance=1#set initial resistance level
 speed,cadence,power,heart_rate=(0,)*4#initialise values
@@ -110,6 +110,11 @@ time.sleep(1)
 
 grade = 0
 accumulated_power = 0
+heart_beat_event_time = time.time() * 1000
+heart_beat_event_time_start_cycle = time.time() * 1000
+heart_toggle = 0
+heart_beat_count = 0
+
 eventcounter = 0
 fedata = "a4 09 4e 00 10 19 89 8c 8d 20 00 30 72 00 00" 
 #p.44 [10] general fe data, [19] eqpt type trainer, [89] acc value time since start in 0.25s r/over 64s, [8c] acc value time dist travelled in m r/over 256m, 
@@ -167,16 +172,10 @@ try:
     dev.write(0x02,byte_str)#send data to device
     
     ####################BROADCAST AND RECEIVE ANT+ data####################
-    if (eventcounter + 1) % 66 == 0:#send first manufacturer's info packet
+    if (eventcounter + 1) % 66 == 0 or eventcounter % 66 == 0:#send first and second manufacturer's info packet
       newdata = "a4 09 4e 00 50 ff ff 01 0f 00 85 83 bb 00 00"
       
-    elif eventcounter % 66 == 0:#send second manufacturer's info packet
-      newdata = "a4 09 4e 00 50 ff ff 01 0f 00 85 83 bb 00 00"
-      
-    elif (eventcounter+32) % 66 == 0:#send first product info packet
-      newdata = "a4 09 4e 00 51 ff ff 01 01 00 00 00 b2 00 00"
-    
-    elif (eventcounter+33) % 66 == 0:#send second product info packet
+    elif (eventcounter+32) % 66 == 0 or (eventcounter+33) % 66 == 0:#send first and second product info packet
       newdata = "a4 09 4e 00 51 ff ff 01 01 00 00 00 b2 00 00"
     
     elif eventcounter % 3 == 0:#send general fe data every 3 packets
@@ -225,8 +224,80 @@ try:
       grade = reply['grade']
       
     ####################HR#######################
-    hrdata = "a4 09 4e 01 75 7e b6 75 aa 06 02 48 cc 00 00"
-    #ant.send([hrdata], dev_ant)
+    #HR format
+    #D00000693_-_ANT+_Device_Profile_-_Heart_Rate_Rev_2.1.pdf
+    #[00][FF][FF][FF][55][03][01][48]p. 18 [00] bits 0:6 data page no, bit 7 toggle every 4th message, [ff][ff][ff] (reserved for page 0), [55][03] heart beat event time [lsb][ msb] rollover 64s, [01] heart beat count rollover 256, [instant heart rate]max 256
+    #[00][FF][FF][FF][55][03][01][48]
+    #[00][FF][FF][FF][AA][06][02][48]
+    #[00][FF][FF][FF][AA][06][02][48]
+    #[80][FF][FF][FF][AA][06][02][48]
+    #[80][FF][FF][FF][AA][06][02][48]
+    #[80][FF][FF][FF][FF][09][03][48]
+    #[80][FF][FF][FF][FF][09][03][48]
+    #[00][FF][FF][FF][FF][09][03][48]
+    #[00][FF][FF][FF][54][0D][04][48]
+    #[00][FF][FF][FF][54][0D][04][48]
+    #[00][FF][FF][FF][54][0D][04][48]
+    
+    #every 65th message send manufacturer and product info -apge 2 and page 3
+    #[82][0F][01][00][00][3A][12][48] - [82] page 2 with toggle on (repeat 4 times)
+    #[83][01][01][33][4F][3F][13][48] - [83] page 3 with toggle on 
+    
+    #heart_rate = 72 #comment out in production
+    if eventcounter % 4 == 0:#toggle bit every 4 counts
+      if heart_toggle == 0: heart_toggle = 128
+      else: 
+        heart_toggle = 0
+    
+    #check if heart beat has occurred as tacx only reports instanatenous heart rate data
+    #last heart beat is at heart_beat_event_time
+    #if now - heart_beat_event_time > time taken for hr to occur, trigger beat. 70 bpm = beat every 70/60 seconds
+    if (time.time()*1000 - heart_beat_event_time) > (heart_rate / 60)*1000:
+      heart_beat_count += 1
+      heart_beat_event_time = time.time()*1000
+      
+    if heart_beat_event_time - heart_beat_event_time_start_cycle >= 64000:
+      heart_beat_event_time = time.time()*1000
+      heart_beat_event_time_start_cycle = time.time()*1000
+      
+    if heart_beat_count >= 256:
+      heart_beat_count = 0
+    
+    if heart_rate >= 256:
+      heart_rate = 255
+    
+    hex_heart_beat_time = int((heart_beat_event_time - heart_beat_event_time_start_cycle)*1.024) # convert ms to 1/1024 of a second
+    hex_heart_beat_time = hex(hex_heart_beat_time)[2:].zfill(4)
+    
+    hr_byte_4 = hex_heart_beat_time[2:]
+    hr_byte_5 = hex_heart_beat_time[:2]
+    hr_byte_6 = hex(heart_beat_count)[2:].zfill(2)
+    hr_byte_7 = hex(heart_rate)[2:].zfill(2)
+    
+    
+    if (eventcounter + 1) % 66 == 0 or eventcounter % 66 == 0:#send first and second manufacturer's info packet
+      hr_byte_0 = hex(2 + heart_toggle)[2:].zfill(2)
+      hr_byte_1 = "0f"
+      hr_byte_2 = "01"
+      hr_byte_3 = "00"
+      #[82][0F][01][00][00][3A][12][48]
+    elif (eventcounter+32) % 66 == 0 or (eventcounter+33) % 66 == 0:#send first and second product info packet
+      hr_byte_0 = hex(3 + heart_toggle)[2:].zfill(2)
+      hr_byte_1 = "01"
+      hr_byte_2 = "01"
+      hr_byte_3 = "33"      
+      #[83][01][01][33][4F][3F][13][48]
+      
+    else:#send page 0
+      hr_byte_0 = hex(0 + heart_toggle)[2:].zfill(2)
+      hr_byte_1 = "ff"
+      hr_byte_2 = "ff"
+      hr_byte_3 = "ff"
+      
+    hrdata = "a4 09 4e 01 "+hr_byte_0+" "+hr_byte_1+" "+hr_byte_2+" "+hr_byte_3+" "+hr_byte_4+" "+hr_byte_5+" "+hr_byte_6+" "+hr_byte_7+" 02 00 00"
+    hrdata = "a4 09 4e 01 "+hr_byte_0+" "+hr_byte_1+" "+hr_byte_2+" "+hr_byte_3+" "+hr_byte_4+" "+hr_byte_5+" "+hr_byte_6+" "+hr_byte_7+" "+ant.calc_checksum(hrdata)+" 00 00"
+    print "HEART RATE",hrdata
+    ant.send([hrdata], dev_ant)
     ####################wait ####################
     
     #add wait so we only send every 250ms
