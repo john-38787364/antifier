@@ -251,14 +251,14 @@ try:
     
     #check if heart beat has occurred as tacx only reports instanatenous heart rate data
     #last heart beat is at heart_beat_event_time
-    #if now - heart_beat_event_time > time taken for hr to occur, trigger beat. 70 bpm = beat every 70/60 seconds
-    if (time.time()*1000 - heart_beat_event_time) > (heart_rate / 60)*1000:
-      heart_beat_count += 1
-      heart_beat_event_time = time.time()*1000
+    #if now - heart_beat_event_time > time taken for hr to occur, trigger beat. 70 bpm = beat every 60/70 seconds
+    if (time.time()*1000 - heart_beat_event_time) > (60 / heart_rate)*1000:
+      heart_beat_count += 1#increment heart beat count
+      heart_beat_event_time = time.time()*1000#reset last time of heart beat
       
-    if heart_beat_event_time - heart_beat_event_time_start_cycle >= 64000:
-      heart_beat_event_time = time.time()*1000
-      heart_beat_event_time_start_cycle = time.time()*1000
+    if heart_beat_event_time - heart_beat_event_time_start_cycle >= 64000:#rollover every 64s
+      heart_beat_event_time = time.time()*1000#reset last heart beat event
+      heart_beat_event_time_start_cycle = time.time()*1000#reset start of cycle
       
     if heart_beat_count >= 256:
       heart_beat_count = 0
