@@ -131,6 +131,8 @@ try:
   while True:
     reply = {}
     last_measured_time = time.time() * 1000
+    if eventcounter >= 256:
+      eventcounter = 0
     ####################GET DATA FROM TRAINER####################
     data = dev.read(0x82,64) #get data from device
     #print data
@@ -184,7 +186,6 @@ try:
         accumulated_time_counter = 0
         accumulated_time = time.time()*1000
       newdata = '{0}{1}{2}'.format(fedata[:18], hex(accumulated_time_counter)[2:].zfill(2), fedata[20:]) # set time
-      speed = 9# m/s
       distance_travelled_since_last_loop = (time.time()*1000 - last_dist_time)/1000 * speed
       last_dist_time = time.time()*1000
       distance_travelled += distance_travelled_since_last_loop
@@ -197,8 +198,6 @@ try:
       print "FE DATA",newdata
     
     else:#send specific trainer data
-      if eventcounter >= 256:
-        eventcounter = 0
       newdata = '{0}{1}{2}'.format(trainerdata[:15], hex(eventcounter)[2:].zfill(2), trainerdata[17:]) # increment event count
       if cadence >= 254:
         cadence=253
