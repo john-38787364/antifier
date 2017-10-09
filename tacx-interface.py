@@ -7,8 +7,9 @@ import sys
 import binascii
 import struct
 import platform, glob
+from datetime import datetime
 #import serial
-  
+
 def list_serial_ports():
   system_name = platform.system()
   if system_name == "Windows":
@@ -34,12 +35,18 @@ def fromcomp(val,bits):
     return 0-(val^(2**bits-1))-1
   else: return val
 
-dev = usb.core.find(idVendor=0x3561, idProduct=0x1932) #find iflow device
-try:
-  dev.set_configuration() #set active configuration
-except AttributeError:
-  print "Could not find trainer USB connection"
-  sys.exit()
+if "--simulate-trainer" in sys.argv:
+  simulatetrainer = True
+else: 
+  simulatetrainer = False
+  
+if not simulatetrainer:
+  dev = usb.core.find(idVendor=0x3561, idProduct=0x1932) #find iflow device
+  try:
+    dev.set_configuration() #set active configuration
+  except AttributeError:
+    print "Could not find trainer USB connection"
+    sys.exit()
 
 #Find ANT+ USB stick on serial (linux)
 #ant_stick_found = False
@@ -105,7 +112,8 @@ speed,cadence,power,heart_rate=(0,)*4#initialise values
 #initialise TACX USB device
 byte_ints = [2,0,0,0] # will not read cadence until initialisation byte is sent
 byte_str = "".join(chr(n) for n in byte_ints)
-dev.write(0x02,byte_str)
+if not simulatetrainer:
+  dev.write(0x02,byte_str)
 time.sleep(1)
 
 grade = 0
@@ -134,44 +142,48 @@ try:
     if eventcounter >= 256:
       eventcounter = 0
     ####################GET DATA FROM TRAINER####################
-    data = dev.read(0x82,64) #get data from device
-    #print data
-    
-    #get values reported by trainer
-    fs = int(data[33])<<8 | int(data[32])
-    speed = round(fs/2.8054/100,1)#speed kph
-    force = fromcomp((data[39]<<8)|data[38],16)
-    print "FORCE",force
-    try:#try to identify force value from list of possible resistance values
-      force = T1932_calibration.possfov.index(force)+1
-      print "FORCE INDEX", force
-      power = T1932_calibration.calcpower(speed,force)
-    except ValueError:
-      pass # do nothing if force value from trainer not recognised
-    cadence = int(data[44])
-    heart_rate = int(data[12])
+    if not simulatetrainer:
+      data = dev.read(0x82,64) #get data from device
+      #print data
+      
+      #get values reported by trainer
+      fs = int(data[33])<<8 | int(data[32])
+      speed = round(fs/2.8054/100,1)#speed kph
+      force = fromcomp((data[39]<<8)|data[38],16)
+      print datetime.utcnow().strftime('%Y-%m-%d %H:%M:%S.%f')[:-3],"FORCE",force
+      try:#try to identify force value from list of possible resistance values
+        force = T1932_calibration.possfov.index(force)+1
+        print datetime.utcnow().strftime('%Y-%m-%d %H:%M:%S.%f')[:-3],"FORCE INDEX", force
+        power = T1932_calibration.calcpower(speed,force)
+      except ValueError:
+        pass # do nothing if force value from trainer not recognised
+      cadence = int(data[44])
+      heart_rate = int(data[12])
+    else:
+        speed,cadence,power,heart_rate=(30, 80, 283, 72)
     print speed,cadence,power,heart_rate
     
     ####################SEND DATA TO TRAINER####################
     #send resistance data to trainer
     level = list(sorted(T1932_calibration.reslist))[-1] #set resistance level to hardest as default
-    print "GRADE", grade*2,"%"
+    print datetime.utcnow().strftime('%Y-%m-%d %H:%M:%S.%f')[:-3],"GRADE", grade*2,"%"
     for g in sorted(T1932_calibration.reslist):
       if g >= grade*2:#find resistance value immediately above grade set by zwift (Zwift ANT+ grade is half that displayed on screen)
         level = g
         break
-    print "RESISTANCE LEVEL", T1932_calibration.reslist[level]
-    r6=int(T1932_calibration.reslist[level])>>8 & 0xff #byte6
-    r5=int(T1932_calibration.reslist[level]) & 0xff #byte 5
-    #echo pedal cadence back to trainer
-    if len(data) > 40:
-      pedecho = data[42]
-    else:
-      pedecho = 0
-    byte_ints = [0x01, 0x08, 0x01, 0x00, r5, r6, pedecho, 0x00 ,0x02, 0x52, 0x10, 0x04]
-    
-    byte_str = "".join(chr(n) for n in byte_ints)
-    dev.write(0x02,byte_str)#send data to device
+    print datetime.utcnow().strftime('%Y-%m-%d %H:%M:%S.%f')[:-3],"RESISTANCE LEVEL", T1932_calibration.reslist[level]
+    if not simulatetrainer:
+      r6=int(T1932_calibration.reslist[level])>>8 & 0xff #byte6
+      r5=int(T1932_calibration.reslist[level]) & 0xff #byte 5
+      #echo pedal cadence back to trainer
+      if len(data) > 40:
+        pedecho = data[42]
+      else:
+        pedecho = 0
+      byte_ints = [0x01, 0x08, 0x01, 0x00, r5, r6, pedecho, 0x00 ,0x02, 0x52, 0x10, 0x04]
+      
+      byte_str = "".join(chr(n) for n in byte_ints)
+      dev.write(0x02,byte_str)#send data to device
     
     ####################BROADCAST AND RECEIVE ANT+ data####################
     if (eventcounter + 1) % 66 == 0 or eventcounter % 66 == 0:#send first and second manufacturer's info packet
@@ -195,7 +207,7 @@ try:
       hexspeed = hex(int(speed*1000))[2:].zfill(4)
       newdata = '{0}{1}{2}{3}{4}'.format(newdata[:24], hexspeed[2:], ' ' , hexspeed[:2], newdata[29:]) # set speed
       newdata = '{0}{1}{2}'.format(newdata[:36], ant.calc_checksum(newdata), newdata[38:])#recalculate checksum
-      print "FE DATA",newdata
+      print datetime.utcnow().strftime('%Y-%m-%d %H:%M:%S.%f')[:-3],"FE DATA",newdata
     
     else:#send specific trainer data
       newdata = '{0}{1}{2}'.format(trainerdata[:15], hex(eventcounter)[2:].zfill(2), trainerdata[17:]) # increment event count
@@ -217,7 +229,7 @@ try:
       power_msb_trainer_status_byte = '0000' + bits_0_to_3
       newdata = '{0}{1}{2}'.format(newdata[:30], hex(int(power_msb_trainer_status_byte))[2:].zfill(2), newdata[32:])#set mixed trainer data power msb byte
       newdata = '{0}{1}{2}'.format(newdata[:36], ant.calc_checksum(newdata), newdata[38:])#recalculate checksum
-      print "TRAINER DATA",newdata
+      print datetime.utcnow().strftime('%Y-%m-%d %H:%M:%S.%f')[:-3],"TRAINER DATA",newdata
     reply = ant.send([newdata], dev_ant)
     if "grade" in reply:
       grade = reply['grade']
@@ -242,61 +254,63 @@ try:
     #[82][0F][01][00][00][3A][12][48] - [82] page 2 with toggle on (repeat 4 times)
     #[83][01][01][33][4F][3F][13][48] - [83] page 3 with toggle on 
     
-    #heart_rate = 72 #comment out in production
-    if eventcounter % 4 == 0:#toggle bit every 4 counts
-      if heart_toggle == 0: heart_toggle = 128
-      else: 
-        heart_toggle = 0
-    
-    #check if heart beat has occurred as tacx only reports instanatenous heart rate data
-    #last heart beat is at heart_beat_event_time
-    #if now - heart_beat_event_time > time taken for hr to occur, trigger beat. 70 bpm = beat every 60/70 seconds
-    if (time.time()*1000 - heart_beat_event_time) > (60 / heart_rate)*1000:
-      heart_beat_count += 1#increment heart beat count
-      heart_beat_event_time = time.time()*1000#reset last time of heart beat
+    #if eventcounter > 40: heart_rate = 100 #comment out in production
+    if heart_rate>0:
+      if eventcounter % 4 == 0:#toggle bit every 4 counts
+        if heart_toggle == 0: heart_toggle = 128
+        else: 
+          heart_toggle = 0
       
-    if heart_beat_event_time - heart_beat_event_time_start_cycle >= 64000:#rollover every 64s
-      heart_beat_event_time = time.time()*1000#reset last heart beat event
-      heart_beat_event_time_start_cycle = time.time()*1000#reset start of cycle
+      #check if heart beat has occurred as tacx only reports instanatenous heart rate data
+      #last heart beat is at heart_beat_event_time
+      #if now - heart_beat_event_time > time taken for hr to occur, trigger beat. 70 bpm = beat every 60/70 seconds
+      if (time.time()*1000 - heart_beat_event_time) > (60 / heart_rate)*1000:
+        heart_beat_count += 1#increment heart beat count
+        heart_beat_event_time = time.time()*1000#reset last time of heart beat
+        
+      if heart_beat_event_time - heart_beat_event_time_start_cycle >= 64000:#rollover every 64s
+        heart_beat_event_time = time.time()*1000#reset last heart beat event
+        heart_beat_event_time_start_cycle = time.time()*1000#reset start of cycle
+        
+      if heart_beat_count >= 256:
+        heart_beat_count = 0
       
-    if heart_beat_count >= 256:
-      heart_beat_count = 0
-    
-    if heart_rate >= 256:
-      heart_rate = 255
-    
-    hex_heart_beat_time = int((heart_beat_event_time - heart_beat_event_time_start_cycle)*1.024) # convert ms to 1/1024 of a second
-    hex_heart_beat_time = hex(hex_heart_beat_time)[2:].zfill(4)
-    
-    hr_byte_4 = hex_heart_beat_time[2:]
-    hr_byte_5 = hex_heart_beat_time[:2]
-    hr_byte_6 = hex(heart_beat_count)[2:].zfill(2)
-    hr_byte_7 = hex(heart_rate)[2:].zfill(2)
-    
-    
-    if (eventcounter + 1) % 66 == 0 or eventcounter % 66 == 0:#send first and second manufacturer's info packet
-      hr_byte_0 = hex(2 + heart_toggle)[2:].zfill(2)
-      hr_byte_1 = "0f"
-      hr_byte_2 = "01"
-      hr_byte_3 = "00"
-      #[82][0F][01][00][00][3A][12][48]
-    elif (eventcounter+32) % 66 == 0 or (eventcounter+33) % 66 == 0:#send first and second product info packet
-      hr_byte_0 = hex(3 + heart_toggle)[2:].zfill(2)
-      hr_byte_1 = "01"
-      hr_byte_2 = "01"
-      hr_byte_3 = "33"      
-      #[83][01][01][33][4F][3F][13][48]
+      if heart_rate >= 256:
+        heart_rate = 255
       
-    else:#send page 0
-      hr_byte_0 = hex(0 + heart_toggle)[2:].zfill(2)
-      hr_byte_1 = "ff"
-      hr_byte_2 = "ff"
-      hr_byte_3 = "ff"
+      hex_heart_beat_time = int((heart_beat_event_time - heart_beat_event_time_start_cycle)*1.024) # convert ms to 1/1024 of a second
+      hex_heart_beat_time = hex(hex_heart_beat_time)[2:].zfill(4)
       
-    hrdata = "a4 09 4e 01 "+hr_byte_0+" "+hr_byte_1+" "+hr_byte_2+" "+hr_byte_3+" "+hr_byte_4+" "+hr_byte_5+" "+hr_byte_6+" "+hr_byte_7+" 02 00 00"
-    hrdata = "a4 09 4e 01 "+hr_byte_0+" "+hr_byte_1+" "+hr_byte_2+" "+hr_byte_3+" "+hr_byte_4+" "+hr_byte_5+" "+hr_byte_6+" "+hr_byte_7+" "+ant.calc_checksum(hrdata)+" 00 00"
-    print "HEART RATE",hrdata
-    ant.send([hrdata], dev_ant)
+      hr_byte_4 = hex_heart_beat_time[2:]
+      hr_byte_5 = hex_heart_beat_time[:2]
+      hr_byte_6 = hex(heart_beat_count)[2:].zfill(2)
+      hr_byte_7 = hex(heart_rate)[2:].zfill(2)
+      
+      
+      if (eventcounter + 1) % 66 == 0 or eventcounter % 66 == 0:#send first and second manufacturer's info packet
+        hr_byte_0 = hex(2 + heart_toggle)[2:].zfill(2)
+        hr_byte_1 = "0f"
+        hr_byte_2 = "01"
+        hr_byte_3 = "00"
+        #[82][0F][01][00][00][3A][12][48]
+      elif (eventcounter+32) % 66 == 0 or (eventcounter+33) % 66 == 0:#send first and second product info packet
+        hr_byte_0 = hex(3 + heart_toggle)[2:].zfill(2)
+        hr_byte_1 = "01"
+        hr_byte_2 = "01"
+        hr_byte_3 = "33"      
+        #[83][01][01][33][4F][3F][13][48]
+        
+      else:#send page 0
+        hr_byte_0 = hex(0 + heart_toggle)[2:].zfill(2)
+        hr_byte_1 = "ff"
+        hr_byte_2 = "ff"
+        hr_byte_3 = "ff"
+        
+      hrdata = "a4 09 4e 01 "+hr_byte_0+" "+hr_byte_1+" "+hr_byte_2+" "+hr_byte_3+" "+hr_byte_4+" "+hr_byte_5+" "+hr_byte_6+" "+hr_byte_7+" 02 00 00"
+      hrdata = "a4 09 4e 01 "+hr_byte_0+" "+hr_byte_1+" "+hr_byte_2+" "+hr_byte_3+" "+hr_byte_4+" "+hr_byte_5+" "+hr_byte_6+" "+hr_byte_7+" "+ant.calc_checksum(hrdata)+" 00 00"
+      time.sleep(0.125)# sleep for 120ms
+      print datetime.utcnow().strftime('%Y-%m-%d %H:%M:%S.%f')[:-3],"HEART RATE",hrdata
+      ant.send([hrdata], dev_ant)
     ####################wait ####################
     
     #add wait so we only send every 250ms
