@@ -7,28 +7,31 @@ import sys
 import binascii
 import struct
 import platform, glob
+import os
 from datetime import datetime
-#import serial
 
-def list_serial_ports():
-  system_name = platform.system()
-  if system_name == "Windows":
-    # Scan for available ports.
-    available = []
-    for i in range(256):
-        try:
-            s = serial.Serial(i)
-            available.append(i)
-            s.close()
-        except serial.SerialException:
-            pass
-    return available
-  elif system_name == "Darwin":
-    # Mac
-    return glob.glob('/dev/tty*') + glob.glob('/dev/cu*')
-  else:
-    # Assume Linux or something else
-    return glob.glob('/dev/ttyUSB*')
+if os.name == 'posix':
+  import serial
+
+#def list_serial_ports():
+  #system_name = platform.system()
+  #if system_name == "Windows":
+    ## Scan for available ports.
+    #available = []
+    #for i in range(256):
+        #try:
+            #s = serial.Serial(i)
+            #available.append(i)
+            #s.close()
+        #except serial.SerialException:
+            #pass
+    #return available
+  #elif system_name == "Darwin":
+    ## Mac
+    #return glob.glob('/dev/tty*') + glob.glob('/dev/cu*')
+  #else:
+    ## Assume Linux or something else
+    #return glob.glob('/dev/ttyUSB*')
 
 def fromcomp(val,bits):
   if val>>(bits-1) == 1:
@@ -50,43 +53,48 @@ for arga in sys.argv:
   if "--power-factor" in arg[0]:
     powerfactor = arg[1]
 
+###windows###
+if os.name == 'nt':
+  #find trainer model
+  product=0
+  if not simulatetrainer:
+    idpl = [0x1932, 0x1942]#iflow, fortius
+    for idp in idpl:
+      dev = usb.core.find(idVendor=0x3561, idProduct=idp) #find iflow device
+      if dev != None:
+        product=idp
+        break
 
-#find trainer model
-product=0
-if not simulatetrainer:
-  idpl = [0x1932, 0x1942]#iflow, fortius
-  for idp in idpl:
-    dev = usb.core.find(idVendor=0x3561, idProduct=idp) #find iflow device
-    if dev != None:
-      product=idp
-      break
+    if product == 0:
+      print "Trainer not found"
+      sys.exit()
+      
+    dev.set_configuration() #set active configuration
 
-  if product == 0:
-    print "Trainer not found"
+###Linux###
+elif os.name == 'posix':
+  #Find ANT+ USB stick on serial (linux)
+  ant_stick_found = False
+  for p in glob.glob('/dev/ttyUSB*'):
+    dev_ant = serial.Serial(p, 19200, rtscts=True,dsrdtr=True)
+    dev_ant.timeout = 0.1
+    dev_ant.write(binascii.unhexlify("a4014a00ef0000")) #probe with reset command
+    reply = binascii.hexlify(dev_ant.read(size=256))
+    if reply == "a4016f20ea":#found ANT+ stick
+      serial_port=p
+      ant_stick_found = True
+    else: dev_ant.close()
+    if ant_stick_found == True  : break
+
+  if ant_stick_found == False:
+    print 'Could not find ANT+ device. Check output of "lsusb | grep 1932" and "ls /dev/ttyUSB*"'
     sys.exit()
     
-  dev.set_configuration() #set active configuration
-
-
-#Find ANT+ USB stick on serial (linux)
-#ant_stick_found = False
-#for p in list_serial_ports():
-  #dev_ant = serial.Serial(p, 19200, rtscts=True,dsrdtr=True)
-  #dev_ant.timeout = 0.1
-  #dev_ant.write(binascii.unhexlify("a4014a00ef0000")) #probe with reset command
-  #reply = binascii.hexlify(dev_ant.read(size=256))
-  #if reply == "a4016f20ea":#found ANT+ stick
-    #serial_port=p
-    #ant_stick_found = True
-  #else: dev_ant.close()
-  #if ant_stick_found == True  : break
-
-#if ant_stick_found == False:
-  #print "Could not find serial port"
-  #sys.exit
   
-  #find ANT+ USB stick with win32usb-lib (Windows)
-  
+else:
+  print "OS not Supported"
+  sys.exit()
+
 found_available_ant_stick= True
 try:
   dev_ant = usb.core.find(idVendor=0x0fcf, idProduct=0x1009) #get ANT+ stick (garmin)
@@ -119,8 +127,6 @@ if found_available_ant_stick == False:
 if found_available_ant_stick == False:
   print "No available ANT+ device"
   sys.exit()
-
-
 
 ant.calibrate(dev_ant)#calibrate ANT+ dongle
 ant.master_channel_config(dev_ant)#calibrate ANT+ channel FE-C

@@ -22,14 +22,17 @@ def send(stringl, dev_ant, debug):#send message string to dongle
       send = send + binascii.unhexlify(string[i:i+2])
       i=i+3
     if debug == True: print ">>",binascii.hexlify(send)#log data to console
-    #dev_ant.write(send
-    try:
-      dev_ant.write(0x01,send)
-    except Exception, e:
-      print "USB WRITE ERROR", str(e)
-    #dev_ant.timeout = 0.1
-    #read_val = binascii.hexlify(dev_ant.read(size=256))
-    read_val = binascii.hexlify(dev_ant.read(0x81,64))
+    if os.name == 'posix':
+      dev_ant.write(send)
+      dev_ant.timeout = 0.1
+      read_val = binascii.hexlify(dev_ant.read(size=256))
+    else:
+      try:
+        dev_ant.write(0x01,send)
+        read_val = binascii.hexlify(dev_ant.read(0x81,64))
+      except Exception, e:
+        print "USB WRITE ERROR", str(e)
+    
     if debug == True: print "<<",read_val
     
     read_val_list = read_val.split("a4")#break reply into list of messsages
