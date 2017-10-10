@@ -13,7 +13,7 @@ def calc_checksum(message):#calulate message checksum
     byte += 1
   return hex(xor_value)[2:].zfill(2)
 
-def send(stringl, dev_ant):#send message string to dongle
+def send(stringl, dev_ant, debug):#send message string to dongle
   rtn = {}
   for string in stringl:
     i=0
@@ -21,7 +21,7 @@ def send(stringl, dev_ant):#send message string to dongle
     while i<len(string):
       send = send + binascii.unhexlify(string[i:i+2])
       i=i+3
-    print ">>",binascii.hexlify(send)#log data to console
+    if debug == True: print ">>",binascii.hexlify(send)#log data to console
     #dev_ant.write(send
     try:
       dev_ant.write(0x01,send)
@@ -30,7 +30,7 @@ def send(stringl, dev_ant):#send message string to dongle
     #dev_ant.timeout = 0.1
     #read_val = binascii.hexlify(dev_ant.read(size=256))
     read_val = binascii.hexlify(dev_ant.read(0x81,64))
-    print "<<",read_val
+    if debug == True: print "<<",read_val
     
     read_val_list = read_val.split("a4")#break reply into list of messsages
     for rv in read_val_list:
@@ -50,7 +50,7 @@ def calibrate(dev_ant):
   "a4 02 4d 00 3e d5 00 00",#request ant version
   "a4 09 46 00 b9 a5 21 fb bd 72 c3 45 64 00 00",#set network key b9 a5 21 fb bd 72 c3 45
   ]
-  send(stringl,dev_ant)
+  send(stringl,dev_ant, False)
   
 def master_channel_config(dev_ant):
   stringl=[
@@ -62,7 +62,7 @@ def master_channel_config(dev_ant):
   "a4 01 4b 00 ee 00 00",#open channel #0
   "a4 09 4e 00 50 ff ff 01 0f 00 85 83 bb 00 00",#broadcast manufacturer's data
   ]
-  send(stringl,dev_ant)
+  send(stringl, dev_ant, False)
 
 def second_channel_config(dev_ant):
   stringl=[
@@ -74,5 +74,5 @@ def second_channel_config(dev_ant):
   "a4 01 4b 01 ef 00 00",#open channel #0
   "a4 09 4e 01 82 0f 01 00 00 00 00 48 26 00 00",#broadcast manufacturer's data
   ]
-  send(stringl,dev_ant)
+  send(stringl, dev_ant, False)
 
