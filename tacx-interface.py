@@ -55,39 +55,58 @@ for arga in sys.argv:
 
 ###windows###
 if os.name == 'nt':
-  #find trainer model
-  product=0
-  if not simulatetrainer:
-    idpl = [0x1932, 0x1942]#iflow, fortius
-    for idp in idpl:
-      dev = usb.core.find(idVendor=0x3561, idProduct=idp) #find iflow device
-      if dev != None:
-        product=idp
-        break
+  found_available_ant_stick= True
+  try:
+    dev_ant = usb.core.find(idVendor=0x0fcf, idProduct=0x1009) #get ANT+ stick (garmin)
+    dev_ant.set_configuration() #set active configuration
+    try:#check if in use
+      stringl=["a4 01 4a 00 ef 00 00"]#reset system
+      ant.send(stringl, dev_ant, debug)
+    except usb.core.USBError:
+      print "Garmin Device is in use"
+      found_available_ant_stick = False
+  except AttributeError:
+    print "No Garmin Device found"
+    found_available_ant_stick = False
 
-    if product == 0:
-      print "Trainer not found"
-      sys.exit()
-      
-    dev.set_configuration() #set active configuration
+  if found_available_ant_stick == False:
+    found_available_ant_stick = True
+    try:
+      dev_ant = usb.core.find(idVendor=0x0fcf, idProduct=0x1008) #get ANT+ stick (suunto)
+      dev_ant.set_configuration() #set active configuration   
+      try:#check if in use
+        stringl=["a4 01 4a 00 ef 00 00"]#reset system
+        ant.send(stringl, dev_ant, debug)
+      except usb.core.USBError:
+        print "Suunto Device is in use"
+        found_available_ant_stick = False
+    except AttributeError:  
+      print "No Suunto Device found"
+      found_available_ant_stick = False
+
+  if found_available_ant_stick == False:
+    print "No available ANT+ device"
+    sys.exit()
+  
 
 ###Linux###
 elif os.name == 'posix':
-  #Find ANT+ USB stick on serial (linux)
+  #Find ANT+ USB stick on serial (Linux)
   ant_stick_found = False
   for p in glob.glob('/dev/ttyUSB*'):
     dev_ant = serial.Serial(p, 19200, rtscts=True,dsrdtr=True)
     dev_ant.timeout = 0.1
     dev_ant.write(binascii.unhexlify("a4014a00ef0000")) #probe with reset command
     reply = binascii.hexlify(dev_ant.read(size=256))
-    if reply == "a4016f20ea":#found ANT+ stick
+    if reply == "a4016f20ea" or reply == "a4016f00ca":#found ANT+ stick
       serial_port=p
       ant_stick_found = True
     else: dev_ant.close()
     if ant_stick_found == True  : break
 
   if ant_stick_found == False:
-    print 'Could not find ANT+ device. Check output of "lsusb | grep 1932" and "ls /dev/ttyUSB*"'
+    print 'Could not find ANT+ device. Check output of "lsusb | grep 0fcf" and "ls /dev/ttyUSB*"'
+    dev_ant.close()
     sys.exit()
     
   
@@ -95,38 +114,22 @@ else:
   print "OS not Supported"
   sys.exit()
 
-found_available_ant_stick= True
-try:
-  dev_ant = usb.core.find(idVendor=0x0fcf, idProduct=0x1009) #get ANT+ stick (garmin)
-  dev_ant.set_configuration() #set active configuration
-  try:#check if in use
-    stringl=["a4 01 4a 00 ef 00 00"]#reset system
-    ant.send(stringl, dev_ant, debug)
-  except usb.core.USBError:
-    print "Garmin Device is in use"
-    found_available_ant_stick = False
-except AttributeError:
-  print "No Garmin Device found"
-  found_available_ant_stick = False
 
-if found_available_ant_stick == False:
-  found_available_ant_stick = True
-  try:
-    dev_ant = usb.core.find(idVendor=0x0fcf, idProduct=0x1008) #get ANT+ stick (suunto)
-    dev_ant.set_configuration() #set active configuration   
-    try:#check if in use
-      stringl=["a4 01 4a 00 ef 00 00"]#reset system
-      ant.send(stringl, dev_ant, debug)
-    except usb.core.USBError:
-      print "Suunto Device is in use"
-      found_available_ant_stick = False
-  except AttributeError:  
-    print "No Suunto Device found"
-    found_available_ant_stick = False
+#find trainer model for Windows and Linux
+product=0
+if not simulatetrainer:
+  idpl = [0x1932, 0x1942]#iflow, fortius
+  for idp in idpl:
+    dev = usb.core.find(idVendor=0x3561, idProduct=idp) #find iflow device
+    if dev != None:
+      product=idp
+      break
 
-if found_available_ant_stick == False:
-  print "No available ANT+ device"
-  sys.exit()
+  if product == 0:
+    print "Trainer not found"
+    sys.exit()
+    
+  dev.set_configuration() #set active configuration
 
 ant.calibrate(dev_ant)#calibrate ANT+ dongle
 ant.master_channel_config(dev_ant)#calibrate ANT+ channel FE-C
