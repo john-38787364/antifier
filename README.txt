@@ -1,5 +1,6 @@
 OVERVIEW
 This project will enable a Windows or Linux PC to broadcast ANT+ data via a dongle from a Tacx trainer connected to it via USB. This can be either be from a standalone PC broadcasting to a PC or tablet running e.g. Zwift or Trainerroad, or from a Windows PC already running Zwift/ Trainerroad (this PC will therefore require two ANT+ dongles) 
+Home page: https://github.com/john-38787364/tacx-ant
 
 REQUIREMENTS
 - Windows or Linux PC
@@ -48,3 +49,12 @@ PROBLEMS
 e.g. save output with tacx-interface.py/.exe --debug > out.log
 
 3. Report all issues via github at https://github.com/john-38787364/tacx-ant
+
+ADVANCED
+The file T1932_calibration.py contains the resistance values on the trainer in response to the slope indicated by the training program. Alter the variable "reslist" index value (which is the grade) to match the resistance you want from the trainer at that resiatnce. Do not alter the values as the trainer responds to specific values rather than a sliding scale
+e.g. the T1932 has 14 available resistance values:
+reslist={ -1:1900, 0:2030,1:2150,1.7:2300,2.5:2400,3.2:2550,4:2700,4.7:2900,  5.4:3070,6.1:3200,6.8:3350,8:3460,9:3600,10:3750}
+any grade up to the key value will get that resistance. In this case a grade of 3% will take index value 3.2 (level 6) - resistance value 2550.
+To change this to level 7 change the variable to:
+reslist={ -1:1900, 0:2030,1:2150,1.7:2300,2.5:2400,2.8:2550,4:2700,4.7:2900,  5.4:3070,6.1:3200,6.8:3350,8:3460,9:3600,10:3750}
+this give resistance value 2700
