@@ -15,7 +15,8 @@ This will create a directory tacx-interface with required scripts in.
 
 Windows:
 You will need to reinstall your trainer as a libusb-win32 device:
-1. Open device manager, right click on the device and click "Uninstall". It may be listed as a "Jungo" device
+1. Open device manager, right click on the device and click "Uninstall". It may be listed as a "Jungo" device 
+(see http://www.tacxdata.com/files/support/Windows10driverissues.pdf - DO NOT RUN TacxDriversSetup.exe!)
 2. Unplug the trainer, wait 5 seconds, and plug it back in again
 3. Find it again (usually under other devices>VR-interface)
 4. Right click and select "update driver software"
