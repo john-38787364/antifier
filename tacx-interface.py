@@ -101,12 +101,11 @@ elif os.name == 'posix':
     if reply == "a4016f20ea" or reply == "a4016f00ca":#found ANT+ stick
       serial_port=p
       ant_stick_found = True
-    else: dev_ant.close()
+    else: dev_ant.close()#not correct reply to reset
     if ant_stick_found == True  : break
 
   if ant_stick_found == False:
     print 'Could not find ANT+ device. Check output of "lsusb | grep 0fcf" and "ls /dev/ttyUSB*"'
-    dev_ant.close()
     sys.exit()
     
   
@@ -174,8 +173,7 @@ try:
     if not simulatetrainer:
       if product==0x1932:#if is an iflow
         data = dev.read(0x82,64) #get data from device
-        if debug == True: print data
-        if debug == True: print data[13] #button 01 enter, 02 down, 04 up, 08 cancel
+        if debug == True: print datetime.utcnow().strftime('%Y-%m-%d %H:%M:%S.%f')[:-3],"TRAINER RX DATA",data
         #get values reported by trainer
         fs = int(data[33])<<8 | int(data[32])
         speed = round(fs/2.8054/100,1)#speed kph
@@ -213,7 +211,7 @@ try:
       else:
         pedecho = 0
       byte_ints = [0x01, 0x08, 0x01, 0x00, r5, r6, pedecho, 0x00 ,0x02, 0x52, 0x10, 0x04]
-      
+      if debug == True: print datetime.utcnow().strftime('%Y-%m-%d %H:%M:%S.%f')[:-3],"TRAINER TX DATA",byte_ints
       byte_str = "".join(chr(n) for n in byte_ints)
       dev.write(0x02,byte_str)#send data to device
     
