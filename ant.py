@@ -1,4 +1,4 @@
-import binascii, re
+import binascii, re, os
 
 def calc_checksum(message):#calulate message checksum
   pattern = re.compile('[\W_]+')
