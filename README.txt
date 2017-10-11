@@ -4,6 +4,8 @@ This project will enable a Windows or Linux PC to broadcast ANT+ data via a dong
 REQUIREMENTS
 - Windows or Linux PC
 - ANT+ dongle to broadcast data - standard Garmin and Suunto dongles tested. Any dongle with hardware ID 0fcf:1009 or 0fcf:1008 should work
+- Tacx trainer. So far tested with 1932 head unit:
+https://github.com/john-38787364/tacx-ant/blob/master/1932.jpg
 
 INSTALLATION
 Linux (Root required):
