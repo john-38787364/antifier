@@ -1,5 +1,5 @@
 apt-get install python-pip
-pip install pyserial
+pip install pyserial pyusb
 mkdir tacx-interface
 cd tacx-interface
 wget --quiet https://raw.githubusercontent.com/john-38787364/tacx-ant/master/tacx-interface.py
