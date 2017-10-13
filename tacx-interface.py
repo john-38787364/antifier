@@ -13,26 +13,6 @@ from datetime import datetime
 if os.name == 'posix':
   import serial
 
-#def list_serial_ports():
-  #system_name = platform.system()
-  #if system_name == "Windows":
-    ## Scan for available ports.
-    #available = []
-    #for i in range(256):
-        #try:
-            #s = serial.Serial(i)
-            #available.append(i)
-            #s.close()
-        #except serial.SerialException:
-            #pass
-    #return available
-  #elif system_name == "Darwin":
-    ## Mac
-    #return glob.glob('/dev/tty*') + glob.glob('/dev/cu*')
-  #else:
-    ## Assume Linux or something else
-    #return glob.glob('/dev/ttyUSB*')
-
 def fromcomp(val,bits):
   if val>>(bits-1) == 1:
     return 0-(val^(2**bits-1))-1
@@ -173,23 +153,26 @@ try:
       eventcounter = 0
     ####################GET DATA FROM TRAINER####################
     if not simulatetrainer:
-      if product==0x1932:#if is an iflow
+      if product==0x1932:#if is a 1932 headunit
         data = dev.read(0x82,64) #get data from device
-        if debug == True: print datetime.utcnow().strftime('%Y-%m-%d %H:%M:%S.%f')[:-3],"TRAINER RX DATA",data
+        if debug == True: print datetime.utcnow().strftime('%Y-%m-%d %H:%M:%S.%f')[:-3],"TRAINER RX DATA",binascii.hexlify(data)
         #get values reported by trainer
-        fs = int(data[33])<<8 | int(data[32])
-        speed = round(fs/2.8054/100,1)#speed kph
-        force = fromcomp((data[39]<<8)|data[38],16)
-        if debug == True: print datetime.utcnow().strftime('%Y-%m-%d %H:%M:%S.%f')[:-3],"FORCE",force
-        try:#try to identify force value from list of possible resistance values
-          force = T1932_calibration.possfov.index(force)+1
-          if debug == True: print datetime.utcnow().strftime('%Y-%m-%d %H:%M:%S.%f')[:-3],"FORCE INDEX", force
-          power = T1932_calibration.calcpower(speed,force)
-          power = int(power * float(powerfactor)) #alter for value passed on command line
-        except ValueError:
-          pass # do nothing if force value from trainer not recognised
-        cadence = int(data[44])
-        heart_rate = int(data[12])
+        if len(data)==24:
+          print "trainer possibly not powered up"
+        if len(data) > 40:
+          fs = int(data[33])<<8 | int(data[32])
+          speed = round(fs/2.8054/100,1)#speed kph
+          force = fromcomp((data[39]<<8)|data[38],16)
+          if debug == True: print datetime.utcnow().strftime('%Y-%m-%d %H:%M:%S.%f')[:-3],"FORCE",force
+          try:#try to identify force value from list of possible resistance values
+            force = T1932_calibration.possfov.index(force)+1
+            if debug == True: print datetime.utcnow().strftime('%Y-%m-%d %H:%M:%S.%f')[:-3],"FORCE INDEX", force
+            power = T1932_calibration.calcpower(speed,force)
+            power = int(power * float(powerfactor)) #alter for value passed on command line
+          except ValueError:
+            pass # do nothing if force value from trainer not recognised
+          cadence = int(data[44])
+          heart_rate = int(data[12])
     else:
         speed,cadence,power,heart_rate=(30, 90, 283, 72)
         power = int(power * float(powerfactor))
@@ -198,26 +181,33 @@ try:
     ####################SEND DATA TO TRAINER####################
     #send resistance data to trainer   
     if debug == True: print datetime.utcnow().strftime('%Y-%m-%d %H:%M:%S.%f')[:-3],"GRADE", grade*2,"%"
-    level = T1932_calibration.grade_resistance[-1]#set resistance level to hardest as default
-    for idx, g in enumerate(sorted(T1932_calibration.grade_resistance)):
-      if g >= grade*2:#find resistance value immediately above grade set by zwift (Zwift ANT+ grade is half that displayed on screen)
-	level = idx
-	break
-    if debug == True: print datetime.utcnow().strftime('%Y-%m-%d %H:%M:%S.%f')[:-3],"RESISTANCE LEVEL", T1932_calibration.reslist[level]
     if not simulatetrainer:
-      r6=int(T1932_calibration.reslist[level])>>8 & 0xff #byte6
-      r5=int(T1932_calibration.reslist[level]) & 0xff #byte 5
-      #echo pedal cadence back to trainer
-      if len(data) > 40:
-        pedecho = data[42]
-      else:
-        pedecho = 0
-      byte_ints = [0x01, 0x08, 0x01, 0x00, r5, r6, pedecho, 0x00 ,0x02, 0x52, 0x10, 0x04]
-      if debug == True: print datetime.utcnow().strftime('%Y-%m-%d %H:%M:%S.%f')[:-3],"TRAINER TX DATA",byte_ints
-      byte_str = "".join(chr(n) for n in byte_ints)
-      dev.write(0x02,byte_str)#send data to device
+      if product==0x1932:#if is a 1932 headunit
+        level = len(T1932_calibration.grade_resistance)#set resistance level to hardest as default
+        for idx, g in enumerate(sorted(T1932_calibration.grade_resistance)):
+          if g >= grade*2:#find resistance value immediately above grade set by zwift (Zwift ANT+ grade is half that displayed on screen)
+            level = idx
+            break
+        if debug == True: print datetime.utcnow().strftime('%Y-%m-%d %H:%M:%S.%f')[:-3],"RESISTANCE LEVEL", T1932_calibration.reslist[level]
+        r6=int(T1932_calibration.reslist[level])>>8 & 0xff #byte6
+        r5=int(T1932_calibration.reslist[level]) & 0xff #byte 5
+        #echo pedal cadence back to trainer
+        if len(data) > 40:
+          pedecho = data[42]
+        else:
+          pedecho = 0
+        byte_ints = [0x01, 0x08, 0x01, 0x00, r5, r6, pedecho, 0x00 ,0x02, 0x52, 0x10, 0x04]
+        if debug == True: print datetime.utcnow().strftime('%Y-%m-%d %H:%M:%S.%f')[:-3],"TRAINER TX DATA",byte_ints
+        byte_str = "".join(chr(n) for n in byte_ints)
+        dev.write(0x02,byte_str)#send data to device
     
     ####################BROADCAST AND RECEIVE ANT+ data####################
+    if power >= 4094:
+      power = 4093
+    accumulated_power += power
+    if accumulated_power >= 65536:
+      accumulated_power = 0
+
     if (eventcounter + 1) % 66 == 0 or eventcounter % 66 == 0:#send first and second manufacturer's info packet
       newdata = "a4 09 4e 00 50 ff ff 01 0f 00 85 83 bb 00 00"
       
@@ -246,11 +236,6 @@ try:
       if cadence >= 254:
         cadence=253
       newdata = '{0}{1}{2}'.format(newdata[:18], hex(cadence)[2:].zfill(2), newdata[20:])#instant cadence
-      if power >= 4094:
-        power = 4093
-      accumulated_power += power
-      if accumulated_power >= 65536:
-        accumulated_power = 0
       hexaccumulated_power = hex(int(accumulated_power))[2:].zfill(4)
       newdata = '{0}{1}{2}{3}{4}'.format(newdata[:21], hexaccumulated_power[2:], ' ' , hexaccumulated_power[:2], newdata[26:]) # set accumulated power
       hexinstant_power = hex(int(power))[2:].zfill(4)
