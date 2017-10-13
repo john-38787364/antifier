@@ -194,13 +194,13 @@ try:
     if debug == True: print speed,cadence,power,heart_rate
     
     ####################SEND DATA TO TRAINER####################
-    #send resistance data to trainer
-    level = list(sorted(T1932_calibration.reslist))[-1] #set resistance level to hardest as default
+    #send resistance data to trainer   
     if debug == True: print datetime.utcnow().strftime('%Y-%m-%d %H:%M:%S.%f')[:-3],"GRADE", grade*2,"%"
-    for g in sorted(T1932_calibration.reslist):
+    level = T1932_calibration.grade_resistance[-1]#set resistance level to hardest as default
+    for idx, g in enumerate(sorted(T1932_calibration.grade_resistance)):
       if g >= grade*2:#find resistance value immediately above grade set by zwift (Zwift ANT+ grade is half that displayed on screen)
-        level = g
-        break
+	level = idx
+	break
     if debug == True: print datetime.utcnow().strftime('%Y-%m-%d %H:%M:%S.%f')[:-3],"RESISTANCE LEVEL", T1932_calibration.reslist[level]
     if not simulatetrainer:
       r6=int(T1932_calibration.reslist[level])>>8 & 0xff #byte6

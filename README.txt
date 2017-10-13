@@ -51,11 +51,32 @@ e.g. save output with tacx-interface.py/.exe --debug > out.log
 
 3. Report all issues via github at https://github.com/john-38787364/tacx-ant
 
-ADVANCED
-The file T1932_calibration.py contains the resistance values on the trainer in response to the slope indicated by the training program. Alter the variable "reslist" index value (which is the grade) to match the resistance you want from the trainer at that resiatnce. Do not alter the values as the trainer responds to specific values rather than a sliding scale
-e.g. the T1932 has 14 available resistance values:
-reslist={ -1:1900, 0:2030,1:2150,1.7:2300,2.5:2400,3.2:2550,4:2700,4.7:2900,  5.4:3070,6.1:3200,6.8:3350,8:3460,9:3600,10:3750}
-any grade up to the key value will get that resistance. In this case a grade of 3% will take index value 3.2 (level 6) - resistance value 2550.
-To change this to level 7 change the variable to:
-reslist={ -1:1900, 0:2030,1:2150,1.7:2300,2.5:2400,2.8:2550,4:2700,4.7:2900,  5.4:3070,6.1:3200,6.8:3350,8:3460,9:3600,10:3750}
-this give resistance value 2700
+CALIBRATION
+As the trainer does not report power, power must be inferred by the following formula:
+
+speed x resistance exerted by the trainer.
+
+The file T1932_calibration.py contains the resistance values on the trainer in response to the slope indicated by the training program, as well as the fomulae to calculate power at each resistance level.
+
+Change the resistance exerted by the trainer for grade sent by training application:
+Alter the list variable "grade_resistance" values to match the resistance level you want at grades up to the value you input.
+e.g.
+grade_resistance = [
+-3,     #up to grade -3% will cause trainer to exert resistance level 1
+-2,     #from grade >-3% to <=-2% will cause trainer to exert resistance level 2
+-1,     #from grade >-2% to <=-1% will cause trainer to exert resistance level 3 etc.
+... etc.
+
+To change the power calculation:
+The basic formula is speed x resistance level. Each resistance level is contained within the "factors" dictionary variable as
+resistance level:[multiplier],[additional power]
+so the power output at a particular resistance = speed * multiplier + additional power
+e.g.
+factors={
+1:[4.5,-20],#i.e. for resistance level 1, power = speed(kph) x 4.5 + (-20) watts = 20kph  x 4.5 - 20 = 70 watts
+
+The "factors" dictionary variable has been derived from tests using values from a Powertap hub vs speed/resistance level.
+The runoff_calibration.py script will help you get your trainer closer to these test conditions and hence a more accurate power value.
+You may alter the multiplier and additional power values for each resistance level to more closely match your personal setup
+
+
