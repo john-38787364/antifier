@@ -23,8 +23,8 @@ dev.write(0x02,byte_str)
 
 
 
-print "Tyre pressure 100psi (unloaded), aim for 7.2s rolloff"
-print "Warm up 2 mins. Cycle 30kph-40kph for 30s then to above 40kph then stop pedalling and freewheel"
+print "CALIBRATION TIPS: Tyre pressure 100psi (unloaded and cold), aim for 7.2s rolloff"
+print "Warm up for 2 mins, then cycle 30kph-40kph for 30s then to above 40kph then stop pedalling and freewheel"
 print "Rolldown timer will start automatically when you hit 40kph, so stop pedalling quickly!"
 
 speed = 0
@@ -53,17 +53,22 @@ while running == True:
     byte_str = "".join(chr(n) for n in byte_ints)
     dev.write(0x02,byte_str)#send data to device
   if speed > 40 or rolldown == True:
-    sys.stdout.write("Rolldown timer started!")
-    sys.stdout.flush()
-    rolldown = True
     if rolldown_time == 0:
       rolldown_time = time.time()#set initial rolldown time
+    sys.stdout.write("Rolldown timer started - STOP PEDALLING! %s \r" % ( round((time.time() - rolldown_time),1) ) )
+    sys.stdout.flush()
+    rolldown = True
     if speed < 0.1:#wheel stopped
       running = False#break loop
-      sys.stdout.write("Rolldown time = %s seconds" % (time.time() - rolldown_time))
-      sys.stdout.flush()
+      print("Rolldown time = %s seconds                  " % (round((time.time() - rolldown_time),1)))
   else:
-    sys.stdout.write("Speed: %s Cadence: %s  \r" % (str(speed).zfill(2),str(cadence)) )
+    sys.stdout.write("Speed: %s Cadence: %s  \r" % (str(speed).zfill(4),str(cadence)) )
     sys.stdout.flush()
- 
+
+if time.time() - rolldown_time > 7.5 : 
+  print "More pressure from trainer on tyre required"
+elif time.time() - rolldown_time < 6.5 : 
+  print "Less pressure from trainer on tyre required"
+else:
+  print "Calibration OK - good to train and get reasonable power numbers!"
     
