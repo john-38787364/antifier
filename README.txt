@@ -67,6 +67,8 @@ grade_resistance = [
 -1,     #from grade >-2% to <=-1% will cause trainer to exert resistance level 3 etc.
 ... etc.
 
+The resistance level 7 was most extensively tested for power calculations so it is recommended that grades 0-2% are around this level
+
 To change the power calculation:
 The basic formula is speed x resistance level. Each resistance level is contained within the "factors" dictionary variable as
 resistance level:[multiplier],[additional power]
