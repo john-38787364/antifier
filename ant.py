@@ -15,6 +15,7 @@ def calc_checksum(message):#calulate message checksum
 
 def send(stringl, dev_ant, debug):#send message string to dongle
   rtn = {}
+  read_val = ""
   for string in stringl:
     i=0
     send=""

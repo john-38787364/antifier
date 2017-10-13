@@ -62,6 +62,7 @@ if os.name == 'nt':
     try:#check if in use
       stringl=["a4 01 4a 00 ef 00 00"]#reset system
       ant.send(stringl, dev_ant, debug)
+      print "Using Garmin dongle..."
     except usb.core.USBError:
       print "Garmin Device is in use"
       found_available_ant_stick = False
@@ -77,6 +78,7 @@ if os.name == 'nt':
       try:#check if in use
         stringl=["a4 01 4a 00 ef 00 00"]#reset system
         ant.send(stringl, dev_ant, debug)
+        print "Using Suunto dongle..."
       except usb.core.USBError:
         print "Suunto Device is in use"
         found_available_ant_stick = False
@@ -85,7 +87,7 @@ if os.name == 'nt':
       found_available_ant_stick = False
 
   if found_available_ant_stick == False:
-    print "No available ANT+ device"
+    print "No available ANT+ device. Retry after quitting Garmin Express or other application that uses ANT+. If still fails then remove dongles for 10s then reinsert"
     sys.exit()
   
 

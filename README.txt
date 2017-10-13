@@ -27,6 +27,8 @@ You will need to reinstall your trainer as a libusb-win32 device:
 
 Download the Windows build of the application from:
 https://github.com/john-38787364/tacx-ant/raw/master/dist/tacx-interface.exe
+Optionally dowload the calibration app:
+https://github.com/john-38787364/tacx-ant/raw/master/dist/runoff_calibration.exe
 
 Run by double clicking on the downloaded EXE
 
