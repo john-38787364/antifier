@@ -4,6 +4,27 @@ from datetime import datetime
 dev = usb.core.find(idVendor=0x3561, idProduct=0x1942)
 dev.set_configuration()
 
+#possible resistance values to be sent
+#-5% (0xf34d or -0x0cb3 or -3251)
+#-2.5% (0xf9a7 or -0x659 or -1625), 
+#0 (0), 
+#2.5% (0x0659 or 1625), 
+#5% (0x0cb3 or 3251), 
+#7.5% (0x130c or 4876),
+#10% (0x1966 or 6502), 
+#12.5% (0x1fbf or 8127), 
+#15% (0x2618 or 9752), 
+#17.5% (0x2c72 or 11378) and 
+#20% (0x32cb or 13003).
+
+#speed values to receive
+#0x0800 : 5km/h,  int 8
+#0x0c00 : 10km/h, int 12
+#0x1300 : 15km/h, int 19
+#0x1600 : 20km/h, int 22
+#0x1c00 : 25 km/h int 30
+#0x2200 : 30 km/h int 34
+
 #initialise TACX USB device
 byte_ints = [2,0,0,0] # will not read cadence until initialisation byte is sent
 byte_str = "".join(chr(n) for n in byte_ints)
