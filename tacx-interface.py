@@ -183,7 +183,7 @@ def main():
       if debug == True: print datetime.utcnow().strftime('%Y-%m-%d %H:%M:%S.%f')[:-3],"GRADE", grade*2,"%"
       if not simulatetrainer:
         if product==0x1932:#if is a 1932 headunit
-          level = len(T1932_calibration.grade_resistance)#set resistance level to hardest as default
+          level = len(T1932_calibration.grade_resistance) - 1 #set resistance level to hardest as default
           for idx, g in enumerate(sorted(T1932_calibration.grade_resistance)):
             if g >= grade*2:#find resistance value immediately above grade set by zwift (Zwift ANT+ grade is half that displayed on screen)
               level = idx
