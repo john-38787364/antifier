@@ -32,6 +32,8 @@ https://github.com/john-38787364/tacx-ant/raw/master/dist/runoff_calibration.exe
 
 Run by double clicking on the downloaded EXE
 
+If you wish to run as a native python script then you will need to run python.exe -m pip install pyusb
+
 USAGE
 Linux
 sudo python tacx-interface.py
