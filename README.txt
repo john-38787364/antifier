@@ -32,7 +32,7 @@ https://github.com/john-38787364/tacx-ant/raw/master/dist/runoff_calibration.exe
 
 Run by double clicking on the downloaded EXE
 
-If you wish to run as a native python script then you will need to run python.exe -m pip install pyusb
+If you wish to run as a native python script then you will need to run python.exe -m pip install pyusb and to download libusb-win32-devel-filter https://sourceforge.net/projects/libusb-win32/files/libusb-win32-releases/1.2.6.0/
 
 USAGE
 Linux
@@ -97,5 +97,4 @@ factors={
 The "factors" dictionary variable has been derived from tests using values from a Powertap hub vs speed/resistance level.
 The runoff_calibration.py script will help you get your trainer closer to these test conditions and hence a more accurate power value.
 You may alter the multiplier and additional power values for each resistance level to more closely match your personal setup
-
 
