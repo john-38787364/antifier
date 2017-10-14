@@ -28,8 +28,7 @@ dev.set_configuration()
 #initialise TACX USB device
 byte_ints = [2,0,0,0] # will not read cadence until initialisation byte is sent
 byte_str = "".join(chr(n) for n in byte_ints)
-if not simulatetrainer:
- dev.write(0x02,byte_str)
+dev.write(0x02,byte_str)
 time.sleep(1)
 data=""
 try:
