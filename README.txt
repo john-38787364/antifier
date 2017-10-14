@@ -35,21 +35,25 @@ Run by double clicking on the downloaded EXE
 USAGE
 Linux
 sudo python tacx-interface.py
+To calibrate trainer pressue on tyre via run off run
+sudo python runoff_calibration.py
 
 Windows
 1. Quit Garmin express if running
 2. Run application- a black screen should open. If it opens then closes then you've got a problem (see debug options below)
 (3. Start Zwift - Power, Heart rate, Cadence and Smart Trainer should all be available as FE-C device )
+To calibrate trainer pressue on tyre via run off run
+runoff_calibration.exe
 
 OPTIONS
---power-factor=x - will alter power reported by factor selected. Defaults to 1. e.g. power-factor=0.9 and power is 100, then power of 90W will be reported
+-p, --power-factor=x - will alter power reported by factor selected. Defaults to 1. e.g. power-factor=0.9 and power is 100, then power of 90W will be reported
 
 PROBLEMS
 1. Unplug and replug USB ANT+ dongles if having problems! Some applications esp Garmin Express can be greedy about ownership of dongles
 2. Open a command prompt and from the download directory and run the program in the console with the following switches:
---debug - starts verbose output from script
---simulate-trainer - will ignore if a trainer is connected and sends cadence=90, power=283, HR=72
-e.g. save output with tacx-interface.py/.exe --debug > out.log
+-d, --debug - starts verbose output from script
+-s, --simulate-trainer - will ignore if a trainer is connected and sends cadence=90, power=283, HR=72 to test if your ANT+ dongle is broadcasting correctly, and if Zwift is receiving
+save output with tacx-interface.py/.exe --debug > out.log
 
 To run the program in the console in Windows:
 2.1 Open the folder containing tacx-interface.exe then press "Shift Key" and right click in the white space next to it, then select "Open command window here". A black window should open
@@ -62,7 +66,7 @@ To run the program in the console in Windows:
 
 3. Report all issues via github at https://github.com/john-38787364/tacx-ant
 
-CALIBRATION
+POWER AND RESISTANCE CALIBRATION
 As the trainer does not report power, power must be inferred by the following formula:
 
 speed x resistance exerted by the trainer.
