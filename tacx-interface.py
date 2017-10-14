@@ -9,6 +9,7 @@ import struct
 import platform, glob
 import os
 from datetime import datetime
+import argparse
 
 if os.name == 'posix':
   import serial
@@ -19,20 +20,18 @@ def fromcomp(val,bits):
   else: return val
 
 def main():
-  powerfactor = 1
-  debug = False
-  simulatetrainer = False
-  for arga in sys.argv:
-    arg = arga.split("=")
-    if len(arg)==1: arg.append("")
-    if "--simulate-trainer" in arg[0]:
-      simulatetrainer = True
+  #powerfactor = 1
+  #debug = False
+  #simulatetrainer = False
+  parser = argparse.ArgumentParser(description='Program to broadcast data from USB Tacx trainer, and to receive resistance data for the trainer')
+  parser.add_argument('-d','--debug', help='Show debugging data', required=False, action='store_true')
+  parser.add_argument('-s','--simulate-trainer', help='Simulated trainer to test ANT+ connectivity', required=False, action='store_true')
+  parser.add_argument('-p','--power-factor', help='Adjust broadcasted power data by multiplying measured power by this factor', required=False, default="1")
+  args = parser.parse_args()
+  powerfactor = args.power_factor
+  debug = args.debug
+  simulatetrainer = args.simulate_trainer
 
-    if "--debug" in arg[0]:
-      debug = True
-      
-    if "--power-factor" in arg[0]:
-      powerfactor = arg[1]
 
   ###windows###
   if os.name == 'nt':

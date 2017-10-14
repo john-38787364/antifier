@@ -46,10 +46,19 @@ OPTIONS
 
 PROBLEMS
 1. Unplug and replug USB ANT+ dongles if having problems! Some applications esp Garmin Express can be greedy about ownership of dongles
-2. Open a command prompt and from the download directory and run the program with the following switches:
+2. Open a command prompt and from the download directory and run the program in the console with the following switches:
 --debug - starts verbose output from script
 --simulate-trainer - will ignore if a trainer is connected and sends cadence=90, power=283, HR=72
 e.g. save output with tacx-interface.py/.exe --debug > out.log
+
+To run the program in the console in Windows:
+2.1 Open the folder containing tacx-interface.exe then press "Shift Key" and right click in the white space next to it, then select "Open command window here". A black window should open
+2.2 Run the script with "tacx-interface.exe --debug > out.log"
+(select this command without the quotes then copy, right click on the black window should paste it into the black window)
+2.3 Press return- there should be no output on the screen
+2.4 Take a short Zwift ride- you should get data from your trainer on Zwift
+2.5 Finish the ride then press ctrl-c whilst in the black window to exit the script
+2.6 Post out.log to github as an issue
 
 3. Report all issues via github at https://github.com/john-38787364/tacx-ant
 
