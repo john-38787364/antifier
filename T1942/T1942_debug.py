@@ -1,8 +1,13 @@
-import usb.core, time, binascii
+import usb.core, time, binascii, sys
 from datetime import datetime
 
-dev = usb.core.find(idVendor=0x3561, idProduct=0x1942)
-dev.set_configuration()
+write = True
+if len(sys.argv) > 1:
+  if sys.argv[1] == "simulate":
+    write = False
+if write:
+  dev = usb.core.find(idVendor=0x3561, idProduct=0x1942)
+  dev.set_configuration()
 
 #possible resistance values to be sent
 #-5% (0xf34d or -0x0cb3 or -3251)
@@ -28,30 +33,46 @@ dev.set_configuration()
 #initialise TACX USB device
 byte_ints = [2,0,0,0] # will not read cadence until initialisation byte is sent
 byte_str = "".join(chr(n) for n in byte_ints)
-dev.write(0x02,byte_str)
+if write:
+  dev.write(0x02,byte_str)
 time.sleep(1)
 data=""
+
+eventcounter=1
+reslist=[-3251, -1625, 0, 1625, 3251, 4876, 6502, 8127, 9752, 11378, 13003]
+resindex = 0
+
 try:
   while True:
     last_measured_time = time.time() * 1000
-    data = dev.read(0x82,64) #get data from device
-    print datetime.utcnow().strftime('%Y-%m-%d %H:%M:%S.%f')[:-3],"TRAINER RX DATA",binascii.hexlify(data)
-    r6=int(4876)>>8 & 0xff #byte6
-    r5=int(4876) & 0xff #byte 5
+    if write:
+      data = dev.read(0x82,64) #get data from device
+      print datetime.utcnow().strftime('%Y-%m-%d %H:%M:%S.%f')[:-3],"TRAINER RX DATA",binascii.hexlify(data)
+
+    #increment resistance every 10seconds
+    if eventcounter % 40 == 0:
+      resindex += 1
+    if resindex == len(reslist):
+      break
+
+    r6=int(reslist[resindex])>>8 & 0xff #byte6
+    r5=int(reslist[resindex]) & 0xff #byte 5
     #echo pedal cadence back to trainer
     if len(data) > 40:
       pedecho = data[42]
     else:
       pedecho = 0
     byte_ints = [0x01, 0x08, 0x01, 0x00, r5, r6, pedecho, 0x00 ,0x02, 0x52, 0x10, 0x04]
-    print datetime.utcnow().strftime('%Y-%m-%d %H:%M:%S.%f')[:-3],"TRAINER TX DATA",byte_ints
+    print datetime.utcnow().strftime('%Y-%m-%d %H:%M:%S.%f')[:-3],"TRAINER TX DATA",'{}'.format(' '.join(hex(x)[2:].zfill(2) for x in byte_ints))
     byte_str = "".join(chr(n) for n in byte_ints)
-    dev.write(0x02,byte_str)#send data to device
+    if write:
+      dev.write(0x02,byte_str)#send data to device
     
     #add wait so we only send every 250ms
     time_to_process_loop = time.time() * 1000 - last_measured_time
     sleep_time = 0.25 - (time_to_process_loop)/1000
     if sleep_time < 0: sleep_time = 0
     time.sleep(sleep_time)
+    eventcounter += 1
 except KeyboardInterrupt: # interrupt power data sending with ctrl c, make sure script continues to reset device
   pass
