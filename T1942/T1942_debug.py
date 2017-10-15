@@ -2,8 +2,6 @@ import usb.core, time, binascii, sys
 from datetime import datetime
 import os
 
-os.system("dir")
-
 ##scan for uninitalised 1942
 deva = usb.core.find(idVendor=0x3561, idProduct=0xe6be)
 try:
