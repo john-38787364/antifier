@@ -6,10 +6,11 @@ import os
 deva = usb.core.find(idVendor=0x3561, idProduct=0xe6be)
 try:
   deva.set_configuration()
-except AttributeError:#not found
   os.system("fxload-libusb.exe -I FortiusSWPID1942Renum.hex -t fx -vv")#load firmware
   print "Initialising trainer, please wait 5 seconds"
   time.sleep(5)
+except AttributeError:#not found
+  print "Uninitialised trainer not found"
   
 
 write = True
@@ -50,9 +51,10 @@ time.sleep(1)
 data=""
 
 eventcounter=1
-reslist=[-3251, -1625, 0, 1625, 3251, 4876, 6502, 8127, 9752, 11378, 13003]
+reslist=[-3251, -1625, 0, 1625, 3251, 4876, 6502, 8127, 9752, 11378, 13003]#1625/1626 increments
 resindex = 0
 
+resistance= -3278
 try:
   while True:
     last_measured_time = time.time() * 1000
@@ -60,21 +62,23 @@ try:
       data = dev.read(0x82,64) #get data from device
       print datetime.utcnow().strftime('%Y-%m-%d %H:%M:%S.%f')[:-3],"TRAINER RX DATA",binascii.hexlify(data)
 
-    #increment resistance every 10seconds
-    if eventcounter % 40 == 0:
-      resindex += 1
-    if resindex == len(reslist):
+    #increment resistance
+    resistance += 27 #add 27 on each time
+    nearest_validated_resistance = min(reslist, key=lambda x:abs(x-resistance))
+    if nearest_validated_resistance - resistance < 27 and nearest_validated_resistance - resistance > 0:
+      resistance = nearest_validated_resistance
+    if resistance == 13004:
       break
 
-    r6=int(reslist[resindex])>>8 & 0xff #byte6
-    r5=int(reslist[resindex]) & 0xff #byte 5
+    r6=int(resistance)>>8 & 0xff #byte6
+    r5=int(resistance) & 0xff #byte 5
     #echo pedal cadence back to trainer
     if len(data) > 40:
       pedecho = data[42]
     else:
       pedecho = 0
     byte_ints = [0x01, 0x08, 0x01, 0x00, r5, r6, pedecho, 0x00 ,0x02, 0x52, 0x10, 0x04]
-    print datetime.utcnow().strftime('%Y-%m-%d %H:%M:%S.%f')[:-3],"TRAINER TX DATA",'{}'.format(' '.join(hex(x)[2:].zfill(2) for x in byte_ints))
+    print datetime.utcnow().strftime('%Y-%m-%d %H:%M:%S.%f')[:-3],"TRAINER TX DATA",resistance,'{}'.format(' '.join(hex(x)[2:].zfill(2) for x in byte_ints))
     byte_str = "".join(chr(n) for n in byte_ints)
     if write:
       dev.write(0x02,byte_str)#send data to device
