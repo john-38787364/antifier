@@ -1,5 +1,18 @@
 import usb.core, time, binascii, sys
 from datetime import datetime
+import os
+
+os.system("dir")
+
+##scan for uninitalised 1942
+deva = usb.core.find(idVendor=0x3561, idProduct=0xe6be)
+try:
+  deva.set_configuration()
+except AttributeError:#not found
+  os.system("fxload-libusb.exe -I FortiusSWPID1942Renum.hex -t fx -vv")#load firmware
+  print "Initialising trainer, please wait 5 seconds"
+  time.sleep(5)
+  
 
 write = True
 if len(sys.argv) > 1:
