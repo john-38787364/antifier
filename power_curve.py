@@ -1,4 +1,59 @@
-import ant, os, usb.core, time, binascii
+import ant, os, usb.core, time, binascii, T1932_calibration, sys
+import Tkinter as tkinter
+
+def update_status(label, status):
+  label.config(text=status)
+  window.update_idletasks()
+  window.update()
+
+window = tkinter.Tk()
+window.title("Tacx calibration")
+window.geometry("600x300")
+tkinter.Label(window, text="Status: ").grid(row=1,column=1, sticky="E")
+tkinter.Label(window, text="Calibrated: ").grid(row=2,column=1, sticky="E")
+tkinter.Label(window, text="Resistance Level: ").grid(row=3,column=1, sticky="E")
+tkinter.Label(window, text="Speed: ").grid(row=4,column=1, sticky="E")
+tkinter.Label(window, text="Power: ").grid(row=5,column=1, sticky="E")
+tkinter.Label(window, text="Instructions: ").grid(row=6,column=1, sticky="E")
+
+status_label = tkinter.Label(window, text="None")
+status_label.grid(row=1,column=2, sticky="W")
+
+calibrated_label = tkinter.Label(window, text="False")
+calibrated_label.grid(row=2,column=2, sticky="W")
+
+resistance_label = tkinter.Label(window, text="None")
+resistance_label.grid(row=3,column=2, sticky="W")
+
+speed_label = tkinter.Label(window, text="None")
+speed_label.grid(row=4,column=2, sticky="W")
+
+power_label = tkinter.Label(window, text="None")
+power_label.grid(row=5,column=2, sticky="W")
+
+instructions_label = tkinter.Label(window, text="None")
+instructions_label.grid(row=6,column=2, sticky="W")
+
+window.update_idletasks()
+window.update()
+
+product=0
+idpl = [0x1932, 0x1942]#iflow, fortius
+for idp in idpl:
+  dev = usb.core.find(idVendor=0x3561, idProduct=idp) #find iflow device
+  if dev != None:
+    product=idp
+    break
+
+if product == 0:
+  print "Trainer not found"
+  sys.exit()
+
+#initialise TACX USB device
+byte_ints = [2,0,0,0] # will not read cadence until initialisation byte is sent
+byte_str = "".join(chr(n) for n in byte_ints)
+dev.write(0x02,byte_str)
+time.sleep(1)
 
 ###windows###
 if os.name == 'nt':
@@ -76,29 +131,97 @@ string=[
 "a4 01 4b 00 ee 00 00" #4b ANT_OpenChannel message ID channel = 0 D00001229_Fitness_Modules_ANT+_Application_Note_Rev_3.0.pdf
 ]
 ant.send(string, dev_ant, True)
-print "Do not pedal... calibrating"
-ant.send(["a4 09 4f 00 01 aa ff ff ff ff ff ff 49 00 00"], dev_ant, True)
-#print binascii.hexlify(dev_ant.read(0x81,64))
+
+power_meter = False
+calibrated = False
+packets_rx=0
+resistance_level=0
+target_power=0
+power=0
+speed=0
+
 try:
   while True:
     reply = {}
     last_measured_time = time.time() * 1000
-#a4 02 4d 00 51 ba 00 00 #51 product info #3969 (every 30s)
-
-#a4 09 4f 00 01 aa ff ff ff ff ff ff 49 00 00 #general calibration request
-
-#a4 02 4d 00 51 ba 00 00 #4918
-
-#receives
-#a4 09 4e 00 11 ec 98 00 7a 26 21 10 eb #11 wheel torque
-#a4 09 4e 00 10 ec ff 00 be 4e 00 00 10 #10 power page be 4e accumulated power 00 00 iunstant power
     #add wait so we only send every 250ms
     try:
+      #get power data
       read_val = binascii.hexlify(dev_ant.read(0x81,64))
-      if read_val[8:10]=="10":
-        print read_val, read_val[20:22], read_val[22:24], int(read_val[22:24],16)*16 + int(read_val[20:22],16)
+      if read_val[8:10]=="10":#a4 09 4e 00 10 ec ff 00 be 4e 00 00 10 #10 power page be 4e accumulated power 00 00 iunstant power
+        power = int(read_val[22:24],16)*16 + int(read_val[20:22],16)
+        print read_val, power
+        power_meter = True
+        
+        
+      elif read_val[0:10]=="a4094f0001":#calibration response
+        if read_val[10:12]=="ac":
+          update_status(status_label, "Calibration successful")
+          update_status(instructions_label, "Resume pedalling")
+          calibrated = True
+          update_status(calibrated_label, "True")
+        elif read_val[10:12]=="af":
+          update_status(status_label, "Calibration failed")
+        else:
+          update_status(status_label, "Calibration unknown response")
+      
+      
+      if power_meter:
+        packets_rx += 1
+        if not calibrated and packets_rx<40:
+          update_status(status_label, "Power data received - waiting to calibrate")
+          update_status(instructions_label, "Keep pedalling")
+        if packets_rx == 40:
+          update_status(status_label, "Starting calibration")
+          update_status(instructions_label, "STOP PEDALLING- power meter calibration in 10 seconds.\nPut pedals into position as instructed by your power meter manufacturer")
+        elif packets_rx == 80:
+          update_status(status_label, "Calibrating...")
+          update_status(instructions_label, "Do not pedal")
+          ant.send(["a4 09 4f 00 01 aa ff ff ff ff ff ff 49 00 00"], dev_ant, True)
+      else:
+        update_status(status_label, "No data from power meter yet")
+        update_status(instructions_label, "Keep pedalling")
+      
+      #receive data from trainer
+      data = dev.read(0x82,64) #get data from device
+      #print "TRAINER",data
+      if len(data)>40:
+        fs = int(data[33])<<8 | int(data[32])
+        speed = round(fs/2.8054/100,1)#speed kph
+        
+        #send data to trainer
+        r6=int(T1932_calibration.reslist[resistance_level])>>8 & 0xff #byte6
+        r5=int(T1932_calibration.reslist[resistance_level]) & 0xff #byte 5
+        #echo pedal cadence back to trainer
+        if len(data) > 40:
+          pedecho = data[42]
+        else:
+          pedecho = 0
+        byte_ints = [0x01, 0x08, 0x01, 0x00, r5, r6, pedecho, 0x00 ,0x02, 0x52, 0x10, 0x04]
+        byte_str = "".join(chr(n) for n in byte_ints)
+        dev.write(0x02,byte_str)#send data to device
+        
+        if packets_rx % 50 == 0 and packets_rx > 150:
+          target_power += 50
+          if target_power == 500:
+            target_power = 50
+            resistance_level += 1
+          if resistance_level == 14:
+            print "Power calibration file created"
+            sys.exit()
+          update_status(status_label, "Creating calibration file")
+          update_status(instructions_label, "Aim for a target power of %s watts. It doesn't matter if you don't hit it exactly or can't achieve it at all!" % target_power)              
+          
+        update_status(resistance_label, "%s" % resistance_level)
+        update_status(speed_label, "%skph" % speed)
+        update_status(power_label, "%sW" % power)
+          
+      else:
+        update_status(status_label, "Trainer possibly not powered up")
     except usb.core.USBError:
-      print "nothing received"    
+      update_status(status_label, "No data received from power meter")
+      update_status(instructions_label, "Start pedalling")
+      power_meter = False
      
     time_to_process_loop = time.time() * 1000 - last_measured_time
     sleep_time = 0.25 - (time_to_process_loop)/1000
