@@ -69,9 +69,11 @@ try:
       resistance = nearest_validated_resistance
     if resistance == 13004:
       break
-
-    r6=int(resistance)>>8 & 0xff #byte6
-    r5=int(resistance) & 0xff #byte 5
+    
+    if resistance < 0: r = (256*256) + resistance
+    else: r= resistance
+    r6=int(r)>>8 & 0xff #byte6
+    r5=int(r) & 0xff #byte 5
     #echo pedal cadence back to trainer
     if len(data) > 40:
       pedecho = data[42]
