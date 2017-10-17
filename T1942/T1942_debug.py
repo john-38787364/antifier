@@ -63,7 +63,7 @@ try:
       print datetime.utcnow().strftime('%Y-%m-%d %H:%M:%S.%f')[:-3],"TRAINER RX DATA",binascii.hexlify(data)
 
     #increment resistance
-    resistance += 5 #add 27 on each time
+    resistance += 5 #add 5 on each time
     nearest_validated_resistance = min(reslist, key=lambda x:abs(x-resistance))
     if nearest_validated_resistance - resistance < 5 and nearest_validated_resistance - resistance > 0:
       resistance = nearest_validated_resistance
