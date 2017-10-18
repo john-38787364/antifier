@@ -1,4 +1,4 @@
-apt-get install python-pip
+apt-get install python-pip python-tk
 pip install pyserial pyusb
 mkdir tacx-interface
 cd tacx-interface
