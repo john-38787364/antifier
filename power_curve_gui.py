@@ -31,14 +31,16 @@ class Window(Frame):
     label = Label(self,textvariable=self.InstructionsVariable,anchor=W, justify=LEFT, wraplength=400)
     label.grid(row=11,column=1,sticky=W, columnspan=2)
     
-    RunoffButton = Button(self,height=1, width=15,text="Start Runoff",command=self.StartRunoff)
-    RunoffButton.grid(column=2,row=1)
+    self.RunoffButton = Button(self,height=1, width=15,text="Start Runoff",command=self.StartRunoff)
+    self.RunoffButton.grid(column=2,row=1)
     
-    CalibrateButton = Button(self,height=1, width=15,text="Calibrate",command=self.Calibrate)
-    CalibrateButton.grid(column=2,row=2)
+    self.CalibrateButton = Button(self,height=1, width=15,text="Calibrate",command=self.Calibrate)
+    self.CalibrateButton.grid(column=2,row=2)
+    self.CalibrateButton.config(state="disabled")
     
-    FindHWbutton = Button(self,height=1, width=15,textvariable=self.StartText,command=self.ScanForHW)
-    FindHWbutton.grid(column=2,row=3)
+    self.FindHWbutton = Button(self,height=1, width=15,textvariable=self.StartText,command=self.ScanForHW)
+    self.FindHWbutton.grid(column=2,row=3)
+    self.FindHWbutton.config(state="disabled")
     
     self.TrainerStatusVariable = StringVar()
     label = Label(self,textvariable=self.TrainerStatusVariable,anchor="w")
@@ -67,88 +69,108 @@ class Window(Frame):
     
   
   def StartRunoff(self):
-    dev = ant.get_trainer()
-    if not dev:
-      self.TrainerStatusVariable.set("Trainer not detected")
-      thread_running = False
-      return
-    else:
-      self.TrainerStatusVariable.set("Trainer detected")
-    ant.initialise_trainer(dev)#initialise trainer
-    running = True
-    running = True
-    rolldown = False
-    rolldown_time = 0
-    speed = 0
-    self.InstructionsVariable.set('''
-CALIBRATION TIPS: 
-1. Tyre pressure 100psi (unloaded and cold) aim for 7.2s rolloff
-2. Warm up for 2 mins, then cycle 30kph-40kph for 30s 
-3. Speed up to above 40kph then stop pedalling and freewheel
-4. Rolldown timer will start automatically when you hit 40kph, so stop pedalling quickly!
-''')
-    dev = ant.get_trainer()
-    if not dev:
-      self.TrainerStatusVariable.set("Trainer not detected")
-      return
-    else:
-      self.TrainerStatusVariable.set("Trainer detected")
-    while running:#loop every 100ms
-      last_measured_time = time.time() * 1000
-      data = dev.read(0x82,64) #get data from device
-      if len(data)>40:
-	fs = int(data[33])<<8 | int(data[32])
-	speed = round(fs/2.8054/100,1)#speed kph
-	self.SpeedVariable.set(speed)
-      if speed > 40 or rolldown == True:
-	if rolldown_time == 0:
-	  rolldown_time = time.time()#set initial rolldown time
-	self.InstructionsVariable.set("Rolldown timer started - STOP PEDALLING! %s " % ( round((time.time() - rolldown_time),1) ) )
-	rolldown = True
-	if speed < 0.1:#wheel stopped
-	  running = False#break loop
-	  if time.time() - rolldown_time > 7.5 : 
-	    msg = "More pressure from trainer on tyre required"
-	  elif time.time() - rolldown_time < 6.5 : 
-	    msg = "Less pressure from trainer on tyre required"
-	  self.InstructionsVariable.set("Rolldown time = %s seconds\n" % (round((time.time() - rolldown_time),1), msg))
-	
-	time_to_process_loop = time.time() * 1000 - last_measured_time
-	sleep_time = 0.1 - (time_to_process_loop)/1000
-	if sleep_time < 0: sleep_time = 0
-	time.sleep(sleep_time)
-      
+    def run():
+      global simulate_trainer
+      running = True
+      running = True
+      rolldown = False
+      rolldown_time = 0
+      speed = 0
+      self.InstructionsVariable.set('''
+  CALIBRATION TIPS: 
+  1. Tyre pressure 100psi (unloaded and cold) aim for 7.2s rolloff
+  2. Warm up for 2 mins, then cycle 30kph-40kph for 30s 
+  3. Speed up to above 40kph then stop pedalling and freewheel
+  4. Rolldown timer will start automatically when you hit 40kph, so stop pedalling quickly!
+  ''')
+      if not simulate_trainer:
+        dev = ant.get_trainer()
+        if not dev:
+          self.TrainerStatusVariable.set("Trainer not detected")
+          return
+        else:
+          self.TrainerStatusVariable.set("Trainer detected")
+          ant.initialise_trainer(dev)#initialise trainer
+      else:
+        self.TrainerStatusVariable.set("Simulated trainer")
+      while running:#loop every 100ms
+        last_measured_time = time.time() * 1000
+        if not simulate_trainer:
+          data = dev.read(0x82,64) #get data from device
+          if len(data)>40:
+            fs = int(data[33])<<8 | int(data[32])
+            speed = round(fs/2.8054/100,1)#speed kph
+            self.SpeedVariable.set(speed)
+        else:
+          speed = 41
+        if speed > 40 or rolldown == True:
+          if rolldown_time == 0:
+            rolldown_time = time.time()#set initial rolldown time
+          self.InstructionsVariable.set("Rolldown timer started - STOP PEDALLING! %s " % ( round((time.time() - rolldown_time),1) ) )
+          rolldown = True
+          if simulate_trainer:
+            speed = 0
+            rolldown_time = time.time() - 7
+          if speed < 0.1:#wheel stopped
+            running = False#break loop
+            if time.time() - rolldown_time > 7.5 : 
+              msg = "More pressure from trainer on tyre required"
+            elif time.time() - rolldown_time < 6.5 : 
+              msg = "Less pressure from trainer on tyre required"
+            else:
+              self.CalibrateButton.config(state="normal")
+              msg = "Pressure on tyre from trainer correct"
+            self.InstructionsVariable.set("Rolldown time = %s seconds\n%s" % (round((time.time() - rolldown_time),1), msg))
+          
+          time_to_process_loop = time.time() * 1000 - last_measured_time
+          sleep_time = 0.1 - (time_to_process_loop)/1000
+          if sleep_time < 0: sleep_time = 0
+          time.sleep(sleep_time)
+    t1 = threading.Thread(target=run)
+    t1.start()
+  
   def Calibrate(self):
-    #find ANT stick
-    dev_ant, msg = ant.get_ant()
-    self.ANTStatusVariable.set(msg)
-    if not dev_ant:
-      print "no ANT"
-      return
-    ant.calibrate(dev_ant)#calibrate ANT+ dongle
-    ant.powerdisplay(dev_ant)#calibrate as power display
-    self.InstructionsVariable.set('Place pedals in positions instructed by power meter manufacturer. Calibration will start in 5 seconds')
-    time.sleep(5)
-    self.ANTStatusVariable.set('Calibrating')
-    ant.send(["a4 09 4f 00 01 aa ff ff ff ff ff ff 49 00 00"], dev_ant, True)
-    i=0
-    while i< 40:#wait 10 seconds
-      if os.name == 'posix': read_val = binascii.hexlify(dev_ant.read(size=256))
-      elif os.name == 'nt': read_val = binascii.hexlify(dev_ant.read(0x81,64))
-      if read_val[0:10]=="a4094f0001":#calibration response
-	if read_val[10:12]=="ac":
-	  self.ANTStatusVariable.set("Calibration successful")
-	  self.CalibratedVariable.set("True")
-	elif read_val[10:12]=="af":
-	  self.ANTStatusVariable.set("Calibration failed")
-	  self.CalibratedVariable.set("False")
-	else:
-	  self.ANTStatusVariable.set("Unknown calibration response")
-	  self.CalibratedVariable.set("False")
-	i=40
-      time.sleep(0.25)
+    def run():
+      #find ANT stick
+      self.ANTStatusVariable.set('Looking for ANT dongle')
+      dev_ant, msg = ant.get_ant()
+      if not dev_ant:
+        self.ANTStatusVariable.set('ANT dongle not found')
+        return
+      self.ANTStatusVariable.set('Initialising ANT dongle')
+      ant.calibrate(dev_ant)#calibrate ANT+ dongle
+      ant.powerdisplay(dev_ant)#calibrate as power display
+      self.ANTStatusVariable.set('ANT dongle initialised')
+      self.InstructionsVariable.set('Place pedals in positions instructed by power meter manufacturer. Calibration will start in 5 seconds')
+      time.sleep(5)
+      self.ANTStatusVariable.set('Sending calibration request')
+      ant.send(["a4 09 4f 00 01 aa ff ff ff ff ff ff 49 00 00"], dev_ant, True)
+      i=0
+      while i< 40:#wait 10 seconds
+        print i
+        if os.name == 'posix': read_val = binascii.hexlify(dev_ant.read(size=256))
+        elif os.name == 'nt': read_val = binascii.hexlify(dev_ant.read(0x81,64))
+        if read_val[0:10]=="a4094f0001":#calibration response
+          if read_val[10:12]=="ac":
+            self.ANTStatusVariable.set("Calibration successful")
+            self.CalibratedVariable.set("True")
+            self.FindHWbutton.config(state="normal")
+          elif read_val[10:12]=="af":
+            self.ANTStatusVariable.set("Calibration failed")
+            self.CalibratedVariable.set("False")
+          else:
+            self.ANTStatusVariable.set("Unknown calibration response")
+            self.CalibratedVariable.set("False")
+          i=999
+        i += 1
+        time.sleep(0.25)
+      if i == 40:#timeout
+        self.ANTStatusVariable.set("No calibration data received")
+        self.CalibratedVariable.set("False")
     
-    
+    t1 = threading.Thread(target=run)
+    t1.start()
+      
     
   def ScanForHW(self):
     global simulate_trainer
