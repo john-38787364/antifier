@@ -13,9 +13,8 @@ def calc_checksum(message):#calulate message checksum
     byte += 1
   return hex(xor_value)[2:].zfill(2)
 
-def send(stringl, dev_ant, debug):#send message string to dongle
-  rtn = {}
-  read_val = ""
+def send_ant(stringl, dev_ant, debug):#send message string to dongle
+  rtn = []
   for string in stringl:
     i=0
     send=""
@@ -25,28 +24,58 @@ def send(stringl, dev_ant, debug):#send message string to dongle
     if debug == True: print ">>",binascii.hexlify(send)#log data to console
     if os.name == 'posix':
       dev_ant.write(send)
-      dev_ant.timeout = 0.1
-      read_val = binascii.hexlify(dev_ant.read(size=256))
     else:
       try:
         dev_ant.write(0x01,send)
-        read_val = binascii.hexlify(dev_ant.read(0x81,64))
       except Exception, e:
         print "USB WRITE ERROR", str(e)
-    
-    if debug == True: print "<<",read_val
-    
-    read_val_list = read_val.split("a4")#break reply into list of messsages
-    for rv in read_val_list:
-      if len(rv)>6:
-        if (int(rv[:2],16)+3)*2 == len(rv):
-          if calc_checksum("a4"+rv) == rv[-2:]:#valid message
-            #a4094f0033ffffffff964ffff7 is gradient message
-            if rv[6:8]=="33":
-              rtn = {'grade' : int(rv[18:20]+rv[16:18],16) * 0.01 - 200} #7% in zwift = 3.5% grade in ANT+
+    tr = read_ant(dev_ant)
+    for v in tr: rtn.append(v)
+
+  if debug == True: print rtn
   return rtn
 
 
+def read_ant(dev_ant):
+  read_val = ""
+  trv = True #temp rtn value from ANT stick
+  if os.name == 'posix': 
+    dev_ant.timeout = 0.1
+    try:
+      while trv:
+        trv = binascii.hexlify(dev_ant.read(size=256))
+        read_val += trv
+    except Exception, e:
+      read_val = ""
+      print str(e)
+  elif os.name == 'nt': 
+    try:
+      while trv:
+        trv = binascii.hexlify(dev_ant.read(0x81,64))
+        read_val += trv
+    except Exception, e:
+      print "USB READ ERROR", str(e)
+      
+  read_val_list = read_val.split("a4")#break reply into list of messsages
+  rtn = []
+  for rv in read_val_list:
+    if rv: 
+      if len(rv)>6:
+        if (int(rv[:2],16)+3)*2 == len(rv):
+          if calc_checksum("a4"+rv) == rv[-2:]: 
+            rtn.append("a4"+rv)
+    
+    #for rv in read_val_list:
+      #if len(rv)>6:
+        #if (int(rv[:2],16)+3)*2 == len(rv):
+          #if calc_checksum("a4"+rv) == rv[-2:]:#valid message
+            ##a4094f0033ffffffff964ffff7 is gradient message
+            #if rv[6:8]=="33":
+              #rtn = {'grade' : int(rv[18:20]+rv[16:18],16) * 0.01 - 200} #7% in zwift = 3.5% grade in ANT+
+  return rtn
+  
+  
+  
 def calibrate(dev_ant):
   stringl=[
   "a4 02 4d 00 54 bf 00 00",#request max channels
@@ -54,7 +83,7 @@ def calibrate(dev_ant):
   "a4 02 4d 00 3e d5 00 00",#request ant version
   "a4 09 46 00 b9 a5 21 fb bd 72 c3 45 64 00 00",#set network key b9 a5 21 fb bd 72 c3 45
   ]
-  send(stringl,dev_ant, False)
+  send_ant(stringl,dev_ant, False)
   
 def master_channel_config(dev_ant):
   stringl=[
@@ -66,7 +95,7 @@ def master_channel_config(dev_ant):
   "a4 01 4b 00 ee 00 00",#open channel #0
   "a4 09 4e 00 50 ff ff 01 0f 00 85 83 bb 00 00",#broadcast manufacturer's data
   ]
-  send(stringl, dev_ant, False)
+  send_ant(stringl, dev_ant, False)
 
 def second_channel_config(dev_ant):
   stringl=[
@@ -78,7 +107,7 @@ def second_channel_config(dev_ant):
   "a4 01 4b 01 ef 00 00",#open channel #0
   "a4 09 4e 01 82 0f 01 00 00 00 00 48 26 00 00",#broadcast manufacturer's data
   ]
-  send(stringl, dev_ant, False)
+  send_ant(stringl, dev_ant, False)
 
 def powerdisplay(dev_ant):
   #calibrate as power display
@@ -92,7 +121,13 @@ def powerdisplay(dev_ant):
   "a4 02 44 00 02 e0 00 00", #44 Host Command/Response 
   "a4 01 4b 00 ee 00 00" #4b ANT_OpenChannel message ID channel = 0 D00001229_Fitness_Modules_ANT+_Application_Note_Rev_3.0.pdf
   ]
-  send(stringl, dev_ant, False)
+  send_ant(stringl, dev_ant, False)
+  
+def antreset(dev_ant):
+  for i in range (0,10):
+    if os.name == 'posix': read_val = binascii.hexlify(dev_ant.read(size=256))#clear cached data
+    elif os.name == 'nt': read_val = binascii.hexlify(dev_ant.read(0x81,64))#
+  send_ant(["a4 01 4a 00 ef 00 00"],dev_ant, False)
 
 def get_ant():
   ###windows###
@@ -103,7 +138,7 @@ def get_ant():
       dev_ant.set_configuration() #set active configuration
       try:#check if in use
         stringl=["a4 01 4a 00 ef 00 00"]#reset system
-        ant.send(stringl, dev_ant, debug)
+        send_ant(stringl, dev_ant, debug)
         msg = "Using Garmin dongle..."
       except usb.core.USBError:
         found_available_ant_stick = False
@@ -118,7 +153,7 @@ def get_ant():
         dev_ant.set_configuration() #set active configuration   
         try:#check if in use
           stringl=["a4 01 4a 00 ef 00 00"]#reset system
-          ant.send(stringl, dev_ant, False)
+          send_ant(stringl, dev_ant, False)
           msg = "Using Suunto dongle..."
         except usb.core.USBError:
           #print "Suunto Device is in use"
@@ -136,10 +171,8 @@ def get_ant():
     ant_stick_found = False
     for p in glob.glob('/dev/ttyUSB*'):
       dev_ant = serial.Serial(p, 19200, rtscts=True,dsrdtr=True)
-      dev_ant.timeout = 0.1
-      dev_ant.write(binascii.unhexlify("a4014a00ef0000")) #probe with reset command
-      reply = binascii.hexlify(dev_ant.read(size=256))
-      if reply == "a4016f20ea" or reply == "a4016f00ca":#found ANT+ stick
+      read_val = send_ant(["a4 01 4a 00 ef 00 00"], dev_ant, False) #probe with reset command
+      if "a4016f20ea" in read_val or "a4016f00ca" in read_val:#found ANT+ stick
         serial_port=p
         ant_stick_found = True
         msg = "Found ANT Stick"
@@ -160,22 +193,3 @@ def get_ant():
   
   if not dev_ant: msg = "ANT Stick not found"
   return dev_ant, msg
-
-def get_trainer():
-  product=0
-  idpl = [0x1932, 0x1942]#iflow, fortius
-  for idp in idpl:
-    dev = usb.core.find(idVendor=0x3561, idProduct=idp) #find iflow device
-    if dev != None:
-      product=idp
-      break
-    
-  if product == 0:
-    return False
-  else:
-    return dev
-  
-def initialise_trainer(dev):
-  byte_ints = [2,0,0,0] # will not read cadence until initialisation byte is sent
-  byte_str = "".join(chr(n) for n in byte_ints)
-  dev.write(0x02,byte_str)

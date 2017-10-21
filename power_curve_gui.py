@@ -1,4 +1,4 @@
-import ant, os, usb.core, time, binascii, T1932_calibration, sys, os
+import ant, os, usb.core, time, binascii, trainer, sys, os, pickle
 from Tkinter import *
 import threading
 
@@ -36,11 +36,11 @@ class Window(Frame):
     
     self.CalibrateButton = Button(self,height=1, width=15,text="Calibrate",command=self.Calibrate)
     self.CalibrateButton.grid(column=2,row=2)
-    self.CalibrateButton.config(state="disabled")
+    #self.CalibrateButton.config(state="disabled")
     
     self.FindHWbutton = Button(self,height=1, width=15,textvariable=self.StartText,command=self.ScanForHW)
     self.FindHWbutton.grid(column=2,row=3)
-    self.FindHWbutton.config(state="disabled")
+    #self.FindHWbutton.config(state="disabled")
     
     self.TrainerStatusVariable = StringVar()
     label = Label(self,textvariable=self.TrainerStatusVariable,anchor="w")
@@ -70,7 +70,8 @@ class Window(Frame):
   
   def StartRunoff(self):
     def run():
-      global simulate_trainer
+      global simulate_trainer, dev_trainer
+      self.RunoffButton.config(state="disabled")
       running = True
       running = True
       rolldown = False
@@ -83,26 +84,34 @@ class Window(Frame):
   3. Speed up to above 40kph then stop pedalling and freewheel
   4. Rolldown timer will start automatically when you hit 40kph, so stop pedalling quickly!
   ''')
+      
       if not simulate_trainer:
-        dev = ant.get_trainer()
-        if not dev:
-          self.TrainerStatusVariable.set("Trainer not detected")
-          return
-        else:
-          self.TrainerStatusVariable.set("Trainer detected")
-          ant.initialise_trainer(dev)#initialise trainer
+        if not dev_trainer:#if trainer not already captured
+          dev_trainer = trainer.get_trainer()
+          if not dev_trainer:
+            self.TrainerStatusVariable.set("Trainer not detected")
+            return
+          else:
+            self.TrainerStatusVariable.set("Trainer detected")
+            trainer.initialise_trainer(dev_trainer)#initialise trainer
       else:
         self.TrainerStatusVariable.set("Simulated trainer")
       while running:#loop every 100ms
         last_measured_time = time.time() * 1000
-        if not simulate_trainer:
-          data = dev.read(0x82,64) #get data from device
-          if len(data)>40:
-            fs = int(data[33])<<8 | int(data[32])
-            speed = round(fs/2.8054/100,1)#speed kph
-            self.SpeedVariable.set(speed)
+        
+        #receive data from trainer
+        if simulate_trainer: 
+          speed, pedecho, heart_rate, calc_power, cadence= 41, 0, 70, 200, 90
         else:
-          speed = 41
+          speed, pedecho, heart_rate, calc_power, cadence = trainer.receive(dev_trainer) #get data from device
+          self.SpeedVariable.set(speed)
+        if speed == "Not found":
+          self.TrainerStatusVariable.set("Check trainer is powered on")
+        
+        #send data to trainer
+        resistance_level = 6
+        trainer.send(dev_trainer, 0, pedecho, resistance_level)
+        
         if speed > 40 or rolldown == True:
           if rolldown_time == 0:
             rolldown_time = time.time()#set initial rolldown time
@@ -126,11 +135,15 @@ class Window(Frame):
           sleep_time = 0.1 - (time_to_process_loop)/1000
           if sleep_time < 0: sleep_time = 0
           time.sleep(sleep_time)
+      self.RunoffButton.config(state="normal")
+      
     t1 = threading.Thread(target=run)
     t1.start()
   
   def Calibrate(self):
     def run():
+      #self.CalibrateButton.config(state="disabled")
+      global dev_ant
       #find ANT stick
       self.ANTStatusVariable.set('Looking for ANT dongle')
       dev_ant, msg = ant.get_ant()
@@ -138,24 +151,26 @@ class Window(Frame):
         self.ANTStatusVariable.set('ANT dongle not found')
         return
       self.ANTStatusVariable.set('Initialising ANT dongle')
+      ant.antreset(dev_ant)
       ant.calibrate(dev_ant)#calibrate ANT+ dongle
       ant.powerdisplay(dev_ant)#calibrate as power display
       self.ANTStatusVariable.set('ANT dongle initialised')
       self.InstructionsVariable.set('Place pedals in positions instructed by power meter manufacturer. Calibration will start in 5 seconds')
       time.sleep(5)
       self.ANTStatusVariable.set('Sending calibration request')
-      ant.send(["a4 09 4f 00 01 aa ff ff ff ff ff ff 49 00 00"], dev_ant, True)
+      ant.send_ant(["a4 09 4f 00 01 aa ff ff ff ff ff ff 49 00 00"], dev_ant, False)
       i=0
       while i< 40:#wait 10 seconds
         print i
-        if os.name == 'posix': read_val = binascii.hexlify(dev_ant.read(size=256))
-        elif os.name == 'nt': read_val = binascii.hexlify(dev_ant.read(0x81,64))
-        if read_val[0:10]=="a4094f0001":#calibration response
-          if read_val[10:12]=="ac":
+        read_val = ant.read_ant(dev_ant)
+        matching = [s for s in read_val if "a4094f0001" in s] #calibration response
+        print matching
+        if matching:
+          if matching[0][10:12]=="ac":
             self.ANTStatusVariable.set("Calibration successful")
             self.CalibratedVariable.set("True")
             self.FindHWbutton.config(state="normal")
-          elif read_val[10:12]=="af":
+          elif matching[0][10:12]=="af":
             self.ANTStatusVariable.set("Calibration failed")
             self.CalibratedVariable.set("False")
           else:
@@ -167,58 +182,89 @@ class Window(Frame):
       if i == 40:#timeout
         self.ANTStatusVariable.set("No calibration data received")
         self.CalibratedVariable.set("False")
+      self.CalibrateButton.config(state="normal")
+      self.InstructionsVariable.set("")
     
     t1 = threading.Thread(target=run)
     t1.start()
       
     
   def ScanForHW(self):
-    global simulate_trainer
-    
+
     def run():
-      #find trainer
-      if simulate_trainer:
-	self.TrainerStatusVariable.set("Simulated Trainer")
-      else:
-	dev = ant.get_trainer()
-	if not dev:
-	  self.TrainerStatusVariable.set("Trainer not detected")
-	  return
-	else:
-	  self.TrainerStatusVariable.set("Trainer detected")
+      global simulate_trainer, dev_trainer, dev_ant
+      power = 0
+      resistance_level = 0
+      save_data = []
+      if not dev_trainer:
+        #find trainer
+        if simulate_trainer:
+          self.TrainerStatusVariable.set("Simulated Trainer")
+        else:
+          dev_trainer = trainer.get_trainer()
+          if not dev_trainer:
+            self.TrainerStatusVariable.set("Trainer not detected")
+            return
+          else:
+            self.TrainerStatusVariable.set("Trainer detected")
+            trainer.initialise_trainer(dev_trainer)#initialise trainer
       
       #find ANT stick
-      dev_ant, msg = ant.get_ant()
-      self.ANTStatusVariable.set(msg)
       if not dev_ant:
-        print "no ANT"
-        return
+        dev_ant, msg = ant.get_ant()
+        self.ANTStatusVariable.set(msg)
+        if not dev_ant:
+          print "no ANT"
+          return
       
-      if not simulate_trainer:
-	ant.initialise_trainer(dev)#initialise trainer
+      ant.antreset(dev_ant)#reset dongle
       ant.calibrate(dev_ant)#calibrate ANT+ dongle
       ant.powerdisplay(dev_ant)#calibrate as power display
       
+      iterations = 0
+      effort_level = 0
+      stop_loop = False
       ###################DATA LOOP FROM ANT STICK###################
       while self.StartText.get()=="Stop":
+        #print iterations
         last_measured_time = time.time() * 1000
+        if iterations % 40 == 0:#inc effort level every 10s (40 iterations)
+          effort_level += 10
+          self.InstructionsVariable.set("Try for %s%% of your max effort level" % effort_level)
+        if iterations == 360:
+          iterations = 0
+          effort_level = 0
+          resistance_level += 1
+          if resistance_level == 14:
+            stop_loop = True
+        if stop_loop:
+          break
+        iterations += 1
         try:
           #get power data
-          if os.name == 'posix': read_val = binascii.hexlify(dev_ant.read(size=256))
-          elif os.name == 'nt': read_val = binascii.hexlify(dev_ant.read(0x81,64))
-          if read_val[8:10]=="10":#a4 09 4e 00 10 ec ff 00 be 4e 00 00 10 #10 power page be 4e accumulated power 00 00 iunstant power
-            power = int(read_val[22:24],16)*16 + int(read_val[20:22],16)
-            self.PowerVariable.set(power)
+          #if os.name == 'posix': read_val = binascii.hexlify(dev_ant.read(size=256))
+          #elif os.name == 'nt': read_val = binascii.hexlify(dev_ant.read(0x81,64))
+          read_val = ant.read_ant(dev_ant)
+          matching = [s for s in read_val if "a4094e0010" in s] #a4 09 4e 00 10 ec ff 00 be 4e 00 00 10 #10 power page be 4e accumulated power 00 00 iunstant power
+          if matching:
+            power = int(matching[0][22:24],16)*16 + int(matching[0][20:22],16)
+            
             
           #receive data from trainer
           if simulate_trainer: 
-	    data = [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,30,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]
+	    speed, pedecho, heart_rate, calc_power, cadence = 20, 0, 70, 200, 90
 	  else:
-	    data = dev.read(0x82,64) #get data from device
-	  if len(data)>40:
-	    fs = int(data[33])<<8 | int(data[32])
-	  speed = round(fs/2.8054/100,1)#speed kph
+	    speed, pedecho, heart_rate, calc_power, cadence = trainer.receive(dev_trainer) #get data from device
+	  if speed == "Not found":
+            self.TrainerStatusVariable.set("Check trainer is powered on")
+	  #send data to trainer
+	  trainer.send(dev_trainer, 0, pedecho, resistance_level)
+	  
+	  self.PowerVariable.set(power)
 	  self.SpeedVariable.set(speed)
+	  self.ResistanceVariable.set(resistance_level)
+	  save_data.append([resistance_level,speed,power])
+	  
 	  
         except usb.core.USBError:#nothing from stick
             pass
@@ -228,6 +274,8 @@ class Window(Frame):
         time.sleep(sleep_time)
       ###################END DATA LOOP FROM ANT STICK###############
       #ant.send(["a4 01 4a 00 ef 00 00"],dev_ant, False)#reset ANT+ dongle
+      with open('calibration.pickle', 'wb') as handle:
+        pickle.dump(save_data, handle, protocol=pickle.HIGHEST_PROTOCOL)
       
           
           
@@ -238,8 +286,11 @@ class Window(Frame):
       
     else:
       self.StartText.set(u"Start")
+      
+dev_trainer = False
+dev_ant = False
+simulate_trainer = False
 
-simulate_trainer = True
 root = Tk()
 #root.geometry("600x300")
 app = Window(root)
