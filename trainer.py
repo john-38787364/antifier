@@ -1,4 +1,4 @@
-import usb.core
+import usb.core, os
 global reslist, trainer_type, possfov, factors, grade_resistance
 
 def fromcomp(val,bits):
@@ -61,7 +61,7 @@ def receive(dev_trainer):
 def get_trainer():
   global trainer_type, reslist, possfov, factors, grade_resistance
   trainer_type = 0
-  idpl = [0x1932, 0x1942]#iflow, fortius
+  idpl = [0x1932, 0x1942, 0xe6be]#iflow, fortius, uninitialised fortius
   for idp in idpl:
     dev = usb.core.find(idVendor=0x3561, idProduct=idp) #find trainer USB device
     if dev != None:
@@ -72,11 +72,42 @@ def get_trainer():
     return False
   else:
     if trainer_type == 0x1932:
+      print "Found 1932 trainer"
       import T1932_calibration
       reslist = T1932_calibration.reslist
       possfov = T1932_calibration.possfov
       factors = T1932_calibration.factors
       grade_resistance = T1932_calibration.grade_resistance
+    elif trainer_type == 0xe6be:#unintialised fortius
+      print "Found uninitialised  trainer"
+      try:
+        os.system("fxload-libusb.exe -I FortiusSWPID1942Renum.hex -t fx -vv")#load firmware
+        print "Initialising trainer, please wait 5 seconds"
+        time.sleep(5)
+        dev = usb.core.find(idVendor=0x3561, idProduct=0x1942)
+        if dev != None:
+          print "Found 1942 trainer"
+          trainer_type = 0x1942
+          import T1942_calibration
+          reslist = T1942_calibration.reslist
+          possfov = T1942_calibration.possfov
+          factors = T1942_calibration.factors
+          grade_resistance = T1932_calibration.grade_resistance
+        else:
+          print "Unable to load firmware"
+          return False
+      except :#not found
+        print "Unable to initialise trainer"
+        return False
+    elif trainer_type == 0x1942:
+      print "Found 1942 trainer"
+      import T1942_calibration
+      reslist = T1942_calibration.reslist
+      possfov = T1942_calibration.possfov
+      factors = T1942_calibration.factors
+      grade_resistance = T1932_calibration.grade_resistance
+    
+    dev.set_configuration()
     return dev
   
 def initialise_trainer(dev):

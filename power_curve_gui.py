@@ -5,7 +5,6 @@ import threading
 class Window(Frame):
   
   def __init__(self, master=None):
-     #Frame.__init__(self, master, background="bisque",highlightbackground="green", highlightcolor="green", highlightthickness=1)
      Frame.__init__(self, master)
      self.master = master
      self.init_window()
