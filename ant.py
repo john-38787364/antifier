@@ -1,4 +1,6 @@
-import binascii, re, os, usb.core, glob, serial
+import binascii, re, os, usb.core, glob
+if os.name == 'posix':
+  import serial
 
 def calc_checksum(message):#calulate message checksum
   pattern = re.compile('[\W_]+')
@@ -132,7 +134,7 @@ def antreset(dev_ant):
   #  elif os.name == 'nt': read_val = binascii.hexlify(dev_ant.read(0x81,64))#
   send_ant(["a4 01 4a 00 ef 00 00"],dev_ant, False)
 
-def get_ant():
+def get_ant(debug):
   msg=""
   ###windows###
   if os.name == 'nt':
@@ -157,7 +159,7 @@ def get_ant():
         dev_ant.set_configuration() #set active configuration   
         try:#check if in use
           stringl=["a4 01 4a 00 ef 00 00"]#reset system
-          send_ant(stringl, dev_ant, False)
+          send_ant(stringl, dev_ant, debug)
           print "Using Suunto dongle..."
         except usb.core.USBError:
           #print "Suunto Device is in use"

@@ -62,7 +62,7 @@ def get_trainer():
   trainer_type = 0
   idpl = [0x1932, 0x1942]#iflow, fortius
   for idp in idpl:
-    dev = usb.core.find(idVendor=0x3561, idProduct=idp) #find iflow device
+    dev = usb.core.find(idVendor=0x3561, idProduct=idp) #find trainer USB device
     if dev != None:
       trainer_type = idp
       break

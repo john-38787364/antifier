@@ -146,7 +146,7 @@ class Window(Frame):
       global dev_ant
       #find ANT stick
       self.ANTStatusVariable.set('Looking for ANT dongle')
-      dev_ant, msg = ant.get_ant()
+      dev_ant, msg = ant.get_ant(False)
       if not dev_ant:
         self.ANTStatusVariable.set('ANT dongle not found')
         return
@@ -211,7 +211,7 @@ class Window(Frame):
       
       #find ANT stick
       if not dev_ant:
-        dev_ant, msg = ant.get_ant()
+        dev_ant, msg = ant.get_ant(False)
         self.ANTStatusVariable.set(msg)
         if not dev_ant:
           print "no ANT"

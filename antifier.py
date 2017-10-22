@@ -344,7 +344,7 @@ class Window(Frame):
     #get ant stick
     print "get ant stick"
     if not dev_ant:
-      dev_ant, msg = ant.get_ant()
+      dev_ant, msg = ant.get_ant(debug)
       if not dev_ant:
         self.ANTVariable.set(u"no ANT dongle found")
         return
@@ -412,7 +412,7 @@ class Window(Frame):
           speed, pedecho, heart_rate, calc_power, cadence = 20, 0, 70, 200, 90
         else:
           speed, pedecho, heart_rate, calc_power, cadence = trainer.receive(dev_trainer) #get data from device
-        if debug == True: print speed,cadence,calc_power,heart_rate
+        if debug == True: print speed, pedecho, heart_rate, calc_power, cadence
         
         ####################SEND DATA TO TRAINER####################
         #send resistance data to trainer   
