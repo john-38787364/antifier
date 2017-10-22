@@ -51,7 +51,7 @@ def read_ant(dev_ant):
   elif os.name == 'nt': 
     try:
       while trv:
-        trv = binascii.hexlify(dev_ant.read(0x81,64,100))
+        trv = binascii.hexlify(dev_ant.read(0x81,64,20))
         read_val += trv
     except Exception, e:
       if "timeout error" in str(e):
