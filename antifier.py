@@ -257,11 +257,12 @@ class Window(Frame):
     label.grid(column=1,row=3,columnspan=2,sticky='EW')
 
 
-    StartAPPbutton = Tkinter.Button(self,height=1, width=15,text=u"Start script",command=self.Start)
-    StartAPPbutton.grid(column=0,row=4)
+    self.StartAPPbutton = Tkinter.Button(self,height=1, width=15,text=u"Start script",command=self.Start)
+    self.StartAPPbutton.grid(column=0,row=4)
 
-    StopAPPbutton = Tkinter.Button(self,height=1, width=15,text=u"Stop script",command=self.Stop)
-    StopAPPbutton.grid(column=1,row=4)
+    self.StopAPPbutton = Tkinter.Button(self,height=1, width=15,text=u"Stop script",command=self.Stop, state="disabled")
+    self.StopAPPbutton.grid(column=1,row=4)
+    
 
     label = Tkinter.Label(self,text="Speed")
     label.grid(column=0,row=5,sticky='EW')
@@ -345,6 +346,8 @@ class Window(Frame):
   def Stop(self):
     global switch  
     switch = False  
+    self.StartAPPbutton.config(state="normal")
+    self.StopAPPbutton.config(state="disabled")
 
 
   def ScanForHW(self):
@@ -374,23 +377,22 @@ class Window(Frame):
         else:
           self.trainerVariable.set("Trainer detected")
           trainer.initialise_trainer(dev_trainer)#initialise trainer
-          print "reset ant stick"
-    ant.antreset(dev_ant)#reset dongle
-    print "calibrate ant stick"
-    ant.calibrate(dev_ant)#calibrate ANT+ dongle
-    print "calibrate ant stick FE-C"
-    ant.master_channel_config(dev_ant)#calibrate ANT+ channel FE-C
-    print "calibrate ant stick HR"
-    ant.second_channel_config(dev_ant)#calibrate ANT+ channel HR
-
-
-
-
 
   def Start(self):
-  
+    
     def run():
-      global dev_ant, dev_trainer, simulatetrainer
+      global dev_ant, dev_trainer, simulatetrainer, switch
+      
+      print "reset ant stick"
+      ant.antreset(dev_ant)#reset dongle
+      print "calibrate ant stick"
+      ant.calibrate(dev_ant)#calibrate ANT+ dongle
+      print "calibrate ant stick FE-C"
+      ant.master_channel_config(dev_ant)#calibrate ANT+ channel FE-C
+      print "calibrate ant stick HR"
+      ant.second_channel_config(dev_ant)#calibrate ANT+ channel HR
+      
+      
       resistance=0#set initial resistance level
       speed,cadence,power,heart_rate=(0,)*4#initialise values
       grade = 0
@@ -399,6 +401,7 @@ class Window(Frame):
       heart_beat_event_time_start_cycle = time.time() * 1000
       heart_toggle = 0
       heart_beat_count = 0
+      switch = True
 
       eventcounter=0
       #p.44 [10] general fe data, [19] eqpt type trainer, [89] acc value time since start in 0.25s r/over 64s, [8c] acc value time dist travelled in m r/over 256m, 
@@ -409,12 +412,13 @@ class Window(Frame):
       
       #p.60 [19] specific trainer data, [10] counter rollover 256, [5a] inst cadence, [b0] acc power lsb, [47] acc power msb (r/over 65536W), [1b] inst power lsb, 
       #[01] bits 0-3 inst power MSB bits 4-7 trainer status bit, [30] flags bit field
-
+      last_measured_time = time.time() * 1000
       while switch == True:  
-        #print "Running"
+        print "Running", round(time.time() * 1000 - last_measured_time)
         last_measured_time = time.time() * 1000
         if eventcounter >= 256:
           eventcounter = 0
+        ###TRAINER- SHOULD WRITE THEN READ 70MS LATER REALLY
         ####################GET DATA FROM TRAINER####################
         if simulatetrainer: 
           speed, pedecho, heart_rate, calc_power, cadence = 20, 0, 70, 200, 90
@@ -429,8 +433,11 @@ class Window(Frame):
           resistance_level = trainer.send(dev_trainer, grade, pedecho)
         else:
           resistance_level=0
+          #time.sleep(0.2)#simulated trainer timeout
         
         ####################BROADCAST AND RECEIVE ANT+ data####################
+        if speed == "Not Found":
+          speed, pedecho, calc_power, cadence = 0, 0, 0, 0
         if calc_power >= 4094:
           calc_power = 4093
         accumulated_power += calc_power
@@ -581,8 +588,13 @@ class Window(Frame):
 
       if os.name == 'posix':#close serial port to ANT stick on Linux
         dev_ant.close()
+        
+      ant.antreset(dev_ant)#reset dongle
+      print "stopped"
 
     self.FindHWbutton.config(state="disabled")
+    self.StartAPPbutton.config(state="disabled")
+    self.StopAPPbutton.config(state="normal")
     thread = threading.Thread(target=run)  
     thread.start() 
 

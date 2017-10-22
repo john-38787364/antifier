@@ -136,37 +136,52 @@ def antreset(dev_ant):
 
 def get_ant(debug):
   msg=""
+  dongles = {4104:"Suunto", 4105:"Garmin"}
+  reset_string="a4 01 4a 00 ef 00 00"#reset string probe 
+  i = 0
+  send=""
+  while i<len(reset_string):
+    send = send + binascii.unhexlify(reset_string[i:i+2])
+    i=i+3
   ###windows###
   if os.name == 'nt':
-    found_available_ant_stick= True
-    try:
-      dev_ant = usb.core.find(idVendor=0x0fcf, idProduct=0x1009) #get ANT+ stick (garmin)
-      dev_ant.set_configuration() #set active configuration
-      try:#check if in use
-        stringl=["a4 01 4a 00 ef 00 00"]#reset system
-        send_ant(stringl, dev_ant, debug)
-        print "Using Garmin dongle..."
-      except usb.core.USBError:
-        found_available_ant_stick = False
-    except AttributeError:
-      #print "No Garmin Device found"
-      found_available_ant_stick = False
-
-    if found_available_ant_stick == False:
-      found_available_ant_stick = True
-      try:
-        dev_ant = usb.core.find(idVendor=0x0fcf, idProduct=0x1008) #get ANT+ stick (suunto)
-        dev_ant.set_configuration() #set active configuration   
-        try:#check if in use
-          stringl=["a4 01 4a 00 ef 00 00"]#reset system
-          send_ant(stringl, dev_ant, debug)
-          print "Using Suunto dongle..."
-        except usb.core.USBError:
-          #print "Suunto Device is in use"
+    found_available_ant_stick= False
+    ant_pids = [0x1008, 0x1009]#0x1008 4104 suunto, 0x1009 4105 garmin
+    for ant_pid in ant_pids:#iterate through ant pids
+      if not found_available_ant_stick:#if haven't found a working ANT dongle yet
+        try:
+          dev_ant = usb.core.find(idVendor=0x0fcf, idProduct=ant_pid) #get ANT+ stick 
+          dev_ant.set_configuration() #set active configuration
+          try:#check if in use
+            print "Trying to write to %s dongle" % ant_pid
+            dev_ant.write(0x01, send)#probe with reset command
+            reply = read_ant(dev_ant)
+            matching = [s for s in reply if "a4016f" in s]#look for an ANT+ reply
+            if matching:
+              found_available_ant_stick = True
+              msg = "Using %s dongle" % dongles[ant_pid]
+              print msg
+          except usb.core.USBError:#cannot write to ANT dongle
+            print "ANT dongle in use"
+            found_available_ant_stick = False
+        except AttributeError:#could not find dongle
+          print "Could not find %s dongle" % ant_pid
           found_available_ant_stick = False
-      except AttributeError:  
-        #print "No Suunto Device found"
-        found_available_ant_stick = False
+
+    #if found_available_ant_stick == False:
+      #found_available_ant_stick = True
+      #try:
+        #dev_ant = usb.core.find(idVendor=0x0fcf, idProduct=0x1008) #get ANT+ stick (suunto)
+        #dev_ant.set_configuration() #set active configuration   
+        #try:#check if in use
+          #dev_ant.write(0x01, send)# probe with reset command
+          #print "Using Suunto dongle..."
+        #except usb.core.USBError:
+          ##print "Suunto Device is in use"
+          #found_available_ant_stick = False
+      #except AttributeError:  
+        ##print "No Suunto Device found"
+        #found_available_ant_stick = False
 
     if found_available_ant_stick == False:
       dev_ant = False 
