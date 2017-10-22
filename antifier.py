@@ -304,6 +304,14 @@ class Window(Frame):
     label = Tkinter.Label(self,textvariable=self.SlopeVariable,anchor="w",fg="black",bg="grey")
     label.grid(column=1,row=9,columnspan=2,sticky='EW')
     self.SlopeVariable.set(u"0")
+    
+    label = Tkinter.Label(self,text="Resistance Level")
+    label.grid(column=0,row=10,sticky='EW')
+
+    self.ResistanceLevelVariable = Tkinter.StringVar()
+    label = Tkinter.Label(self,textvariable=self.ResistanceLevelVariable,anchor="w",fg="black",bg="grey")
+    label.grid(column=1,row=10,columnspan=2,sticky='EW')
+    self.ResistanceLevelVariable.set(u"0")
 
 
 
@@ -418,7 +426,9 @@ class Window(Frame):
         #send resistance data to trainer   
         if debug == True: print datetime.utcnow().strftime('%Y-%m-%d %H:%M:%S.%f')[:-3],"GRADE", grade*2,"%"
         if not simulatetrainer:
-          trainer.send(dev_trainer, grade, pedecho)
+          resistance_level = trainer.send(dev_trainer, grade, pedecho)
+        else:
+          resistance_level=0
         
         ####################BROADCAST AND RECEIVE ANT+ data####################
         if calc_power >= 4094:
@@ -474,6 +484,7 @@ class Window(Frame):
         matching = [s for s in reply if "a4094f0033" in s]#a4094f0033ffffffff964ffff7 is gradient message
         if matching:
           grade = int(matching[0][20:22]+matching[0][18:20],16) * 0.01 - 200
+          print grade, matching[0]
           
         ####################HR#######################
         #HR format
@@ -565,7 +576,8 @@ class Window(Frame):
         self.HeartrateVariable.set(heart_rate)
         self.CadenceVariable.set(cadence)
         self.PowerVariable.set(calc_power)
-        self.SlopeVariable.set(grade)
+        self.SlopeVariable.set(round(grade*2,1))
+        self.ResistanceLevelVariable.set(resistance_level)
 
       if os.name == 'posix':#close serial port to ANT stick on Linux
         dev_ant.close()

@@ -23,6 +23,7 @@ def send(dev_trainer, grade, pedecho=0, resistance_level_override=False):
     byte_ints = [0x01, 0x08, 0x01, 0x00, r5, r6, pedecho, 0x00 ,0x02, 0x52, 0x10, 0x04]
     byte_str = "".join(chr(n) for n in byte_ints)
     dev_trainer.write(0x02,byte_str)#send data to device
+    return resistance_level
   
 def receive(dev_trainer):
   global trainer_type, possfov, factors
