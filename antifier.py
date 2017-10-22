@@ -342,6 +342,7 @@ class Window(Frame):
   def ScanForHW(self):
     global dev_trainer, dev_ant, simulatetrainer
     #get ant stick
+    print "get ant stick"
     if not dev_ant:
       dev_ant, msg = ant.get_ant()
       if not dev_ant:
@@ -351,7 +352,7 @@ class Window(Frame):
 
 
     self.PowerFactorVariable.set(powerfactor)
-    
+    print "get trainer"
     #find trainer model for Windows and Linux
     if not dev_trainer:
       #find trainer
@@ -365,10 +366,13 @@ class Window(Frame):
         else:
           self.trainerVariable.set("Trainer detected")
           trainer.initialise_trainer(dev_trainer)#initialise trainer
-
+          print "reset ant stick"
     ant.antreset(dev_ant)#reset dongle
+    print "calibrate ant stick"
     ant.calibrate(dev_ant)#calibrate ANT+ dongle
+    print "calibrate ant stick FE-C"
     ant.master_channel_config(dev_ant)#calibrate ANT+ channel FE-C
+    print "calibrate ant stick HR"
     ant.second_channel_config(dev_ant)#calibrate ANT+ channel HR
 
 

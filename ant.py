@@ -51,10 +51,13 @@ def read_ant(dev_ant):
   elif os.name == 'nt': 
     try:
       while trv:
-        trv = binascii.hexlify(dev_ant.read(0x81,64))
+        trv = binascii.hexlify(dev_ant.read(0x81,64,100))
         read_val += trv
     except Exception, e:
-      print "USB READ ERROR", str(e)
+      if "timeout error" in str(e):
+        pass
+      else:
+        print "USB READ ERROR", str(e)
       
   read_val_list = read_val.split("a4")#break reply into list of messsages
   rtn = []
@@ -124,12 +127,13 @@ def powerdisplay(dev_ant):
   send_ant(stringl, dev_ant, False)
   
 def antreset(dev_ant):
-  for i in range (0,10):
-    if os.name == 'posix': read_val = binascii.hexlify(dev_ant.read(size=256))#clear cached data
-    elif os.name == 'nt': read_val = binascii.hexlify(dev_ant.read(0x81,64))#
+  #for i in range (0,10):
+  #  if os.name == 'posix': read_val = binascii.hexlify(dev_ant.read(size=256))#clear cached data
+  #  elif os.name == 'nt': read_val = binascii.hexlify(dev_ant.read(0x81,64))#
   send_ant(["a4 01 4a 00 ef 00 00"],dev_ant, False)
 
 def get_ant():
+  msg=""
   ###windows###
   if os.name == 'nt':
     found_available_ant_stick= True
@@ -139,7 +143,7 @@ def get_ant():
       try:#check if in use
         stringl=["a4 01 4a 00 ef 00 00"]#reset system
         send_ant(stringl, dev_ant, debug)
-        msg = "Using Garmin dongle..."
+        print "Using Garmin dongle..."
       except usb.core.USBError:
         found_available_ant_stick = False
     except AttributeError:
@@ -154,7 +158,7 @@ def get_ant():
         try:#check if in use
           stringl=["a4 01 4a 00 ef 00 00"]#reset system
           send_ant(stringl, dev_ant, False)
-          msg = "Using Suunto dongle..."
+          print "Using Suunto dongle..."
         except usb.core.USBError:
           #print "Suunto Device is in use"
           found_available_ant_stick = False
@@ -191,5 +195,6 @@ def get_ant():
     dev_ant = False
   
   
-  if not dev_ant: msg = "ANT Stick not found"
+  if not dev_ant: 
+    print "ANT Stick not found"
   return dev_ant, msg
