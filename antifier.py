@@ -444,7 +444,6 @@ class Window(Frame):
           hexspeed = hex(int(speed*1000*1000/3600))[2:].zfill(4)
           newdata = '{0}{1}{2}{3}{4}'.format(newdata[:24], hexspeed[2:], ' ' , hexspeed[:2], newdata[29:]) # set speed
           newdata = '{0}{1}{2}'.format(newdata[:36], ant.calc_checksum(newdata), newdata[38:])#recalculate checksum
-          if debug == True: print datetime.utcnow().strftime('%Y-%m-%d %H:%M:%S.%f')[:-3],"FE DATA",newdata
         
         else:#send specific trainer data
           newdata = '{0}{1}{2}'.format('a4 09 4e 00 19 ', hex(eventcounter)[2:].zfill(2), ' 5a b0 47 1b 01 30 6d 00 00') # increment event count
