@@ -1,4 +1,4 @@
-import usb.core
+import usb.core, os
 global reslist, trainer_type, possfov, factors, grade_resistance
 
 def fromcomp(val,bits):
@@ -22,11 +22,12 @@ def send(dev_trainer, grade, pedecho=0, resistance_level_override=False):
     r5=int(reslist[resistance_level]) & 0xff #byte 5
     byte_ints = [0x01, 0x08, 0x01, 0x00, r5, r6, pedecho, 0x00 ,0x02, 0x52, 0x10, 0x04]
     byte_str = "".join(chr(n) for n in byte_ints)
-    dev_trainer.write(0x02,byte_str)#send data to device
+    dev_trainer.write(0x02, byte_str, 30)#send data to device
+    return resistance_level
   
 def receive(dev_trainer):
   global trainer_type, possfov, factors
-  data = dev_trainer.read(0x82,64)
+  data = dev_trainer.read(0x82, 64, 30)
   if trainer_type == 0x1932:
     if len(data)>40:
       fs = int(data[33])<<8 | int(data[32])
@@ -60,9 +61,9 @@ def receive(dev_trainer):
 def get_trainer():
   global trainer_type, reslist, possfov, factors, grade_resistance
   trainer_type = 0
-  idpl = [0x1932, 0x1942]#iflow, fortius
+  idpl = [0x1932, 0x1942, 0xe6be]#iflow, fortius, uninitialised fortius
   for idp in idpl:
-    dev = usb.core.find(idVendor=0x3561, idProduct=idp) #find iflow device
+    dev = usb.core.find(idVendor=0x3561, idProduct=idp) #find trainer USB device
     if dev != None:
       trainer_type = idp
       break
@@ -71,11 +72,42 @@ def get_trainer():
     return False
   else:
     if trainer_type == 0x1932:
+      print "Found 1932 trainer"
       import T1932_calibration
       reslist = T1932_calibration.reslist
       possfov = T1932_calibration.possfov
       factors = T1932_calibration.factors
       grade_resistance = T1932_calibration.grade_resistance
+    elif trainer_type == 0xe6be:#unintialised fortius
+      print "Found uninitialised  trainer"
+      try:
+        os.system("fxload-libusb.exe -I FortiusSWPID1942Renum.hex -t fx -vv")#load firmware
+        print "Initialising trainer, please wait 5 seconds"
+        time.sleep(5)
+        dev = usb.core.find(idVendor=0x3561, idProduct=0x1942)
+        if dev != None:
+          print "Found 1942 trainer"
+          trainer_type = 0x1942
+          import T1942_calibration
+          reslist = T1942_calibration.reslist
+          possfov = T1942_calibration.possfov
+          factors = T1942_calibration.factors
+          grade_resistance = T1932_calibration.grade_resistance
+        else:
+          print "Unable to load firmware"
+          return False
+      except :#not found
+        print "Unable to initialise trainer"
+        return False
+    elif trainer_type == 0x1942:
+      print "Found 1942 trainer"
+      import T1942_calibration
+      reslist = T1942_calibration.reslist
+      possfov = T1942_calibration.possfov
+      factors = T1942_calibration.factors
+      grade_resistance = T1932_calibration.grade_resistance
+    
+    dev.set_configuration()
     return dev
   
 def initialise_trainer(dev):
