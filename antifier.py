@@ -414,9 +414,7 @@ class Window(Frame):
       #[01] bits 0-3 inst power MSB bits 4-7 trainer status bit, [30] flags bit field
       last_measured_time = time.time() * 1000
       while switch == True:  
-        if eventcounter % 51 == 0:
-          ant.antreset(dev_ant)
-          if debug == True: print "Running", round(time.time() * 1000 - last_measured_time)
+        if debug == True: print "Running", round(time.time() * 1000 - last_measured_time)
         last_measured_time = time.time() * 1000
         if eventcounter >= 256:
           eventcounter = 0
