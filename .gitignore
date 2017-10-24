@@ -1,0 +1,16 @@
+
+*.pyc
+build/antifier/antifier.exe.manifest
+build/antifier/out00-Analysis.toc
+build/antifier/out00-EXE.toc
+build/antifier/out00-PKG.pkg
+build/antifier/out00-PKG.toc
+antifier.spec
+build/antifier/out00-PYZ.pyz
+build/antifier/out00-PYZ.toc
+build/antifier/out00-Tree.toc
+build/antifier/out01-Tree.toc
+build/antifier/warnantifier.txt
+build/antifier/xref-antifier.html
+*.pyc
+trainer.pyc
