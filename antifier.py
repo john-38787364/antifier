@@ -353,7 +353,7 @@ class Window(Frame):
   def ScanForHW(self):
     global dev_trainer, dev_ant, simulatetrainer
     #get ant stick
-    print "get ant stick"
+    if debug:print "get ant stick"
     if not dev_ant:
       dev_ant, msg = ant.get_ant(debug)
       if not dev_ant:
@@ -363,7 +363,7 @@ class Window(Frame):
 
 
     self.PowerFactorVariable.set(powerfactor)
-    print "get trainer"
+    if debug:print "get trainer"
     #find trainer model for Windows and Linux
     if not dev_trainer:
       #find trainer
@@ -383,13 +383,13 @@ class Window(Frame):
     def run():
       global dev_ant, dev_trainer, simulatetrainer, switch
       
-      print "reset ant stick"
+      if debug:print "reset ant stick"
       ant.antreset(dev_ant)#reset dongle
-      print "calibrate ant stick"
+      if debug:print "calibrate ant stick"
       ant.calibrate(dev_ant)#calibrate ANT+ dongle
-      print "calibrate ant stick FE-C"
+      if debug:print "calibrate ant stick FE-C"
       ant.master_channel_config(dev_ant)#calibrate ANT+ channel FE-C
-      print "calibrate ant stick HR"
+      if debug: print "calibrate ant stick HR"
       ant.second_channel_config(dev_ant)#calibrate ANT+ channel HR
       
       
@@ -414,7 +414,7 @@ class Window(Frame):
       #[01] bits 0-3 inst power MSB bits 4-7 trainer status bit, [30] flags bit field
       last_measured_time = time.time() * 1000
       while switch == True:  
-        print "Running", round(time.time() * 1000 - last_measured_time)
+        if debug == True: print "Running", round(time.time() * 1000 - last_measured_time)
         last_measured_time = time.time() * 1000
         if eventcounter >= 256:
           eventcounter = 0
@@ -465,7 +465,7 @@ class Window(Frame):
           hexspeed = hex(int(speed*1000*1000/3600))[2:].zfill(4)
           newdata = '{0}{1}{2}{3}{4}'.format(newdata[:24], hexspeed[2:], ' ' , hexspeed[:2], newdata[29:]) # set speed
           newdata = '{0}{1}{2}'.format(newdata[:36], ant.calc_checksum(newdata), newdata[38:])#recalculate checksum
-        
+
         else:#send specific trainer data
           newdata = '{0}{1}{2}'.format('a4 09 4e 00 19 ', hex(eventcounter)[2:].zfill(2), ' 5a b0 47 1b 01 30 6d 00 00') # increment event count
           if cadence >= 254:

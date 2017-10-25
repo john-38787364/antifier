@@ -31,14 +31,14 @@ def send_ant(stringl, dev_ant, debug):#send message string to dongle
         dev_ant.write(0x01,send)
       except Exception, e:
         print "USB WRITE ERROR", str(e)
-    tr = read_ant(dev_ant)
+    tr = read_ant(dev_ant, debug)
     for v in tr: rtn.append(v)
 
   if debug == True: print rtn
   return rtn
 
 
-def read_ant(dev_ant):
+def read_ant(dev_ant, debug):
   read_val = ""
   trv = True #temp rtn value from ANT stick
   if os.name == 'posix': 
@@ -70,13 +70,7 @@ def read_ant(dev_ant):
           if calc_checksum("a4"+rv) == rv[-2:]: 
             rtn.append("a4"+rv)
     
-    #for rv in read_val_list:
-      #if len(rv)>6:
-        #if (int(rv[:2],16)+3)*2 == len(rv):
-          #if calc_checksum("a4"+rv) == rv[-2:]:#valid message
-            ##a4094f0033ffffffff964ffff7 is gradient message
-            #if rv[6:8]=="33":
-              #rtn = {'grade' : int(rv[18:20]+rv[16:18],16) * 0.01 - 200} #7% in zwift = 3.5% grade in ANT+
+  if debug: print "<<",rtn
   return rtn
   
   
@@ -153,35 +147,20 @@ def get_ant(debug):
           dev_ant = usb.core.find(idVendor=0x0fcf, idProduct=ant_pid) #get ANT+ stick 
           dev_ant.set_configuration() #set active configuration
           try:#check if in use
-            print "Trying to write to %s dongle" % ant_pid
+            if debug: print "Trying to write to %s dongle" % ant_pid
             dev_ant.write(0x01, send)#probe with reset command
-            reply = read_ant(dev_ant)
+            reply = read_ant(dev_ant, debug)
             matching = [s for s in reply if "a4016f" in s]#look for an ANT+ reply
             if matching:
               found_available_ant_stick = True
               msg = "Using %s dongle" % dongles[ant_pid]
-              print msg
+              if debug: print msg
           except usb.core.USBError:#cannot write to ANT dongle
-            print "ANT dongle in use"
+            if debug: print "ANT dongle in use"
             found_available_ant_stick = False
         except AttributeError:#could not find dongle
-          print "Could not find %s dongle" % ant_pid
+          if debug: print "Could not find %s dongle" % ant_pid
           found_available_ant_stick = False
-
-    #if found_available_ant_stick == False:
-      #found_available_ant_stick = True
-      #try:
-        #dev_ant = usb.core.find(idVendor=0x0fcf, idProduct=0x1008) #get ANT+ stick (suunto)
-        #dev_ant.set_configuration() #set active configuration   
-        #try:#check if in use
-          #dev_ant.write(0x01, send)# probe with reset command
-          #print "Using Suunto dongle..."
-        #except usb.core.USBError:
-          ##print "Suunto Device is in use"
-          #found_available_ant_stick = False
-      #except AttributeError:  
-        ##print "No Suunto Device found"
-        #found_available_ant_stick = False
 
     if found_available_ant_stick == False:
       dev_ant = False 
