@@ -92,7 +92,7 @@ def get_trainer():
           reslist = T1942_calibration.reslist
           possfov = T1942_calibration.possfov
           factors = T1942_calibration.factors
-          grade_resistance = T1932_calibration.grade_resistance
+          grade_resistance = T1942_calibration.grade_resistance
         else:
           print "Unable to load firmware"
           return False
@@ -100,12 +100,12 @@ def get_trainer():
         print "Unable to initialise trainer"
         return False
     elif trainer_type == 0x1942:
-      print "Found 1942 trainer"
+      print "Found initialised 1942 trainer"
       import T1942_calibration
       reslist = T1942_calibration.reslist
       possfov = T1942_calibration.possfov
       factors = T1942_calibration.factors
-      grade_resistance = T1932_calibration.grade_resistance
+      grade_resistance = T1942_calibration.grade_resistance
     
     dev.set_configuration()
     return dev

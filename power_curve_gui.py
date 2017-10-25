@@ -161,7 +161,7 @@ class Window(Frame):
       i=0
       while i< 40:#wait 10 seconds
         print i
-        read_val = ant.read_ant(dev_ant)
+        read_val = ant.read_ant(dev_ant, False)
         matching = [s for s in read_val if "a4094f0001" in s] #calibration response
         print matching
         if matching:
@@ -243,7 +243,7 @@ class Window(Frame):
           #get power data
           #if os.name == 'posix': read_val = binascii.hexlify(dev_ant.read(size=256))
           #elif os.name == 'nt': read_val = binascii.hexlify(dev_ant.read(0x81,64))
-          read_val = ant.read_ant(dev_ant)
+          read_val = ant.read_ant(dev_ant, False)
           matching = [s for s in read_val if "a4094e0010" in s] #a4 09 4e 00 10 ec ff 00 be 4e 00 00 10 #10 power page be 4e accumulated power 00 00 iunstant power
           if matching:
             power = int(matching[0][22:24],16)*16 + int(matching[0][20:22],16)
