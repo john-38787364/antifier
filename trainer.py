@@ -45,8 +45,8 @@ def receive(dev_trainer):
       return speed, pedecho, heart_rate, calc_power, cadence
     else:
       return "Not Found", False, False, False, False
-  elif trainer_type == 0x1942:#0b17000008010000060080f8000000005902dc03d007d00703130200282b0000000028630000000041f30000000002aa
-    if len(data)>80:
+  elif trainer_type == 0x1942:#[0x0b,0x17,0x00,0x00,0x08,0x01,0x00,0x00,0x06,0x00,0x80,0xf8,0x00,0x00,0x00,0x00,0x59,0x02,0xdc,0x03,0xd0,0x07,0xd0,0x07,0x03,0x13,0x02,0x00,0x28,0x2b,0x00,0x00,0x00,0x00,0x28,0x63,0x00,0x00,0x00,0x00,0x41,0xf3,0x00,0x00,0x00,0x00,0x02,0xaa]
+    if len(data)>40:
       fs = int(data[33])<<8 | int(data[32])
       speed = round(fs/2.8054/100,1)#speed kph
       pedecho = data[42]
@@ -92,7 +92,7 @@ def get_trainer():
           reslist = T1942_calibration.reslist
           possfov = T1942_calibration.possfov
           factors = T1942_calibration.factors
-          grade_resistance = T1932_calibration.grade_resistance
+          grade_resistance = T1942_calibration.grade_resistance
         else:
           print "Unable to load firmware"
           return False
@@ -100,12 +100,12 @@ def get_trainer():
         print "Unable to initialise trainer"
         return False
     elif trainer_type == 0x1942:
-      print "Found 1942 trainer"
+      print "Found initialised 1942 trainer"
       import T1942_calibration
       reslist = T1942_calibration.reslist
       possfov = T1942_calibration.possfov
       factors = T1942_calibration.factors
-      grade_resistance = T1932_calibration.grade_resistance
+      grade_resistance = T1942_calibration.grade_resistance
     
     dev.set_configuration()
     return dev
