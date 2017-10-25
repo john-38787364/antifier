@@ -259,6 +259,7 @@ class Window(Frame):
 
     self.StartAPPbutton = Tkinter.Button(self,height=1, width=15,text=u"Start script",command=self.Start)
     self.StartAPPbutton.grid(column=0,row=4)
+    self.StartAPPbutton.config(state="disabled")
 
     self.StopAPPbutton = Tkinter.Button(self,height=1, width=15,text=u"Stop script",command=self.Stop, state="disabled")
     self.StopAPPbutton.grid(column=1,row=4)
@@ -337,7 +338,10 @@ class Window(Frame):
     
   def DebugButton(self):
     global debug
-    debug = True
+    if debug == False:
+      debug = True
+    else:
+      debug = False
  
   def Simulatebutton(self):
     global simulatetrainer
@@ -377,6 +381,8 @@ class Window(Frame):
         else:
           self.trainerVariable.set("Trainer detected")
           trainer.initialise_trainer(dev_trainer)#initialise trainer
+          
+    self.StartAPPbutton.config(state="normal")
 
   def Start(self):
     
