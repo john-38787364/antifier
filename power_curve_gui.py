@@ -228,7 +228,7 @@ class Window(Frame):
       while self.StartText.get()=="Stop":
         #print iterations
         last_measured_time = time.time() * 1000
-        if iterations == 80:#inc resistance level every 20s (80 iterations)
+        if iterations == 240:#inc resistance level every 60s (240 iterations)
           iterations = 0
           rest = 1
           resistance_level += 1
@@ -245,7 +245,7 @@ class Window(Frame):
             rest = 0
         else:
           iterations += 1
-          self.InstructionsVariable.set("Over next %s seconds gradually increase your power from slow to near maximum" % int(round((80 - iterations)/4)))
+          self.InstructionsVariable.set("Over next %s seconds gradually increase your power from easy to near maximum" % int(round((240 - iterations)/4)))
         
         try:
           read_val = ant.read_ant(dev_ant, False)
