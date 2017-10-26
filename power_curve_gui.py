@@ -221,48 +221,49 @@ class Window(Frame):
       ant.powerdisplay(dev_ant)#calibrate as power display
       
       iterations = 0
-      effort_level = 0
+      rest = 1
       stop_loop = False
+      
       ###################DATA LOOP FROM ANT STICK###################
       while self.StartText.get()=="Stop":
         #print iterations
         last_measured_time = time.time() * 1000
-        if iterations % 40 == 0:#inc effort level every 10s (40 iterations)
-          effort_level += 10
-          self.InstructionsVariable.set("Try for %s%% of your max effort level" % effort_level)
-        if iterations == 360:
+        if iterations == 80:#inc resistance level every 20s (80 iterations)
           iterations = 0
-          effort_level = 0
+          rest = 1
           resistance_level += 1
           if resistance_level == 14:
             stop_loop = True
         if stop_loop:
+          self.StartText.set(u"Start")
+          self.InstructionsVariable.set("Test finished. Please exit")
           break
-        iterations += 1
+        if rest > 0: 
+          rest += 1
+          self.InstructionsVariable.set("Rest for %s seconds at a slow spin in an easy gear" % int(round((40 - rest)/4)))
+          if rest ==40:
+            rest = 0
+        else:
+          iterations += 1
+          self.InstructionsVariable.set("Over next %s seconds gradually increase your power from slow to near maximum" % int(round((80 - iterations)/4)))
+        
         try:
-          #get power data
-          #if os.name == 'posix': read_val = binascii.hexlify(dev_ant.read(size=256))
-          #elif os.name == 'nt': read_val = binascii.hexlify(dev_ant.read(0x81,64))
           read_val = ant.read_ant(dev_ant, False)
-          matching = [s for s in read_val if "a4094e0010" in s] #a4 09 4e 00 10 ec ff 00 be 4e 00 00 10 #10 power page be 4e accumulated power 00 00 iunstant power
+          matching = [s for s in read_val if "a4094e0010" in s] #a4094e0010ecff00be4e000010 #10 power page be 4e accumulated power 00 00 iunstant power
           if matching:
-            power = int(matching[0][22:24],16)*16 + int(matching[0][20:22],16)
-            
-            
+            power = int(matching[0][22:24],16)*256 + int(matching[0][20:22],16)      
           #receive data from trainer
-          if simulate_trainer: 
-	    speed, pedecho, heart_rate, calc_power, cadence = 20, 0, 70, 200, 90
-	  else:
-	    speed, pedecho, heart_rate, calc_power, cadence = trainer.receive(dev_trainer) #get data from device
-	  if speed == "Not found":
-            self.TrainerStatusVariable.set("Check trainer is powered on")
-	  #send data to trainer
-	  trainer.send(dev_trainer, 0, pedecho, resistance_level)
-	  
-	  self.PowerVariable.set(power)
-	  self.SpeedVariable.set(speed)
-	  self.ResistanceVariable.set(resistance_level)
-	  save_data.append([resistance_level,speed,power])
+          speed, pedecho, heart_rate, calc_power, cadence = trainer.receive(dev_trainer) #get data from device
+          if speed == "Not found":
+                self.TrainerStatusVariable.set("Check trainer is powered on")
+          #send data to trainer
+          trainer.send(dev_trainer, 0, pedecho, resistance_level)
+          
+          self.PowerVariable.set(power)
+          self.SpeedVariable.set(speed)
+          self.ResistanceVariable.set(resistance_level)
+          if rest == 0:#in calibration mode
+            save_data.append([resistance_level,speed,power])
 	  
 	  
         except usb.core.USBError:#nothing from stick
