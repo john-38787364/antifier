@@ -23,7 +23,7 @@ def send_ant(stringl, dev_ant, debug):#send message string to dongle
     while i<len(string):
       send = send + binascii.unhexlify(string[i:i+2])
       i=i+3
-    if debug == True: print ">>",binascii.hexlify(send)#log data to console
+    if debug == True: print int(time.time()*1000),'>>',binascii.hexlify(send)#log data to console
     if os.name == 'posix':
       dev_ant.write(send)
     else:
@@ -82,7 +82,7 @@ def calibrate(dev_ant):
   "a4 02 4d 00 3e d5 00 00",#request ant version
   "a4 09 46 00 b9 a5 21 fb bd 72 c3 45 64 00 00",#set network key b9 a5 21 fb bd 72 c3 45
   ]
-  send_ant(stringl,dev_ant, False)
+  send_ant(stringl,dev_ant, True)
   
 def master_channel_config(dev_ant):
   stringl=[
