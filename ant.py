@@ -97,14 +97,22 @@ def master_channel_config(dev_ant):
   send_ant(stringl, dev_ant, True)
 
 def second_channel_config(dev_ant):
+  #stringl=[
+  #"a4 03 42 01 10 00 f4 00 00",#[42] assign channel, [01] channel #1, [10] type 10 bidirectional transmit, [00] network number 0, [f4] normal assignment
+  #"a4 05 51 01 02 00 78 01 8a 00 00",#[51] set channel ID, [01] channel 1 , [02] device number 2, [00] pairing request (off), [78] device type HR sensor, [01] transmission type  (page 18 and 66 Protocols) 00000101 - 01= independent channel, 1=global data pages used
+  #"a4 02 45 01 39 db 00 00",#[45] set channel freq, [01] set channel #1, [39] freq 2400 + 57 x 1 Mhz= 2457 Mhz
+  #"a4 03 43 01 86 1f c5 00 00",#[43] set messaging period, [01] channel #1, [861f] = 32768/8070(861f) = 4Hz (The channel messaging period in seconds * 32768. Maximum messaging period is ~2 seconds. )
+  #"a4 02 60 01 03 c4 00 00",#[60] set transmit power, [01] channel #1, [03] 0 dBm
+  #"a4 01 4b 01 ef 00 00",#open channel #1
+  #]
   stringl=[
-  "a4 03 42 01 10 00 f4 00 00",#[42] assign channel, [01] channel #1, [10] type 10 bidirectional transmit, [00] network number 0, [f4] normal assignment
-  "a4 05 51 01 02 00 78 01 8a 00 00",#[51] set channel ID, [01] channel 1 , [02] device number 2, [00] pairing request (off), [78] device type HR sensor, [01] transmission type  (page 18 and 66 Protocols) 00000101 - 01= independent channel, 1=global data pages used
-  "a4 02 45 01 39 db 00 00",#[45] set channel freq, [01] set channel #1, [39] freq 2400 + 57 x 1 Mhz= 2457 Mhz
-  "a4 03 43 01 86 1f c5 00 00",#[43] set messaging period, [01] channel #1, [861f] = 32768/8070(861f) = 4Hz (The channel messaging period in seconds * 32768. Maximum messaging period is ~2 seconds. )
-  "a4 02 60 01 03 c4 00 00",#[60] set transmit power, [01] channel #1, [03] 0 dBm
-  "a4 01 4b 01 ef 00 00",#open channel #1
-  ]
+    "a4 03 42 00 10 00 f5 00 00",
+    "a4 05 51 00 65 00 78 01 ec 00 00",
+    "a4 02 45 00 39 da 00 00",
+    "a4 03 43 00 86 1f 7d 00 00",
+    "a4 02 60 00 03 c5 00 00",
+    "a4 01 4b 00 ee 00 00"
+    ]
   send_ant(stringl, dev_ant, True)
 
 def powerdisplay(dev_ant):
