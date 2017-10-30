@@ -833,16 +833,16 @@ class Window(Frame):
           #last heart beat is at heart_beat_event_time
           #if now - heart_beat_event_time > time taken for hr to occur, trigger beat. 70 bpm = beat every 60/70 seconds
           if (time.time()*1000 - heart_beat_event_time) >= (60 / float(heart_rate))*1000:
-            heart_beat_count += 1#increment heart beat count
-            print time.time()*1000, heart_beat_event_time, time.time()*1000 - heart_beat_event_time, heart_beat_count
+            heart_beat_count += 1#increment heart beat count           
             heart_beat_event_time += (60 / float(heart_rate))*1000#reset last time of heart beat
-            print heart_beat_event_time
             
           if heart_beat_event_time - heart_beat_event_time_start_cycle >= 64000:#rollover every 64s
 	    print heart_beat_event_time_start_cycle
             heart_beat_event_time = time.time()*1000#reset last heart beat event
             heart_beat_event_time_start_cycle = time.time()*1000#reset start of cycle
-            
+          
+          print heart_beat_event_time, heart_beat_event_time - heart_beat_event_time_start_cycle, heart_beat_count  
+          
           if heart_beat_count >= 256:
             heart_beat_count = 0
           
