@@ -1,4 +1,4 @@
-import binascii, re, os, usb.core, glob
+import binascii, re, os, usb.core, glob, time
 if os.name == 'posix':
   import serial
 
