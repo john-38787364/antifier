@@ -698,7 +698,7 @@ class Window(Frame):
       if debug:print "calibrate ant stick"
       ant.calibrate(dev_ant)#calibrate ANT+ dongle
       if debug:print "calibrate ant stick FE-C"
-      #ant.master_channel_config(dev_ant)#calibrate ANT+ channel FE-C
+      ant.master_channel_config(dev_ant)#calibrate ANT+ channel FE-C
       if debug: print "calibrate ant stick HR"
       ant.second_channel_config(dev_ant)#calibrate ANT+ channel HR
       
@@ -793,8 +793,8 @@ class Window(Frame):
           newdata = '{0}{1}{2}'.format(newdata[:36], ant.calc_checksum(newdata), newdata[38:])#recalculate checksum
         
         if debug == True: print datetime.utcnow().strftime('%Y-%m-%d %H:%M:%S.%f')[:-3],"TRAINER DATA",newdata
-        #reply = ant.send_ant([newdata], dev_ant, debug)
-        reply = []
+        reply = ant.send_ant([newdata], dev_ant, debug)
+        #reply = []
         #if rv[6:8]=="33":
         #rtn = {'grade' : int(rv[18:20]+rv[16:18],16) * 0.01 - 200} #7% in zwift = 3.5% grade in ANT+  
         matching = [s for s in reply if "a4094f0033" in s]#a4094f0033ffffffff964ffff7 is gradient message
