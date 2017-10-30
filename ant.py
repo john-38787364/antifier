@@ -104,7 +104,6 @@ def second_channel_config(dev_ant):
   "a4 03 43 01 00 20 c5 00 00",#[43] set messaging period, [01] channel #1, [861f] = 32768/8070(861f) = 4Hz (The channel messaging period in seconds * 32768. Maximum messaging period is ~2 seconds. )
   "a4 02 60 01 03 c4 00 00",#[60] set transmit power, [01] channel #1, [03] 0 dBm
   "a4 01 4b 01 ef 00 00",#open channel #1
-  "a4 09 4e 01 82 0f 01 00 00 00 00 48 26 00 00",#broadcast manufacturer's data
   ]
   send_ant(stringl, dev_ant, False)
 

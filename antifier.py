@@ -834,7 +834,9 @@ class Window(Frame):
           #if now - heart_beat_event_time > time taken for hr to occur, trigger beat. 70 bpm = beat every 60/70 seconds
           if (time.time()*1000 - heart_beat_event_time) >= (60 / heart_rate)*1000:
             heart_beat_count += 1#increment heart beat count
+            echo time.time()*1000, heart_beat_event_time, time.time()*1000 - heart_beat_event_time, heart_beat_count
             heart_beat_event_time += (60 / heart_rate)*1000#reset last time of heart beat
+            echo heart_beat_event_time
             
           if heart_beat_event_time - heart_beat_event_time_start_cycle >= 64000:#rollover every 64s
             heart_beat_event_time = time.time()*1000#reset last heart beat event
@@ -855,13 +857,13 @@ class Window(Frame):
           hr_byte_7 = hex(heart_rate)[2:].zfill(2)
           
           
-          if (eventcounter + 1) % 65 == 0 or (eventcounter + 2) % 65 == 0 or (eventcounter + 3) % 65 == 0 or eventcounter % 65 == 0:#send first and second manufacturer's info packet
+          if eventcounter % 65 ==0 or (eventcounter + 1) % 65 == 0 or (eventcounter + 2) % 65 == 0 or (eventcounter + 3) % 65 == 0:#send first and second manufacturer's info packet
             hr_byte_0 = hex(2 + heart_toggle)[2:].zfill(2)
             hr_byte_1 = "0f"
             hr_byte_2 = "01"
             hr_byte_3 = "00"
             #[82][0F][01][00][00][3A][12][48]
-          elif (eventcounter+31) % 65 == 0 or (eventcounter+32) or (eventcounter+33) or (eventcounter+34) % 65 == 0:#send first and second product info packet
+          elif (eventcounter+31) % 65 == 0 or (eventcounter+32) % 65 == 0 or (eventcounter+33) % 65 == 0 or (eventcounter+34) % 65 == 0:#send first and second product info packet
             hr_byte_0 = hex(3 + heart_toggle)[2:].zfill(2)
             hr_byte_1 = "01"
             hr_byte_2 = "01"
