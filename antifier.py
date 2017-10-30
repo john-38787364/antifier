@@ -832,10 +832,10 @@ class Window(Frame):
           #check if heart beat has occurred as tacx only reports instanatenous heart rate data
           #last heart beat is at heart_beat_event_time
           #if now - heart_beat_event_time > time taken for hr to occur, trigger beat. 70 bpm = beat every 60/70 seconds
-          if (time.time()*1000 - heart_beat_event_time) >= (60 / heart_rate)*1000:
+          if (time.time()*1000 - heart_beat_event_time) >= (60 / float(heart_rate))*1000:
             heart_beat_count += 1#increment heart beat count
             print time.time()*1000, heart_beat_event_time, time.time()*1000 - heart_beat_event_time, heart_beat_count
-            heart_beat_event_time += (60 / heart_rate)*1000#reset last time of heart beat
+            heart_beat_event_time += (60 / float(heart_rate))*1000#reset last time of heart beat
             print heart_beat_event_time
             
           if heart_beat_event_time - heart_beat_event_time_start_cycle >= 64000:#rollover every 64s
