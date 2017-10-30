@@ -712,7 +712,7 @@ class Window(Frame):
       heart_toggle = 0
       heart_beat_count = 0
       switch = True
-
+      cot_start = time.time()
       eventcounter=0
       #p.44 [10] general fe data, [19] eqpt type trainer, [89] acc value time since start in 0.25s r/over 64s, [8c] acc value time dist travelled in m r/over 256m, 
       #[8d] [20] speed lsb msb 0.001m/s, [00] hr, [30] capabilities bit field
@@ -857,7 +857,7 @@ class Window(Frame):
           hr_byte_6 = hex(heart_beat_count)[2:].zfill(2)
           hr_byte_7 = hex(heart_rate)[2:].zfill(2)
           
-          
+          #data page 1,6,7 every 80s
           if eventcounter % 65 ==0 or (eventcounter + 1) % 65 == 0 or (eventcounter + 2) % 65 == 0 or (eventcounter + 3) % 65 == 0:#send first and second manufacturer's info packet
             hr_byte_0 = hex(2 + heart_toggle)[2:].zfill(2)
             hr_byte_1 = "0f"
@@ -870,7 +870,23 @@ class Window(Frame):
             hr_byte_2 = "01"
             hr_byte_3 = "33"      
             #[83][01][01][33][4F][3F][13][48]
-            
+          elif (eventcounter+11) % 65 == 0 or (eventcounter+12) % 65 == 0 or (eventcounter+13) % 65 == 0 or (eventcounter+44) % 65 == 0:#send page 0x01 cumulative operating time
+	    cot = int((time.time() - cot_start) / 2)
+            cot_hex = hex(cot)[2:].zfill(6)
+            hr_byte_0 = hex(1 + heart_toggle)[2:].zfill(2)
+            hr_byte_1 = cot_hex[4:6]
+            hr_byte_2 = cot_hex[2:4]
+            hr_byte_3 = cot_hex[0:2]
+	  elif (eventcounter+21) % 65 == 0 or (eventcounter+22) % 65 == 0 or (eventcounter+23) % 65 == 0 or (eventcounter+24) % 65 == 0:#send page 0x06 capabilities
+            hr_byte_0 = hex(6 + heart_toggle)[2:].zfill(2)
+            hr_byte_1 = "ff"
+            hr_byte_2 = "00"
+            hr_byte_3 = "00"
+	  elif (eventcounter+41) % 65 == 0 or (eventcounter+42) % 65 == 0 or (eventcounter+43) % 65 == 0 or (eventcounter+44) % 65 == 0:#send page 0x07 battery
+            hr_byte_0 = hex(7 + heart_toggle)[2:].zfill(2)
+            hr_byte_1 = "64"
+            hr_byte_2 = "55"
+            hr_byte_3 = "13"
           else:#send page 0
             hr_byte_0 = hex(0 + heart_toggle)[2:].zfill(2)
             hr_byte_1 = "ff"
