@@ -855,13 +855,13 @@ class Window(Frame):
           hr_byte_7 = hex(heart_rate)[2:].zfill(2)
           
           
-          if (eventcounter + 1) % 66 == 0 or eventcounter % 66 == 0:#send first and second manufacturer's info packet
+          if (eventcounter + 1) % 65 == 0 or (eventcounter + 2) % 65 == 0 or (eventcounter + 3) % 65 == 0 or eventcounter % 65 == 0:#send first and second manufacturer's info packet
             hr_byte_0 = hex(2 + heart_toggle)[2:].zfill(2)
             hr_byte_1 = "0f"
             hr_byte_2 = "01"
             hr_byte_3 = "00"
             #[82][0F][01][00][00][3A][12][48]
-          elif (eventcounter+32) % 66 == 0 or (eventcounter+33) % 66 == 0:#send first and second product info packet
+          elif (eventcounter+31) % 65 == 0 or (eventcounter+32) or (eventcounter+33) or (eventcounter+34) % 65 == 0:#send first and second product info packet
             hr_byte_0 = hex(3 + heart_toggle)[2:].zfill(2)
             hr_byte_1 = "01"
             hr_byte_2 = "01"
