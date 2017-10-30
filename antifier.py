@@ -839,6 +839,7 @@ class Window(Frame):
             print heart_beat_event_time
             
           if heart_beat_event_time - heart_beat_event_time_start_cycle >= 64000:#rollover every 64s
+	    print heart_beat_event_time_start_cycle
             heart_beat_event_time = time.time()*1000#reset last heart beat event
             heart_beat_event_time_start_cycle = time.time()*1000#reset start of cycle
             
