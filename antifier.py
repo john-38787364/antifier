@@ -834,9 +834,9 @@ class Window(Frame):
           #if now - heart_beat_event_time > time taken for hr to occur, trigger beat. 70 bpm = beat every 60/70 seconds
           if (time.time()*1000 - heart_beat_event_time) >= (60 / heart_rate)*1000:
             heart_beat_count += 1#increment heart beat count
-            echo time.time()*1000, heart_beat_event_time, time.time()*1000 - heart_beat_event_time, heart_beat_count
+            print time.time()*1000, heart_beat_event_time, time.time()*1000 - heart_beat_event_time, heart_beat_count
             heart_beat_event_time += (60 / heart_rate)*1000#reset last time of heart beat
-            echo heart_beat_event_time
+            print heart_beat_event_time
             
           if heart_beat_event_time - heart_beat_event_time_start_cycle >= 64000:#rollover every 64s
             heart_beat_event_time = time.time()*1000#reset last heart beat event
