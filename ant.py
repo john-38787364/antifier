@@ -94,7 +94,7 @@ def master_channel_config(dev_ant):
   "a4 01 4b 00 ee 00 00",#open channel #0
   "a4 09 4e 00 50 ff ff 01 0f 00 85 83 bb 00 00",#broadcast manufacturer's data
   ]
-  send_ant(stringl, dev_ant, False)
+  send_ant(stringl, dev_ant, True)
 
 def second_channel_config(dev_ant):
   stringl=[
@@ -105,7 +105,7 @@ def second_channel_config(dev_ant):
   "a4 02 60 01 03 c4 00 00",#[60] set transmit power, [01] channel #1, [03] 0 dBm
   "a4 01 4b 01 ef 00 00",#open channel #1
   ]
-  send_ant(stringl, dev_ant, False)
+  send_ant(stringl, dev_ant, True)
 
 def powerdisplay(dev_ant):
   #calibrate as power display
