@@ -964,6 +964,9 @@ class Window(Frame):
     thread = threading.Thread(target=run)  
     thread.start() 
 
+def on_closing():#handle for window closing- stop loops
+ global switch
+ switch = False
 
 <<<<<<< HEAD
 #load defaults
