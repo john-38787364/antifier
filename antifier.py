@@ -556,7 +556,6 @@ class Window(Frame):
     label = Tkinter.Label(self,textvariable=self.PowerCurveVariable,anchor="w",fg="black",bg="grey")
     label.grid(column=1,row=3,columnspan=2,sticky='EW')
     if 'power_curve' in user_defaults:
-      print user_defaults['power_curve']
       self.settrainer(user_defaults['power_curve'])
 
 
@@ -967,20 +966,17 @@ class Window(Frame):
 def on_closing():#handle for window closing- stop loops
  global switch
  switch = False
+ root.destroy()
 
-<<<<<<< HEAD
+
 #load defaults
 try:
   user_defaults = pickle.load(open('user_defaults','rb'))
 except:
   user_defaults = {}
-=======
 
-def on_closing():#handle for window closing- stop loops
-  global switch
-  switch = False
 
->>>>>>> 4641dd0d77cd7a48e8b280e316c1efdd9ccc0cb7
+
 dev_trainer = False
 dev_ant = False
 power_curve = ""
