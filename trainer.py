@@ -79,40 +79,36 @@ def get_trainer():
     
   if trainer_type == 0:
     return False
-  else:
-    if trainer_type == 0x1932:
-      print "Found 1932 trainer"
-      import T1932_calibration
-      reslist = T1932_calibration.reslist
-      possfov = T1932_calibration.possfov
-      factors = T1932_calibration.factors
-      grade_resistance = T1932_calibration.grade_resistance
-    elif trainer_type == 0xe6be:#unintialised fortius
-      print "Found uninitialised  trainer"
+  else:#found trainer
+    if trainer_type == 0xe6be:#unintialised 1942
+      print "Found uninitialised 1942 head unit"
       try:
         os.system("fxload-libusb.exe -I FortiusSWPID1942Renum.hex -t fx -vv")#load firmware
-        print "Initialising trainer, please wait 5 seconds"
+        print "Initialising head unit, please wait 5 seconds"
         time.sleep(5)
         dev = usb.core.find(idVendor=0x3561, idProduct=0x1942)
         if dev != None:
-          print "Found 1942 trainer"
+          print "1942 head unit initialised"
           trainer_type = 0x1942
-          import T1942_calibration
-          reslist = T1942_calibration.reslist
-          possfov = T1942_calibration.possfov
-          factors = T1942_calibration.factors
-          grade_resistance = T1942_calibration.grade_resistance
         else:
           print "Unable to load firmware"
           return False
       except :#not found
         print "Unable to initialise trainer"
         return False
+      
+    if trainer_type == 0x1932:
+      print "Found 1932 head unit"
+      import T1932_calibration
+      possfov=[1039, 1299, 1559, 1819, 2078, 2338, 2598, 2858, 3118, 3378, 3767, 4027, 4287, 4677]#possible force values to be recv from device
+      reslist=[1900, 2030, 2150, 2300, 2400, 2550, 2700, 2900, 3070, 3200, 3350, 3460, 3600, 3750]#possible resistance value to be transmitted to device
+      factors = T1932_calibration.factors
+      grade_resistance = T1932_calibration.grade_resistance
     elif trainer_type == 0x1942:
-      print "Found initialised 1942 trainer"
+      print "Found initialised 1942 head unit"
       import T1942_calibration
-      reslist = T1942_calibration.reslist
-      possfov = T1942_calibration.possfov
+      possfov=[0, 1000, 2000, 3000, 4000, 5000, 6000, 7000, 8000, 9000, 10000, 11000, 12000, 13000]#possible force values to be recv from device
+      reslist=[0, 1000, 2000, 3000, 4000, 5000, 6000, 7000, 8000, 9000, 10000, 11000, 12000, 13000]#possible resistance value to be transmitted to device
       factors = T1942_calibration.factors
       grade_resistance = T1942_calibration.grade_resistance
     
@@ -123,3 +119,6 @@ def initialise_trainer(dev):
   byte_ints = [2,0,0,0] # will not read cadence until initialisation byte is sent
   byte_str = "".join(chr(n) for n in byte_ints)
   dev.write(0x02,byte_str)
+  
+def parse_factors(f):
+  c = open()

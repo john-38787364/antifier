@@ -50,5 +50,3 @@ def send(dev_trainer, resistance_level, data):
   byte_str = "".join(chr(n) for n in byte_ints)
   dev_trainer.write(0x02,byte_str)#send data to device
 
-possfov=[1039, 1299, 1559, 1819, 2078, 2338, 2598, 2858, 3118, 3378, 3767, 4027, 4287, 4677]#possible force values to be recv from device
-reslist=[1900, 2030, 2150, 2300, 2400, 2550, 2700, 2900, 3070, 3200, 3350, 3460, 3600, 3750]#possible resistance value to be transmitted to device
