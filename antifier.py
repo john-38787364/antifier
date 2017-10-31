@@ -948,6 +948,12 @@ class Window(Frame):
     thread = threading.Thread(target=run)  
     thread.start() 
 
+
+
+def on_closing():#handle for window closing- stop loops
+  global switch
+  switch = False
+
 dev_trainer = False
 dev_ant = False
 power_curve = ""
@@ -964,4 +970,5 @@ app = Window(root)
 
 
 if __name__ == "__main__":
-     root.mainloop()
+  root.protocol("WM_DELETE_WINDOW", on_closing)
+  root.mainloop()
