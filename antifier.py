@@ -965,11 +965,19 @@ class Window(Frame):
     thread.start() 
 
 
+<<<<<<< HEAD
 #load defaults
 try:
   user_defaults = pickle.load(open('user_defaults','rb'))
 except:
   user_defaults = {}
+=======
+
+def on_closing():#handle for window closing- stop loops
+  global switch
+  switch = False
+
+>>>>>>> 4641dd0d77cd7a48e8b280e316c1efdd9ccc0cb7
 dev_trainer = False
 dev_ant = False
 power_curve = ""
@@ -987,3 +995,5 @@ app = Window(root)
 
 
 if __name__ == "__main__":
+  root.protocol("WM_DELETE_WINDOW", on_closing)
+  root.mainloop()
