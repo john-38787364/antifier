@@ -9,6 +9,7 @@ import platform, glob
 import os
 import threading
 import Tkinter
+import pickle
 from Tkinter import *
 from tkMessageBox import *
 
@@ -233,7 +234,7 @@ class Calibrate_Window:
   def Calibrate(self):
     def run():
       #self.frame.CalibrateButton.config(state="disabled")
-      global dev_ant
+      global dev_ant, debug
       #find ANT stick
       self.ANTStatusVariable.set('Looking for ANT dongle')
       dev_ant, msg = ant.get_ant(False)
@@ -241,14 +242,14 @@ class Calibrate_Window:
         self.ANTStatusVariable.set('ANT dongle not found')
         return
       self.ANTStatusVariable.set('Initialising ANT dongle')
-      ant.antreset(dev_ant)
-      ant.calibrate(dev_ant)#calibrate ANT+ dongle
-      ant.powerdisplay(dev_ant)#calibrate as power display
+      ant.antreset(dev_ant, debug)
+      ant.calibrate(dev_ant, debug)#calibrate ANT+ dongle
+      ant.powerdisplay(dev_ant, debug)#calibrate as power display
       self.ANTStatusVariable.set('ANT dongle initialised')
       self.InstructionsVariable.set('Place pedals in positions instructed by power meter manufacturer. Calibration will start in 5 seconds')
       time.sleep(5)
       self.ANTStatusVariable.set('Sending calibration request')
-      ant.send_ant(["a4 09 4f 00 01 aa ff ff ff ff ff ff 49 00 00"], dev_ant, False)
+      ant.send_ant(["a4 09 4f 00 01 aa ff ff ff ff ff ff 49 00 00"], dev_ant, debug)
       i=0
       while i< 40:#wait 10 seconds
         print i
@@ -460,11 +461,19 @@ class Window(Frame):
     self.master = master
     self.init_window()
 
-  def settrainer(l, n):
-    global power_curve
+  def settrainer(self, n):
+    global power_curve, user_defaults
+    user_defaults['power_curve'] = n
     power_curve = n
-    
+    if n == "power_calc_factors_imagic.txt":
+      self.PowerCurveVariable.set("I-Magic")
+    elif n == "power_calc_factors_fortius.txt":
+      self.PowerCurveVariable.set("Fortius")
+    elif n == "power_calc_factors_custom.txt":
+      self.PowerCurveVariable.set("Custom")
+  
   def init_window(self):
+    global user_defaults
     self.grid()
 
     ###Setup menu content###
@@ -488,7 +497,9 @@ class Window(Frame):
     subSetup = Menu(Setup)
     subSetup.add_command(label='iMagic', command=lambda p="power_calc_factors_imagic.txt": self.settrainer(p))
     subSetup.add_command(label='Fortius', command=lambda p="power_calc_factors_fortius.txt": self.settrainer(p))   
-    subSetup.add_command(label='My Curve', command=lambda p="power_calc_factors_my.txt": self.settrainer(p))
+    subSetup.add_command(label='Custom Curve', command=lambda p="power_calc_factors_custom.txt": self.settrainer(p))
+    
+    
     Setup.add_cascade(label='Power_Curve', menu=subSetup)
 
     Setup.add_command(label="Calibrate", command=self.Calibrate_window)
@@ -533,88 +544,92 @@ class Window(Frame):
     self.Runoffbutton.grid(column=0,row=1)
 
 
-    label = Tkinter.Label(self,height=1, width=10,text="Trainer")
+    label = Tkinter.Label(self,height=1, width=10,text="Head Unit")
     label.grid(column=0,row=2,sticky='EW')
-
     self.trainerVariable = Tkinter.StringVar()
     label = Tkinter.Label(self,textvariable=self.trainerVariable,anchor="w",fg="black",bg="grey")
     label.grid(column=1,row=2,columnspan=2,sticky='EW')
+    
+    label = Tkinter.Label(self,height=1, width=10,text="Power curve")
+    label.grid(column=0,row=3,sticky='EW')
+    self.PowerCurveVariable = Tkinter.StringVar()
+    label = Tkinter.Label(self,textvariable=self.PowerCurveVariable,anchor="w",fg="black",bg="grey")
+    label.grid(column=1,row=3,columnspan=2,sticky='EW')
+    if 'power_curve' in user_defaults:
+      print user_defaults['power_curve']
+      self.settrainer(user_defaults['power_curve'])
 
 
 
     label = Tkinter.Label(self,height=1, width=10,text="ANT+")
-    label.grid(column=0,row=3,sticky='EW')
-
+    label.grid(column=0,row=4,sticky='EW')
     self.ANTVariable = Tkinter.StringVar()
     label = Tkinter.Label(self,textvariable=self.ANTVariable,anchor="w",fg="black",bg="grey")
-    label.grid(column=1,row=3,columnspan=2,sticky='EW')
-
-
-    label = Tkinter.Label(self,text="Power factor")
-    label.grid(column=0,row=4,sticky='EW')
-
-    self.PowerFactorVariable = Tkinter.StringVar()
-    label = Tkinter.Label(self,textvariable=self.PowerFactorVariable,anchor="w",fg="black",bg="grey")
     label.grid(column=1,row=4,columnspan=2,sticky='EW')
 
 
+    label = Tkinter.Label(self,text="Power factor")
+    label.grid(column=0,row=5,sticky='EW')
+    self.PowerFactorVariable = Tkinter.StringVar()
+    label = Tkinter.Label(self,textvariable=self.PowerFactorVariable,anchor="w",fg="black",bg="grey")
+    label.grid(column=1,row=5,columnspan=2,sticky='EW')
+
+
     self.StartAPPbutton = Tkinter.Button(self,height=1, width=15,text=u"Start script",command=self.Start)
-    self.StartAPPbutton.grid(column=0,row=5)
+    self.StartAPPbutton.grid(column=0,row=6)
     self.StartAPPbutton.config(state="disabled")
 
     self.StopAPPbutton = Tkinter.Button(self,height=1, width=15,text=u"Stop script",command=self.Stop, state="disabled")
-    self.StopAPPbutton.grid(column=1,row=5)
+    self.StopAPPbutton.grid(column=1,row=6)
     
 
     label = Tkinter.Label(self,text="Speed")
-    label.grid(column=0,row=6,sticky='EW')
+    label.grid(column=0,row=7,sticky='EW')
 
     self.SpeedVariable = Tkinter.StringVar()
     label = Tkinter.Label(self,textvariable=self.SpeedVariable,anchor="w",fg="black",bg="grey")
-    label.grid(column=1,row=6,columnspan=2,sticky='EW')
+    label.grid(column=1,row=7,columnspan=2,sticky='EW')
     self.SpeedVariable.set(u"0")
 
 
     label = Tkinter.Label(self,text="Heartrate")
-    label.grid(column=0,row=7,sticky='EW')
-
+    label.grid(column=0,row=8,sticky='EW')
     self.HeartrateVariable = Tkinter.StringVar()
     label = Tkinter.Label(self,textvariable=self.HeartrateVariable,anchor="w",fg="black",bg="grey")
-    label.grid(column=1,row=7,columnspan=2,sticky='EW')
+    label.grid(column=1,row=8,columnspan=2,sticky='EW')
     self.HeartrateVariable.set(u"0")
 
     label = Tkinter.Label(self,text="Cadence")
-    label.grid(column=0,row=8,sticky='EW')
+    label.grid(column=0,row=9,sticky='EW')
 
     self.CadenceVariable = Tkinter.StringVar()
     label = Tkinter.Label(self,textvariable=self.CadenceVariable,anchor="w",fg="black",bg="grey")
-    label.grid(column=1,row=8,columnspan=2,sticky='EW')
+    label.grid(column=1,row=9,columnspan=2,sticky='EW')
     self.CadenceVariable.set(u"0")
 
 
     label = Tkinter.Label(self,text="Power")
-    label.grid(column=0,row=9,sticky='EW')
-
+    label.grid(column=0,row=10,sticky='EW')
     self.PowerVariable = Tkinter.StringVar()
     label = Tkinter.Label(self,textvariable=self.PowerVariable,anchor="w",fg="black",bg="grey")
-    label.grid(column=1,row=9,columnspan=2,sticky='EW')
+    label.grid(column=1,row=10,columnspan=2,sticky='EW')
     self.PowerVariable.set(u"0")
 
     label = Tkinter.Label(self,text="Slope")
-    label.grid(column=0,row=10,sticky='EW')
-
+    label.grid(column=0,row=11,sticky='EW')
     self.SlopeVariable = Tkinter.StringVar()
     label = Tkinter.Label(self,textvariable=self.SlopeVariable,anchor="w",fg="black",bg="grey")
-    label.grid(column=1,row=10,columnspan=2,sticky='EW')
+    label.grid(column=1,row=11,columnspan=2,sticky='EW')
     self.SlopeVariable.set(u"0")
     
     label = Tkinter.Label(self,text="Resistance Level")
-    label.grid(column=0,row=11,sticky='EW')
-
+    label.grid(column=0,row=12,sticky='EW')
     self.ResistanceLevelVariable = Tkinter.StringVar()
     label = Tkinter.Label(self,textvariable=self.ResistanceLevelVariable,anchor="w",fg="black",bg="grey")
-    label.grid(column=1,row=11,columnspan=2,sticky='EW')
+    label.grid(column=1,row=12,columnspan=2,sticky='EW')
     self.ResistanceLevelVariable.set(u"0")
+    
+    
 
 
 
@@ -697,27 +712,25 @@ class Window(Frame):
     def run():
       global dev_ant, dev_trainer, simulatetrainer, switch, power_curve
       if power_curve == "":
-        self.trainerVariable.set("Choose a power curve")
+        self.PowerCurveVariable.set("Choose a power curve")
         self.StartAPPbutton.config(state="normal")
         self.StopAPPbutton.config(state="disabled")
         return
       pc_dict = trainer.parse_factors(power_curve)#get power curve dictionary
-      print pc_dict
-      print len(pc_dict)
       if len(pc_dict) != 14:
-        self.trainerVariable.set("Need 14 levels for power curve")
+        self.PowerCurveVariable.set("Need 14 levels for power curve")
         self.StartAPPbutton.config(state="normal")
         self.StopAPPbutton.config(state="disabled")
         return
       pc_sorted_keys = sorted(pc_dict.iterkeys())#-1,-0,2,3 etc.
       if debug:print "reset ant stick"
-      ant.antreset(dev_ant)#reset dongle
+      ant.antreset(dev_ant, debug)#reset dongle
       if debug:print "calibrate ant stick"
-      ant.calibrate(dev_ant)#calibrate ANT+ dongle
+      ant.calibrate(dev_ant, debug)#calibrate ANT+ dongle
       if debug:print "calibrate ant stick FE-C"
-      ant.master_channel_config(dev_ant)#calibrate ANT+ channel FE-C
+      ant.master_channel_config(dev_ant, debug)#calibrate ANT+ channel FE-C
       if debug: print "calibrate ant stick HR"
-      ant.second_channel_config(dev_ant)#calibrate ANT+ channel HR
+      ant.second_channel_config(dev_ant, debug)#calibrate ANT+ channel HR
       
       resistance=0#set initial resistance level
       speed,cadence,power,heart_rate=(0,)*4#initialise values
@@ -751,7 +764,7 @@ class Window(Frame):
         else:
           speed, pedecho, heart_rate, force_index, cadence = trainer.receive(dev_trainer) #get data from device
         factors = pc_dict[pc_sorted_keys[force_index]]
-        calc_power=round(speed*factors[0] + factors[1])
+        calc_power=int(speed*factors[0] + factors[1])
         if calc_power <0: calc_power = 0
         if debug == True: print speed, pedecho, heart_rate, force_index, cadence, calc_power
         ####################SEND DATA TO TRAINER####################
@@ -759,10 +772,10 @@ class Window(Frame):
         if debug == True: print datetime.utcnow().strftime('%Y-%m-%d %H:%M:%S.%f')[:-3],"GRADE", grade*2,"%"
         #set resistance level
         resistance_level = len(pc_dict) - 1
-        for idx, g in enumerate(sorted(grade_resistance)):
-	  if g >= grade*2:#find resistance value immediately above grade set by zwift (Zwift ANT+ grade is half that displayed on screen)
-	    resistance_level = idx
-	    break
+        for idx, g in enumerate(sorted(pc_dict)):
+          if g >= grade*2:#find resistance value immediately above grade set by zwift (Zwift ANT+ grade is half that displayed on screen)
+            resistance_level = idx
+            break
         if not simulatetrainer:
           resistance_level = trainer.send(dev_trainer, resistance_level, pedecho)
         else:
@@ -939,8 +952,11 @@ class Window(Frame):
       if os.name == 'posix':#close serial port to ANT stick on Linux
         dev_ant.close()
         
-      ant.antreset(dev_ant)#reset dongle
+      ant.antreset(dev_ant, debug)#reset dongle
       print "stopped"
+      
+      with open("user_defaults",'wb') as handle:#save defaults
+        pickle.dump(user_defaults, handle, protocol=pickle.HIGHEST_PROTOCOL)
 
     self.FindHWbutton.config(state="disabled")
     self.StartAPPbutton.config(state="disabled")
@@ -948,9 +964,16 @@ class Window(Frame):
     thread = threading.Thread(target=run)  
     thread.start() 
 
+
+#load defaults
+try:
+  user_defaults = pickle.load(open('user_defaults','rb'))
+except:
+  user_defaults = {}
 dev_trainer = False
 dev_ant = False
 power_curve = ""
+
 # root window created. Here, that would be the only window, but
 # you can later have windows within windows.
 root = Tk()

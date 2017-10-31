@@ -75,16 +75,16 @@ def read_ant(dev_ant, debug):
   
   
   
-def calibrate(dev_ant):
+def calibrate(dev_ant, debug):
   stringl=[
   "a4 02 4d 00 54 bf 00 00",#request max channels
   "a4 01 4a 00 ef 00 00",#reset system
   "a4 02 4d 00 3e d5 00 00",#request ant version
   "a4 09 46 00 b9 a5 21 fb bd 72 c3 45 64 00 00",#set network key b9 a5 21 fb bd 72 c3 45
   ]
-  send_ant(stringl,dev_ant, True)
+  send_ant(stringl,dev_ant, debug)
   
-def master_channel_config(dev_ant):
+def master_channel_config(dev_ant, debug):
   stringl=[
   "a4 03 42 00 10 00 f5 00 00",#[42] assign channel, [00] 0, [10] type 10 bidirectional transmit, [00] network number 0, [f5] extended assignment
   "a4 05 51 00 01 00 11 05 e5 00 00",#[51] set channel ID, [00] number 0 (wildcard search) , [01] device number 1, [00] pairing request (off), [11] device type fec, [05] transmission type  (page 18 and 66 Protocols) 00000101 - 01= independent channel, 1=global data pages used
@@ -94,9 +94,9 @@ def master_channel_config(dev_ant):
   "a4 01 4b 00 ee 00 00",#open channel #0
   "a4 09 4e 00 50 ff ff 01 0f 00 85 83 bb 00 00",#broadcast manufacturer's data
   ]
-  send_ant(stringl, dev_ant, True)
+  send_ant(stringl, dev_ant, debug)
 
-def second_channel_config(dev_ant):
+def second_channel_config(dev_ant, debug):
   #stringl=[
   #"a4 03 42 01 10 00 f4 00 00",#[42] assign channel, [01] channel #1, [10] type 10 bidirectional transmit, [00] network number 0, [f4] normal assignment
   #"a4 05 51 01 02 00 78 01 8a 00 00",#[51] set channel ID, [01] channel 1 , [02] device number 2, [00] pairing request (off), [78] device type HR sensor, [01] transmission type  (page 18 and 66 Protocols) 00000101 - 01= independent channel, 1=global data pages used
@@ -113,9 +113,9 @@ def second_channel_config(dev_ant):
     "a4 02 60 01 03 c4 00 00",
     "a4 01 4b 01 ef 00 00"
     ]
-  send_ant(stringl, dev_ant, True)
+  send_ant(stringl, dev_ant, debug)
 
-def powerdisplay(dev_ant):
+def powerdisplay(dev_ant, debug):
   #calibrate as power display
   stringl=[
   "a4 03 42 00 00 00 e5 00 00", #42 assign channel
@@ -127,13 +127,13 @@ def powerdisplay(dev_ant):
   "a4 02 44 00 02 e0 00 00", #44 Host Command/Response 
   "a4 01 4b 00 ee 00 00" #4b ANT_OpenChannel message ID channel = 0 D00001229_Fitness_Modules_ANT+_Application_Note_Rev_3.0.pdf
   ]
-  send_ant(stringl, dev_ant, False)
+  send_ant(stringl, dev_ant, debug)
   
-def antreset(dev_ant):
+def antreset(dev_ant, debug):
   #for i in range (0,10):
   #  if os.name == 'posix': read_val = binascii.hexlify(dev_ant.read(size=256))#clear cached data
   #  elif os.name == 'nt': read_val = binascii.hexlify(dev_ant.read(0x81,64))#
-  send_ant(["a4 01 4a 00 ef 00 00"],dev_ant, False)
+  send_ant(["a4 01 4a 00 ef 00 00"],dev_ant, debug)
 
 def get_ant(debug):
   msg=""
