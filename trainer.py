@@ -6,18 +6,9 @@ def fromcomp(val,bits):
     return 0-(val^(2**bits-1))-1
   else: return val
 
-def send(dev_trainer, grade, pedecho=0, resistance_level_override=False):
-  global reslist, grade_resistance  
-  if 'reslist' in globals():#if not a simulation
-    #get resistance_level from grade
-    if resistance_level_override:#if override grade and specify a level
-      resistance_level = resistance_level_override
-    else:
-      resistance_level = len(grade_resistance) - 1 #set resistance level to hardest as default
-      for idx, g in enumerate(sorted(grade_resistance)):
-        if g >= grade*2:#find resistance value immediately above grade set by zwift (Zwift ANT+ grade is half that displayed on screen)
-          resistance_level = idx
-          break
+def send(dev_trainer, resistance_level, pedecho=0):
+  global reslist  
+  if 'reslist' in globals():#if not a simulation   
     r6=int(reslist[resistance_level])>>8 & 0xff #byte6
     r5=int(reslist[resistance_level]) & 0xff #byte 5
     byte_ints = [0x01, 0x08, 0x01, 0x00, r5, r6, pedecho, 0x00 ,0x02, 0x52, 0x10, 0x04]

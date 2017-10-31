@@ -200,7 +200,7 @@ class Calibrate_Window:
         
         #send data to trainer
         resistance_level = 6
-        trainer.send(dev_trainer, 0, pedecho, resistance_level)
+        trainer.send(dev_trainer, resistance_level, pedecho)
         
         if speed > 40 or rolldown == True:
           if rolldown_time == 0:
@@ -348,7 +348,7 @@ class Calibrate_Window:
           if speed == "Not found":
                 self.TrainerStatusVariable.set("Check trainer is powered on")
           #send data to trainer
-          trainer.send(dev_trainer, 0, pedecho, resistance_level)
+          trainer.send(dev_trainer, resistance_level, pedecho)
           
           self.PowerVariable.set(power)
           self.SpeedVariable.set(speed)
@@ -487,7 +487,8 @@ class Window(Frame):
 
     subSetup = Menu(Setup)
     subSetup.add_command(label='iMagic', command=lambda p="power_calc_factors_imagic.txt": self.settrainer(p))
-    subSetup.add_command(label='Fortius', command=self.settrainer)
+    subSetup.add_command(label='Fortius', command=lambda p="power_calc_factors_fortius.txt": self.settrainer(p))   
+    subSetup.add_command(label='My Curve', command=lambda p="power_calc_factors_my.txt": self.settrainer(p))
     Setup.add_cascade(label='Power_Curve', menu=subSetup)
 
     Setup.add_command(label="Calibrate", command=self.Calibrate_window)
@@ -756,8 +757,14 @@ class Window(Frame):
         ####################SEND DATA TO TRAINER####################
         #send resistance data to trainer   
         if debug == True: print datetime.utcnow().strftime('%Y-%m-%d %H:%M:%S.%f')[:-3],"GRADE", grade*2,"%"
+        #set resistance level
+        resistance_level = len(pc_dict) - 1
+        for idx, g in enumerate(sorted(grade_resistance)):
+	  if g >= grade*2:#find resistance value immediately above grade set by zwift (Zwift ANT+ grade is half that displayed on screen)
+	    resistance_level = idx
+	    break
         if not simulatetrainer:
-          resistance_level = trainer.send(dev_trainer, grade, pedecho)
+          resistance_level = trainer.send(dev_trainer, resistance_level, pedecho)
         else:
           resistance_level=0
           #time.sleep(0.2)#simulated trainer timeout
