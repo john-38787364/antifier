@@ -1,4 +1,4 @@
-#grade:multiplier additional
+#grade:multiplier,additional
 -3:4.5000-20 #i.e. for resistance level 1, power = speed x 4.5 + (-20) watts = 20kph  x 4.5 - 20 = 70 watts
 -2:5.3666,-29
 -1:6.0666,-30
