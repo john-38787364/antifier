@@ -33,6 +33,7 @@ debug = args.debug
 simulatetrainer = args.simulate_trainer
 
 switch = True
+runoff_loop_running = False
 
 
 
@@ -84,300 +85,289 @@ class PowerFactor_Window:
     powerfactor = self.PwrFactVariable.get() 
     self.master.destroy()
 
-class Runoff_Window:
-  def __init__(self, master=None):
-    self.master = master
-    self.frame = Tkinter.Frame(self.master)
-    self.init_window()
+#class Calibrate_Window:
+  #def __init__(self, master=None):
+    #self.master = master
+    #self.frame = Tkinter.Frame(self.master)
+    #self.init_window()
 
-  def init_window(self):
-    self.frame.grid()
-    x = Calibrate_Window()
-    x.StartRunoff(self)
-
-class Calibrate_Window:
-  def __init__(self, master=None):
-    self.master = master
-    self.frame = Tkinter.Frame(self.master)
-    self.init_window()
-
-  def init_window(self):
-    self.frame.grid()
-    self.frame.grid_columnconfigure(1, minsize=200)
-    self.frame.grid_columnconfigure(2, minsize=200)
-    self.StartText = StringVar()
-    self.StartText.set(u"Start")
-    Label(self.frame, text="Step 1: Rundown test").grid(row=1,column=1, sticky="E")
-    Label(self.frame, text="Step 2: Calibrate power meter").grid(row=2,column=1, sticky="E")
-    Label(self.frame, text="Step 3: Runpower curve").grid(row=3,column=1, sticky="E")
-    Label(self.frame, text="Trainer Status: ").grid(row=4,column=1, sticky="E")
-    Label(self.frame, text="ANT+ Status: ").grid(row=5,column=1, sticky="E")
-    Label(self.frame, text="Calibrated: ").grid(row=6,column=1, sticky="E")
-    Label(self.frame, text="Resistance Level: ").grid(row=7,column=1, sticky="E")
-    Label(self.frame, text="Speed: ").grid(row=8,column=1, sticky="E")
-    Label(self.frame, text="Power: ").grid(row=9,column=1, sticky="E")
-    Label(self.frame, text="Instructions: ").grid(row=10,column=1, sticky="E")
+  #def init_window(self):
+    #self.frame.grid()
+    #self.frame.grid_columnconfigure(1, minsize=200)
+    #self.frame.grid_columnconfigure(2, minsize=200)
+    #self.StartText = StringVar()
+    #self.StartText.set(u"Start")
+    #Label(self.frame, text="Step 1: Rundown test").grid(row=1,column=1, sticky="E")
+    #Label(self.frame, text="Step 2: Calibrate power meter").grid(row=2,column=1, sticky="E")
+    #Label(self.frame, text="Step 3: Runpower curve").grid(row=3,column=1, sticky="E")
+    #Label(self.frame, text="Trainer Status: ").grid(row=4,column=1, sticky="E")
+    #Label(self.frame, text="ANT+ Status: ").grid(row=5,column=1, sticky="E")
+    #Label(self.frame, text="Calibrated: ").grid(row=6,column=1, sticky="E")
+    #Label(self.frame, text="Resistance Level: ").grid(row=7,column=1, sticky="E")
+    #Label(self.frame, text="Speed: ").grid(row=8,column=1, sticky="E")
+    #Label(self.frame, text="Power: ").grid(row=9,column=1, sticky="E")
+    #Label(self.frame, text="Instructions: ").grid(row=10,column=1, sticky="E")
     
-    self.InstructionsVariable = StringVar()
-    label = Label(self.frame,textvariable=self.InstructionsVariable,anchor=W, justify=LEFT, wraplength=400)
-    label.grid(row=11,column=1,sticky=W, columnspan=2)
+    #self.InstructionsVariable = StringVar()
+    #label = Label(self.frame,textvariable=self.InstructionsVariable,anchor=W, justify=LEFT, wraplength=400)
+    #label.grid(row=11,column=1,sticky=W, columnspan=2)
     
-    self.RunoffButton = Button(self.frame,height=1, width=15,text="Start Runoff",command=self.StartRunoff)
-    self.RunoffButton.grid(column=2,row=1)
+    #self.RunoffButton = Button(self.frame,height=1, width=15,text="Start Runoff",command=self.StartRunoff)
+    #self.RunoffButton.grid(column=2,row=1)
     
-    self.CalibrateButton = Button(self.frame,height=1, width=15,text="Calibrate",command=self.Calibrate)
-    self.CalibrateButton.grid(column=2,row=2)
-    #self.frame.CalibrateButton.config(state="disabled")
+    #self.CalibrateButton = Button(self.frame,height=1, width=15,text="Calibrate",command=self.Calibrate)
+    #self.CalibrateButton.grid(column=2,row=2)
+    ##self.frame.CalibrateButton.config(state="disabled")
     
-    self.FindHWbutton = Button(self.frame,height=1, width=15,textvariable=self.StartText,command=self.ScanForHW)
-    self.FindHWbutton.grid(column=2,row=3)
-    #self.frame.FindHWbutton.config(state="disabled")
+    #self.FindHWbutton = Button(self.frame,height=1, width=15,textvariable=self.StartText,command=self.ScanForHW)
+    #self.FindHWbutton.grid(column=2,row=3)
+    ##self.frame.FindHWbutton.config(state="disabled")
     
-    self.TrainerStatusVariable = StringVar()
-    label = Label(self.frame,textvariable=self.TrainerStatusVariable,anchor="w")
-    label.grid(row=4,column=2,sticky='EW')
+    #self.TrainerStatusVariable = StringVar()
+    #label = Label(self.frame,textvariable=self.TrainerStatusVariable,anchor="w")
+    #label.grid(row=4,column=2,sticky='EW')
     
-    self.ANTStatusVariable = StringVar()
-    label = Label(self.frame,textvariable=self.ANTStatusVariable,anchor="w")
-    label.grid(row=5,column=2,sticky='EW')   
+    #self.ANTStatusVariable = StringVar()
+    #label = Label(self.frame,textvariable=self.ANTStatusVariable,anchor="w")
+    #label.grid(row=5,column=2,sticky='EW')   
     
-    self.CalibratedVariable = StringVar()
-    label = Label(self.frame,textvariable=self.CalibratedVariable,anchor="w")
-    label.grid(row=6,column=2,sticky='EW') 
-    self.CalibratedVariable.set("False")
+    #self.CalibratedVariable = StringVar()
+    #label = Label(self.frame,textvariable=self.CalibratedVariable,anchor="w")
+    #label.grid(row=6,column=2,sticky='EW') 
+    #self.CalibratedVariable.set("False")
     
-    self.ResistanceVariable = StringVar()
-    label = Label(self.frame,textvariable=self.ResistanceVariable,anchor="w")
-    label.grid(row=7,column=2,sticky='EW')
+    #self.ResistanceVariable = StringVar()
+    #label = Label(self.frame,textvariable=self.ResistanceVariable,anchor="w")
+    #label.grid(row=7,column=2,sticky='EW')
     
-    self.SpeedVariable = StringVar()
-    label = Label(self.frame,textvariable=self.SpeedVariable,anchor="w")
-    label.grid(row=8,column=2,sticky='EW')
+    #self.SpeedVariable = StringVar()
+    #label = Label(self.frame,textvariable=self.SpeedVariable,anchor="w")
+    #label.grid(row=8,column=2,sticky='EW')
     
-    self.PowerVariable = StringVar()
-    label = Label(self.frame,textvariable=self.PowerVariable,anchor="w")
-    label.grid(row=9,column=2,sticky='EW')
+    #self.PowerVariable = StringVar()
+    #label = Label(self.frame,textvariable=self.PowerVariable,anchor="w")
+    #label.grid(row=9,column=2,sticky='EW')
     
   
-  def StartRunoff(self):
-    def run():
-      global simulatetrainer, dev_trainer
-      self.RunoffButton.config(state="disabled")
-      running = True
-      running = True
-      rolldown = False
-      rolldown_time = 0
-      speed = 0
-      self.InstructionsVariable.set('''
-  CALIBRATION TIPS: 
-  1. Tyre pressure 100psi (unloaded and cold) aim for 7.2s rolloff
-  2. Warm up for 2 mins, then cycle 30kph-40kph for 30s 
-  3. Speed up to above 40kph then stop pedalling and freewheel
-  4. Rolldown timer will start automatically when you hit 40kph, so stop pedalling quickly!
-  ''')
+  #def StartRunoff(self):
+    #def run():
+      #global simulatetrainer, dev_trainer
+      #self.RunoffButton.config(state="disabled")
+      #running = True
+      #running = True
+      #rolldown = False
+      #rolldown_time = 0
+      #speed = 0
+      #self.InstructionsVariable.set('''
+  #CALIBRATION TIPS: 
+  #1. Tyre pressure 100psi (unloaded and cold) aim for 7.2s rolloff
+  #2. Warm up for 2 mins, then cycle 30kph-40kph for 30s 
+  #3. Speed up to above 40kph then stop pedalling and freewheel
+  #4. Rolldown timer will start automatically when you hit 40kph, so stop pedalling quickly!
+  #''')
       
-      if not simulatetrainer:
-        if not dev_trainer:#if trainer not already captured
-          dev_trainer = trainer.get_trainer()
-          if not dev_trainer:
-            self.TrainerStatusVariable.set("Trainer not detected")
-            return
-          else:
-            self.TrainerStatusVariable.set("Trainer detected")
-            trainer.initialise_trainer(dev_trainer)#initialise trainer
-      else:
-        self.TrainerStatusVariable.set("Simulated trainer")
-      while running:#loop every 100ms
-        last_measured_time = time.time() * 1000
+      #if not simulatetrainer:
+        #if not dev_trainer:#if trainer not already captured
+          #dev_trainer = trainer.get_trainer()
+          #if not dev_trainer:
+            #self.TrainerStatusVariable.set("Trainer not detected")
+            #return
+          #else:
+            #self.TrainerStatusVariable.set("Trainer detected")
+            #trainer.initialise_trainer(dev_trainer)#initialise trainer
+      #else:
+        #self.TrainerStatusVariable.set("Simulated trainer")
+      #while running:#loop every 100ms
+        #last_measured_time = time.time() * 1000
         
-        #receive data from trainer
-        if simulatetrainer: 
-          speed, pedecho, heart_rate, calc_power, cadence= 41, 0, 70, 200, 90
-        else:
-          speed, pedecho, heart_rate, calc_power, cadence = trainer.receive(dev_trainer) #get data from device
-          self.SpeedVariable.set(speed)
-        if speed == "Not found":
-          self.TrainerStatusVariable.set("Check trainer is powered on")
+        ##receive data from trainer
+        #if simulatetrainer: 
+          #speed, pedecho, heart_rate, calc_power, cadence= 41, 0, 70, 200, 90
+        #else:
+          #speed, pedecho, heart_rate, calc_power, cadence = trainer.receive(dev_trainer) #get data from device
+          #self.SpeedVariable.set(speed)
+        #if speed == "Not found":
+          #self.TrainerStatusVariable.set("Check trainer is powered on")
         
-        #send data to trainer
-        resistance_level = 6
-        trainer.send(dev_trainer, resistance_level, pedecho)
+        ##send data to trainer
+        #resistance_level = 6
+        #trainer.send(dev_trainer, resistance_level, pedecho)
         
-        if speed > 40 or rolldown == True:
-          if rolldown_time == 0:
-            rolldown_time = time.time()#set initial rolldown time
-          self.InstructionsVariable.set("Rolldown timer started - STOP PEDALLING! %s " % ( round((time.time() - rolldown_time),1) ) )
-          rolldown = True
-          if simulatetrainer:
-            speed = 0
-            rolldown_time = time.time() - 7
-          if speed < 0.1:#wheel stopped
-            running = False#break loop
-            if time.time() - rolldown_time > 7.5 : 
-              msg = "More pressure from trainer on tyre required"
-            elif time.time() - rolldown_time < 6.5 : 
-              msg = "Less pressure from trainer on tyre required"
-            else:
-              self.CalibrateButton.config(state="normal")
-              msg = "Pressure on tyre from trainer correct"
-            self.InstructionsVariable.set("Rolldown time = %s seconds\n%s" % (round((time.time() - rolldown_time),1), msg))
+        #if speed > 40 or rolldown == True:
+          #if rolldown_time == 0:
+            #rolldown_time = time.time()#set initial rolldown time
+          #self.InstructionsVariable.set("Rolldown timer started - STOP PEDALLING! %s " % ( round((time.time() - rolldown_time),1) ) )
+          #rolldown = True
+          #if simulatetrainer:
+            #speed = 0
+            #rolldown_time = time.time() - 7
+          #if speed < 0.1:#wheel stopped
+            #running = False#break loop
+            #if time.time() - rolldown_time > 7.5 : 
+              #msg = "More pressure from trainer on tyre required"
+            #elif time.time() - rolldown_time < 6.5 : 
+              #msg = "Less pressure from trainer on tyre required"
+            #else:
+              #self.CalibrateButton.config(state="normal")
+              #msg = "Pressure on tyre from trainer correct"
+            #self.InstructionsVariable.set("Rolldown time = %s seconds\n%s" % (round((time.time() - rolldown_time),1), msg))
           
-          time_to_process_loop = time.time() * 1000 - last_measured_time
-          sleep_time = 0.1 - (time_to_process_loop)/1000
-          if sleep_time < 0: sleep_time = 0
-          time.sleep(sleep_time)
-      self.RunoffButton.config(state="normal")
+          #time_to_process_loop = time.time() * 1000 - last_measured_time
+          #sleep_time = 0.1 - (time_to_process_loop)/1000
+          #if sleep_time < 0: sleep_time = 0
+          #time.sleep(sleep_time)
+      #self.RunoffButton.config(state="normal")
       
-    t1 = threading.Thread(target=run)
-    t1.start()
+    #t1 = threading.Thread(target=run)
+    #t1.start()
   
-  def Calibrate(self):
-    def run():
-      #self.frame.CalibrateButton.config(state="disabled")
-      global dev_ant, debug
-      #find ANT stick
-      self.ANTStatusVariable.set('Looking for ANT dongle')
-      dev_ant, msg = ant.get_ant(False)
-      if not dev_ant:
-        self.ANTStatusVariable.set('ANT dongle not found')
-        return
-      self.ANTStatusVariable.set('Initialising ANT dongle')
-      ant.antreset(dev_ant, debug)
-      ant.calibrate(dev_ant, debug)#calibrate ANT+ dongle
-      ant.powerdisplay(dev_ant, debug)#calibrate as power display
-      self.ANTStatusVariable.set('ANT dongle initialised')
-      self.InstructionsVariable.set('Place pedals in positions instructed by power meter manufacturer. Calibration will start in 5 seconds')
-      time.sleep(5)
-      self.ANTStatusVariable.set('Sending calibration request')
-      ant.send_ant(["a4 09 4f 00 01 aa ff ff ff ff ff ff 49 00 00"], dev_ant, debug)
-      i=0
-      while i< 40:#wait 10 seconds
-        print i
-        read_val = ant.read_ant(dev_ant, False)
-        matching = [s for s in read_val if "a4094f0001" in s] #calibration response
-        print matching
-        if matching:
-          if matching[0][10:12]=="ac":
-            self.ANTStatusVariable.set("Calibration successful")
-            self.CalibratedVariable.set("True")
-            self.FindHWbutton.config(state="normal")
-          elif matching[0][10:12]=="af":
-            self.ANTStatusVariable.set("Calibration failed")
-            self.CalibratedVariable.set("False")
-          else:
-            self.ANTStatusVariable.set("Unknown calibration response")
-            self.CalibratedVariable.set("False")
-          i=999
-        i += 1
-        time.sleep(0.25)
-      if i == 40:#timeout
-        self.ANTStatusVariable.set("No calibration data received")
-        self.CalibratedVariable.set("False")
-      self.CalibrateButton.config(state="normal")
-      self.InstructionsVariable.set("")
+  #def Calibrate(self):
+    #def run():
+      ##self.frame.CalibrateButton.config(state="disabled")
+      #global dev_ant, debug
+      ##find ANT stick
+      #self.ANTStatusVariable.set('Looking for ANT dongle')
+      #dev_ant, msg = ant.get_ant(False)
+      #if not dev_ant:
+        #self.ANTStatusVariable.set('ANT dongle not found')
+        #return
+      #self.ANTStatusVariable.set('Initialising ANT dongle')
+      #ant.antreset(dev_ant, debug)
+      #ant.calibrate(dev_ant, debug)#calibrate ANT+ dongle
+      #ant.powerdisplay(dev_ant, debug)#calibrate as power display
+      #self.ANTStatusVariable.set('ANT dongle initialised')
+      #self.InstructionsVariable.set('Place pedals in positions instructed by power meter manufacturer. Calibration will start in 5 seconds')
+      #time.sleep(5)
+      #self.ANTStatusVariable.set('Sending calibration request')
+      #ant.send_ant(["a4 09 4f 00 01 aa ff ff ff ff ff ff 49 00 00"], dev_ant, debug)
+      #i=0
+      #while i< 40:#wait 10 seconds
+        #print i
+        #read_val = ant.read_ant(dev_ant, False)
+        #matching = [s for s in read_val if "a4094f0001" in s] #calibration response
+        #print matching
+        #if matching:
+          #if matching[0][10:12]=="ac":
+            #self.ANTStatusVariable.set("Calibration successful")
+            #self.CalibratedVariable.set("True")
+            #self.FindHWbutton.config(state="normal")
+          #elif matching[0][10:12]=="af":
+            #self.ANTStatusVariable.set("Calibration failed")
+            #self.CalibratedVariable.set("False")
+          #else:
+            #self.ANTStatusVariable.set("Unknown calibration response")
+            #self.CalibratedVariable.set("False")
+          #i=999
+        #i += 1
+        #time.sleep(0.25)
+      #if i == 40:#timeout
+        #self.ANTStatusVariable.set("No calibration data received")
+        #self.CalibratedVariable.set("False")
+      #self.CalibrateButton.config(state="normal")
+      #self.InstructionsVariable.set("")
     
-    t1 = threading.Thread(target=run)
-    t1.start()
+    #t1 = threading.Thread(target=run)
+    #t1.start()
       
     
-  def ScanForHW(self):
+  #def ScanForHW(self):
 
-    def run():
-      global simulatetrainer, dev_trainer, dev_ant
-      power = 0
-      resistance_level = 0
-      save_data = []
-      if not dev_trainer:
-        #find trainer
-        if simulatetrainer:
-          self.TrainerStatusVariable.set("Simulated Trainer")
-        else:
-          dev_trainer = trainer.get_trainer()
-          if not dev_trainer:
-            self.TrainerStatusVariable.set("Trainer not detected")
-            return
-          else:
-            self.TrainerStatusVariable.set("Trainer detected")
-            trainer.initialise_trainer(dev_trainer)#initialise trainer
+    #def run():
+      #global simulatetrainer, dev_trainer, dev_ant
+      #power = 0
+      #resistance_level = 0
+      #save_data = []
+      #if not dev_trainer:
+        ##find trainer
+        #if simulatetrainer:
+          #self.TrainerStatusVariable.set("Simulated Trainer")
+        #else:
+          #dev_trainer = trainer.get_trainer()
+          #if not dev_trainer:
+            #self.TrainerStatusVariable.set("Trainer not detected")
+            #return
+          #else:
+            #self.TrainerStatusVariable.set("Trainer detected")
+            #trainer.initialise_trainer(dev_trainer)#initialise trainer
       
-      #find ANT stick
-      if not dev_ant:
-        dev_ant, msg = ant.get_ant(False)
-        self.ANTStatusVariable.set(msg)
-        if not dev_ant:
-          print "no ANT"
-          return
+      ##find ANT stick
+      #if not dev_ant:
+        #dev_ant, msg = ant.get_ant(False)
+        #self.ANTStatusVariable.set(msg)
+        #if not dev_ant:
+          #print "no ANT"
+          #return
       
-      ant.antreset(dev_ant)#reset dongle
-      ant.calibrate(dev_ant)#calibrate ANT+ dongle
-      ant.powerdisplay(dev_ant)#calibrate as power display
+      #ant.antreset(dev_ant)#reset dongle
+      #ant.calibrate(dev_ant)#calibrate ANT+ dongle
+      #ant.powerdisplay(dev_ant)#calibrate as power display
       
-      iterations = 0
-      rest = 1
-      stop_loop = False
+      #iterations = 0
+      #rest = 1
+      #stop_loop = False
       
-      ###################DATA LOOP FROM ANT STICK###################
-      while self.StartText.get()=="Stop":
-        #print iterations
-        last_measured_time = time.time() * 1000
-        if iterations == 240:#inc resistance level every 60s (240 iterations)
-          iterations = 0
-          rest = 1
-          resistance_level += 1
-          if resistance_level == 14:
-            stop_loop = True
-        if stop_loop:
-          self.StartText.set(u"Start")
-          self.InstructionsVariable.set("Test finished. Please exit")
-          break
-        if rest > 0: 
-          rest += 1
-          self.InstructionsVariable.set("Rest for %s seconds at a slow spin in an easy gear" % int(round((40 - rest)/4)))
-          if rest ==40:
-            rest = 0
-        else:
-          iterations += 1
-          self.InstructionsVariable.set("Over next %s seconds gradually increase your power from easy to near maximum" % int(round((240 - iterations)/4)))
+      ####################DATA LOOP FROM ANT STICK###################
+      #while self.StartText.get()=="Stop":
+        ##print iterations
+        #last_measured_time = time.time() * 1000
+        #if iterations == 240:#inc resistance level every 60s (240 iterations)
+          #iterations = 0
+          #rest = 1
+          #resistance_level += 1
+          #if resistance_level == 14:
+            #stop_loop = True
+        #if stop_loop:
+          #self.StartText.set(u"Start")
+          #self.InstructionsVariable.set("Test finished. Please exit")
+          #break
+        #if rest > 0: 
+          #rest += 1
+          #self.InstructionsVariable.set("Rest for %s seconds at a slow spin in an easy gear" % int(round((40 - rest)/4)))
+          #if rest ==40:
+            #rest = 0
+        #else:
+          #iterations += 1
+          #self.InstructionsVariable.set("Over next %s seconds gradually increase your power from easy to near maximum" % int(round((240 - iterations)/4)))
         
-        try:
-          read_val = ant.read_ant(dev_ant, False)
-          matching = [s for s in read_val if "a4094e0010" in s] #a4094e0010ecff00be4e000010 #10 power page be 4e accumulated power 00 00 iunstant power
-          if matching:
-            power = int(matching[0][22:24],16)*256 + int(matching[0][20:22],16)      
-          #receive data from trainer
-          speed, pedecho, heart_rate, calc_power, cadence = trainer.receive(dev_trainer) #get data from device
-          if speed == "Not found":
-                self.TrainerStatusVariable.set("Check trainer is powered on")
-          #send data to trainer
-          trainer.send(dev_trainer, resistance_level, pedecho)
+        #try:
+          #read_val = ant.read_ant(dev_ant, False)
+          #matching = [s for s in read_val if "a4094e0010" in s] #a4094e0010ecff00be4e000010 #10 power page be 4e accumulated power 00 00 iunstant power
+          #if matching:
+            #power = int(matching[0][22:24],16)*256 + int(matching[0][20:22],16)      
+          ##receive data from trainer
+          #speed, pedecho, heart_rate, calc_power, cadence = trainer.receive(dev_trainer) #get data from device
+          #if speed == "Not found":
+                #self.TrainerStatusVariable.set("Check trainer is powered on")
+          ##send data to trainer
+          #trainer.send(dev_trainer, resistance_level, pedecho)
           
-          self.PowerVariable.set(power)
-          self.SpeedVariable.set(speed)
-          self.ResistanceVariable.set(resistance_level)
-          if rest == 0:#in calibration mode
-            save_data.append([resistance_level,speed,power])
+          #self.PowerVariable.set(power)
+          #self.SpeedVariable.set(speed)
+          #self.ResistanceVariable.set(resistance_level)
+          #if rest == 0:#in calibration mode
+            #save_data.append([resistance_level,speed,power])
 	  
 	  
-        except usb.core.USBError:#nothing from stick
-            pass
-        time_to_process_loop = time.time() * 1000 - last_measured_time
-        sleep_time = 0.25 - (time_to_process_loop)/1000
-        if sleep_time < 0: sleep_time = 0
-        time.sleep(sleep_time)
-      ###################END DATA LOOP FROM ANT STICK###############
-      #ant.send(["a4 01 4a 00 ef 00 00"],dev_ant, False)#reset ANT+ dongle
-      with open('calibration.pickle', 'wb') as handle:
-        pickle.dump(save_data, handle, protocol=pickle.HIGHEST_PROTOCOL)
+        #except usb.core.USBError:#nothing from stick
+            #pass
+        #time_to_process_loop = time.time() * 1000 - last_measured_time
+        #sleep_time = 0.25 - (time_to_process_loop)/1000
+        #if sleep_time < 0: sleep_time = 0
+        #time.sleep(sleep_time)
+      ####################END DATA LOOP FROM ANT STICK###############
+      ##ant.send(["a4 01 4a 00 ef 00 00"],dev_ant, False)#reset ANT+ dongle
+      #with open('calibration.pickle', 'wb') as handle:
+        #pickle.dump(save_data, handle, protocol=pickle.HIGHEST_PROTOCOL)
       
           
           
-    if self.StartText.get()=="Start":
-      self.StartText.set(u"Stop")
-      t1 = threading.Thread(target=run)
-      t1.start()
+    #if self.StartText.get()=="Start":
+      #self.StartText.set(u"Stop")
+      #t1 = threading.Thread(target=run)
+      #t1.start()
       
-    else:
-      self.StartText.set(u"Start")
+    #else:
+      #self.StartText.set(u"Start")
    
 class HeadUnit_Window:
   def __init__(self, master):
@@ -471,6 +461,7 @@ class Window(Frame):
       self.PowerCurveVariable.set("Fortius")
     elif n == "power_calc_factors_custom.txt":
       self.PowerCurveVariable.set("Custom")
+      
   
   def init_window(self):
     global user_defaults
@@ -478,7 +469,7 @@ class Window(Frame):
 
     ###Setup menu content###
 
-    self.master.title("Antifier")
+    self.master.title("Antifier v0.9")
     self.master.option_add('*tearOff', False)
 
     # allowing the widget to take the full space of the root window
@@ -538,43 +529,47 @@ class Window(Frame):
 
     ###Setup GUI buttons and labels###
 
-    self.FindHWbutton = Tkinter.Button(self,height=1, width=15,text=u"Locate HW",command=self.ScanForHW)
+    self.FindHWbutton = Tkinter.Button(self,height=1, width=15,text=u"1. Locate HW",command=self.ScanForHW)
     self.FindHWbutton.grid(column=0,row=0)
-    self.Runoffbutton = Tkinter.Button(self,height=1, width=15,text=u"Perform Runoff test",command=self.Runoff_window)
-    self.Runoffbutton.grid(column=0,row=1)
 
 
     label = Tkinter.Label(self,height=1, width=10,text="Head Unit")
-    label.grid(column=0,row=2,sticky='EW')
+    label.grid(column=0,row=1,sticky='EW')
     self.trainerVariable = Tkinter.StringVar()
     label = Tkinter.Label(self,textvariable=self.trainerVariable,anchor="w",fg="black",bg="grey")
-    label.grid(column=1,row=2,columnspan=2,sticky='EW')
+    label.grid(column=1,row=1,columnspan=2,sticky='EW')
     
     label = Tkinter.Label(self,height=1, width=10,text="Power curve")
-    label.grid(column=0,row=3,sticky='EW')
+    label.grid(column=0,row=2,sticky='EW')
     self.PowerCurveVariable = Tkinter.StringVar()
     label = Tkinter.Label(self,textvariable=self.PowerCurveVariable,anchor="w",fg="black",bg="grey")
-    label.grid(column=1,row=3,columnspan=2,sticky='EW')
+    label.grid(column=1,row=2,columnspan=2,sticky='EW')
     if 'power_curve' in user_defaults:
       self.settrainer(user_defaults['power_curve'])
 
 
 
     label = Tkinter.Label(self,height=1, width=10,text="ANT+")
-    label.grid(column=0,row=4,sticky='EW')
+    label.grid(column=0,row=3,sticky='EW')
     self.ANTVariable = Tkinter.StringVar()
     label = Tkinter.Label(self,textvariable=self.ANTVariable,anchor="w",fg="black",bg="grey")
-    label.grid(column=1,row=4,columnspan=2,sticky='EW')
+    label.grid(column=1,row=3,columnspan=2,sticky='EW')
 
 
     label = Tkinter.Label(self,text="Power factor")
-    label.grid(column=0,row=5,sticky='EW')
+    label.grid(column=0,row=4,sticky='EW')
     self.PowerFactorVariable = Tkinter.StringVar()
     label = Tkinter.Label(self,textvariable=self.PowerFactorVariable,anchor="w",fg="black",bg="grey")
+    label.grid(column=1,row=4,columnspan=2,sticky='EW')
+
+    self.RunoffButton = Tkinter.Button(self,height=1, width=15,text=u"2. Perform Runoff",command=self.Runoff)
+    self.RunoffButton.grid(column=0,row=5)
+    self.RunoffButton.config(state="disabled")
+    self.runoffVariable = Tkinter.StringVar()
+    label = Tkinter.Label(self,textvariable=self.runoffVariable,anchor="w",fg="black",bg="grey", width=40)
     label.grid(column=1,row=5,columnspan=2,sticky='EW')
 
-
-    self.StartAPPbutton = Tkinter.Button(self,height=1, width=15,text=u"Start script",command=self.Start)
+    self.StartAPPbutton = Tkinter.Button(self,height=1, width=15,text=u"3. Start script",command=self.Start)
     self.StartAPPbutton.grid(column=0,row=6)
     self.StartAPPbutton.config(state="disabled")
 
@@ -644,10 +639,64 @@ class Window(Frame):
     self.CalibrateWindow = Tkinter.Toplevel(self.master)
     self.app = Calibrate_Window(self.CalibrateWindow)
     
-  def Runoff_window(self):
-    self.RunoffWindow = Tkinter.Toplevel(self.master)
-    self.app = Runoff_Window(self.RunoffWindow)
+  def Runoff(self):
+    global runoff_loop_running
+    def run():
+      global dev_trainer, runoff_loop_running
+      rolldown = False
+      rolldown_time = 0
+      speed = 0
+      #self.InstructionsVariable.set('''
+  #CALIBRATION TIPS: 
+  #1. Tyre pressure 100psi (unloaded and cold) aim for 7.2s rolloff
+  #2. Warm up for 2 mins, then cycle 30kph-40kph for 30s 
+  #3. Speed up to above 40kph then stop pedalling and freewheel
+  #4. Rolldown timer will start automatically when you hit 40kph, so stop pedalling quickly!
+  #''')
+      
+      while runoff_loop_running:#loop every 100ms
+        last_measured_time = time.time() * 1000
+        #receive data from trainer
+        speed, pedecho, heart_rate, force_index, cadence = trainer.receive(dev_trainer) #get data from device
+        self.SpeedVariable.set(speed)
+        if speed == "Not found":
+          self.TrainerStatusVariable.set("Check trainer is powered on")
+        
+        #send data to trainer
+        resistance_level = 6
+        trainer.send(dev_trainer, resistance_level, pedecho)
+        
+        if speed > 40:#speed above 40, start rolldown
+          self.runoffVariable.set("Rolldown timer started - STOP PEDALLING! %s " % ( round((time.time() - rolldown_time),1) ) )
+          rolldown = True
+        
+        if speed <=40 and rolldown:#rolldown timer starts when dips below 40
+          if rolldown_time == 0:
+            rolldown_time = time.time()#set initial rolldown time
+          
+        if speed < 0.1 and rolldown:#wheel stopped
+          runoff_loop_running = False#break loop
+          self.runoffVariable.set("Rolldown time = %s seconds (aim 7s)" % round((time.time() - rolldown_time),1))
 
+          time_to_process_loop = time.time() * 1000 - last_measured_time
+          sleep_time = 0.1 - (time_to_process_loop)/1000
+          if sleep_time < 0: sleep_time = 0
+          time.sleep(sleep_time)
+          self.RunoffButton.config(text="2. Perform Runoff")#reset runoff button
+    
+    if self.RunoffButton.cget('text')=="2. Perform Runoff":#start runoff
+      self.runoffVariable.set('Cycle to above 40kph then stop')
+      self.RunoffButton.config(text="2. Stop Runoff")
+      self.StartAPPbutton.config(state="disabled")
+      runoff_loop_running = True#loop switch
+      t1 = threading.Thread(target=run)
+      t1.start()
+    else:#stop loop
+      runoff_loop_running = False
+      self.runoffVariable.set('Stopped')
+      self.RunoffButton.config(text="2. Perform Runoff")
+      self.StartAPPbutton.config(state="normal")
+    
   def Readme(self):
     os.startfile('README.txt')
 
@@ -705,6 +754,9 @@ class Window(Frame):
           trainer.initialise_trainer(dev_trainer)#initialise trainer
           
     self.StartAPPbutton.config(state="normal")
+    if not simulatetrainer:
+      self.RunoffButton.config(state="normal")
+    self.FindHWbutton.config(state="disabled")
 
   def Start(self):
     
@@ -731,6 +783,7 @@ class Window(Frame):
       if debug: print "calibrate ant stick HR"
       ant.second_channel_config(dev_ant, debug)#calibrate ANT+ channel HR
       
+      self.RunoffButton.config(state='disabled')
       resistance=0#set initial resistance level
       speed,cadence,power,heart_rate=(0,)*4#initialise values
       grade = 0
@@ -952,7 +1005,8 @@ class Window(Frame):
         dev_ant.close()
         
       ant.antreset(dev_ant, debug)#reset dongle
-      print "stopped"
+      if debug: print "stopped"
+      self.RunoffButton.config(state='normal')
       
       with open("user_defaults",'wb') as handle:#save defaults
         pickle.dump(user_defaults, handle, protocol=pickle.HIGHEST_PROTOCOL)
