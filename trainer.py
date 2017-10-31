@@ -48,10 +48,8 @@ def receive(dev_trainer):
       if force == 0:
         force = 1039
       #print force, possfov, factors
-      calc_power=round(factors[possfov.index(force)][0]*speed + factors[possfov.index(force)][1])
-      if calc_power<0: calc_power=0
-      #print speed, pedecho, heart_rate, calc_power, cadence
-      return speed, pedecho, heart_rate, calc_power, cadence
+      force_index = possfov.index(force)
+      return speed, pedecho, heart_rate, force_index, cadence
     else:
       return "Not Found", False, False, False, False
   elif trainer_type == 0x1942:#[0x0b,0x17,0x00,0x00,0x08,0x01,0x00,0x00,0x06,0x00,0x80,0xf8,0x00,0x00,0x00,0x00,0x59,0x02,0xdc,0x03,0xd0,0x07,0xd0,0x07,0x03,0x13,0x02,0x00,0x28,0x2b,0x00,0x00,0x00,0x00,0x28,0x63,0x00,0x00,0x00,0x00,0x41,0xf3,0x00,0x00,0x00,0x00,0x02,0xaa]
@@ -62,8 +60,8 @@ def receive(dev_trainer):
       heart_rate = int(data[12])
       cadence = int(data[44])
       force = fromcomp((data[39]<<8)|data[38],16)
-      calc_power = 0
-      return speed, pedecho, heart_rate, calc_power, cadence
+      force_index = possfov.index(force)
+      return speed, pedecho, heart_rate, force_index, cadence
     else:
       return "Not Found", False, False, False, False
     

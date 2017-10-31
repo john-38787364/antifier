@@ -694,8 +694,21 @@ class Window(Frame):
   def Start(self):
     
     def run():
-      global dev_ant, dev_trainer, simulatetrainer, switch
-      
+      global dev_ant, dev_trainer, simulatetrainer, switch, power_curve
+      if power_curve == "":
+        self.trainerVariable.set("Choose a power curve")
+        self.StartAPPbutton.config(state="normal")
+        self.StopAPPbutton.config(state="disabled")
+        return
+      pc_dict = trainer.parse_factors(power_curve)#get power curve dictionary
+      print pc_dict
+      print len(pc_dict)
+      if len(pc_dict) != 14:
+        self.trainerVariable.set("Need 14 levels for power curve")
+        self.StartAPPbutton.config(state="normal")
+        self.StopAPPbutton.config(state="disabled")
+        return
+      pc_sorted_keys = sorted(pc_dict.iterkeys())#-1,-0,2,3 etc.
       if debug:print "reset ant stick"
       ant.antreset(dev_ant)#reset dongle
       if debug:print "calibrate ant stick"
@@ -705,7 +718,6 @@ class Window(Frame):
       if debug: print "calibrate ant stick HR"
       ant.second_channel_config(dev_ant)#calibrate ANT+ channel HR
       
-      print power_curve
       resistance=0#set initial resistance level
       speed,cadence,power,heart_rate=(0,)*4#initialise values
       grade = 0
@@ -734,11 +746,13 @@ class Window(Frame):
         ###TRAINER- SHOULD WRITE THEN READ 70MS LATER REALLY
         ####################GET DATA FROM TRAINER####################
         if simulatetrainer: 
-          speed, pedecho, heart_rate, calc_power, cadence = 20, 0, 70, 200, 90
+          speed, pedecho, heart_rate, force_index, cadence = 20, 0, 70, 5, 90
         else:
-          speed, pedecho, heart_rate, calc_power, cadence = trainer.receive(dev_trainer) #get data from device
-        if debug == True: print speed, pedecho, heart_rate, calc_power, cadence
-        
+          speed, pedecho, heart_rate, force_index, cadence = trainer.receive(dev_trainer) #get data from device
+        factors = pc_dict[pc_sorted_keys[force_index]]
+        calc_power=round(speed*factors[0] + factors[1])
+        if calc_power <0: calc_power = 0
+        if debug == True: print speed, pedecho, heart_rate, force_index, cadence, calc_power
         ####################SEND DATA TO TRAINER####################
         #send resistance data to trainer   
         if debug == True: print datetime.utcnow().strftime('%Y-%m-%d %H:%M:%S.%f')[:-3],"GRADE", grade*2,"%"
@@ -803,7 +817,7 @@ class Window(Frame):
         matching = [s for s in reply if "a4094f0033" in s]#a4094f0033ffffffff964ffff7 is gradient message
         if matching:
           grade = int(matching[0][20:22]+matching[0][18:20],16) * 0.01 - 200
-          print grade, matching[0]
+          if debug: print grade, matching[0]
           
         ####################HR#######################
         #HR format
@@ -840,11 +854,9 @@ class Window(Frame):
             heart_beat_event_time += (60 / float(heart_rate))*1000#reset last time of heart beat
             
           if heart_beat_event_time - heart_beat_event_time_start_cycle >= 64000:#rollover every 64s
-	    print heart_beat_event_time_start_cycle
             heart_beat_event_time = time.time()*1000#reset last heart beat event
             heart_beat_event_time_start_cycle = time.time()*1000#reset start of cycle
-          
-          print heart_beat_event_time, heart_beat_event_time - heart_beat_event_time_start_cycle, heart_beat_count  
+           
           
           if heart_beat_count >= 256:
             heart_beat_count = 0
