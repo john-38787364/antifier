@@ -1,5 +1,5 @@
 import usb.core, os
-global reslist, trainer_type, possfov, factors, grade_resistance
+global reslist, trainer_type, possfov
 
 def fromcomp(val,bits):
   if val>>(bits-1) == 1:
@@ -20,7 +20,7 @@ def send(dev_trainer, resistance_level, pedecho=0):
     return resistance_level
   
 def receive(dev_trainer):
-  global trainer_type, possfov, factors
+  global trainer_type, possfov
   try:
     data = dev_trainer.read(0x82, 64, 30)
   except Exception, e:
@@ -38,7 +38,6 @@ def receive(dev_trainer):
       force = fromcomp((data[39]<<8)|data[38],16)
       if force == 0:
         force = 1039
-      #print force, possfov, factors
       force_index = possfov.index(force)
       return speed, pedecho, heart_rate, force_index, cadence
     else:
@@ -57,7 +56,7 @@ def receive(dev_trainer):
       return "Not Found", False, False, False, False
     
 def get_trainer():
-  global trainer_type, reslist, possfov, factors, grade_resistance
+  global trainer_type, reslist, possfov
   trainer_type = 0
   idpl = [0x1932, 0x1942, 0xe6be]#iflow, fortius, uninitialised fortius
   for idp in idpl:
@@ -88,18 +87,12 @@ def get_trainer():
       
     if trainer_type == 0x1932:
       print "Found 1932 head unit"
-      import T1932_calibration
       possfov=[1039, 1299, 1559, 1819, 2078, 2338, 2598, 2858, 3118, 3378, 3767, 4027, 4287, 4677]#possible force values to be recv from device
       reslist=[1900, 2030, 2150, 2300, 2400, 2550, 2700, 2900, 3070, 3200, 3350, 3460, 3600, 3750]#possible resistance value to be transmitted to device
-      factors = T1932_calibration.factors
-      grade_resistance = T1932_calibration.grade_resistance
     elif trainer_type == 0x1942:
       print "Found initialised 1942 head unit"
-      import T1942_calibration
       possfov=[0, 1000, 2000, 3000, 4000, 5000, 6000, 7000, 8000, 9000, 10000, 11000, 12000, 13000]#possible force values to be recv from device
       reslist=[0, 1000, 2000, 3000, 4000, 5000, 6000, 7000, 8000, 9000, 10000, 11000, 12000, 13000]#possible resistance value to be transmitted to device
-      factors = T1942_calibration.factors
-      grade_resistance = T1942_calibration.grade_resistance
     
     dev.set_configuration()
     return dev
