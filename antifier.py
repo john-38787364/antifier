@@ -460,7 +460,10 @@ class Window(Frame):
     self.master = master
     self.init_window()
 
-
+  def settrainer(l, n):
+    global power_curve
+    power_curve = n
+    
   def init_window(self):
     self.grid()
 
@@ -483,8 +486,8 @@ class Window(Frame):
     Setup.add_command(label="Head Unit", command=self.HeadUnit_window)
 
     subSetup = Menu(Setup)
-    subSetup.add_command(label='iFlow')
-    subSetup.add_command(label='Fortius')
+    subSetup.add_command(label='iMagic', command=lambda p="power_calc_factors_imagic.txt": self.settrainer(p))
+    subSetup.add_command(label='Fortius', command=self.settrainer)
     Setup.add_cascade(label='Power_Curve', menu=subSetup)
 
     Setup.add_command(label="Calibrate", command=self.Calibrate_window)
@@ -702,7 +705,7 @@ class Window(Frame):
       if debug: print "calibrate ant stick HR"
       ant.second_channel_config(dev_ant)#calibrate ANT+ channel HR
       
-      
+      print power_curve
       resistance=0#set initial resistance level
       speed,cadence,power,heart_rate=(0,)*4#initialise values
       grade = 0
@@ -928,7 +931,7 @@ class Window(Frame):
 
 dev_trainer = False
 dev_ant = False
-
+power_curve = ""
 # root window created. Here, that would be the only window, but
 # you can later have windows within windows.
 root = Tk()
