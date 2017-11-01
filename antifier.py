@@ -804,6 +804,7 @@ class Window(Frame):
       ant.second_channel_config(dev_ant, debug)#calibrate ANT+ channel HR
       
       if not headless: self.RunoffButton.config(state='disabled')
+      else: print "Ctrl-C to exit"
       resistance=0#set initial resistance level
       speed,cadence,power,heart_rate=(0,)*4#initialise values
       grade = False
