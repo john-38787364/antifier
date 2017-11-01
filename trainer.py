@@ -17,7 +17,6 @@ def send(dev_trainer, resistance_level, pedecho=0):
       dev_trainer.write(0x02, byte_str, 30)#send data to device
     except Exception, e:
       print "TRAINER WRITE ERROR", str(e)
-    return resistance_level
   
 def receive(dev_trainer):
   global trainer_type, possfov

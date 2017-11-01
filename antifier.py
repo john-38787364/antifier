@@ -614,13 +614,18 @@ class Window(Frame):
     self.SlopeVariable = Tkinter.StringVar()
     label = Tkinter.Label(self,textvariable=self.SlopeVariable,anchor="w",fg="black",bg="grey")
     label.grid(column=1,row=11,columnspan=2,sticky='EW')
-    self.SlopeVariable.set(u"0")
+    
+    label = Tkinter.Label(self,text="Target Power")
+    label.grid(column=0,row=12,sticky='EW')
+    self.TargetPowerVariable = Tkinter.StringVar()
+    label = Tkinter.Label(self,textvariable=self.TargetPowerVariable,anchor="w",fg="black",bg="grey")
+    label.grid(column=1,row=12,columnspan=2,sticky='EW')
     
     label = Tkinter.Label(self,text="Resistance Level")
-    label.grid(column=0,row=12,sticky='EW')
+    label.grid(column=0,row=13,sticky='EW')
     self.ResistanceLevelVariable = Tkinter.StringVar()
     label = Tkinter.Label(self,textvariable=self.ResistanceLevelVariable,anchor="w",fg="black",bg="grey")
-    label.grid(column=1,row=12,columnspan=2,sticky='EW')
+    label.grid(column=1,row=13,columnspan=2,sticky='EW')
     self.ResistanceLevelVariable.set(u"0")
     
     
@@ -789,7 +794,8 @@ class Window(Frame):
       self.RunoffButton.config(state='disabled')
       resistance=0#set initial resistance level
       speed,cadence,power,heart_rate=(0,)*4#initialise values
-      grade = 0
+      grade = False
+      target_power = False
       accumulated_power = 0
       heart_beat_event_time = time.time() * 1000
       heart_beat_event_time_start_cycle = time.time() * 1000
@@ -831,15 +837,26 @@ class Window(Frame):
         #send resistance data to trainer   
         if debug == True: print datetime.utcnow().strftime('%Y-%m-%d %H:%M:%S.%f')[:-3],"GRADE", grade*2,"%"
         #set resistance level
-        resistance_level = len(pc_dict) - 1
-        for idx, g in enumerate(sorted(pc_dict)):
-          if g >= grade*2:#find resistance value immediately above grade set by zwift (Zwift ANT+ grade is half that displayed on screen)
-            resistance_level = idx
-            break
+        if not grade and not target_power:#if trainer not been been set a grade or target power
+          grade = 0
+        resistance_level = len(pc_dict) - 1#set to highest by default
+        if grade is not False:#find resistance for grade
+          for idx, g in enumerate(sorted(pc_dict)):
+            if g >= grade*2:#find resistance value immediately above grade set by zwift (Zwift ANT+ grade is half that displayed on screen)
+              resistance_level = idx
+              break
+        elif target_power:#get resistance closest for power target
+          if speed < 10:
+            speed = 10#default to at least 10 kph
+          closest = 1000
+          for idx, g in enumerate(sorted(pc_dict)):#iterate up
+            power_at_level = int(speed*pc_dict[g][0] + pc_dict[g][1])
+            if (target_power - power_at_level)**2 < closest ** 2:
+              resistance_level = idx
+              closest = ((target_power - power_at_level)**2)**0.5
         if not simulatetrainer:
-          resistance_level = trainer.send(dev_trainer, resistance_level, pedecho)
-        else:
-          resistance_level=0
+          trainer.send(dev_trainer, resistance_level, pedecho)
+
           #time.sleep(0.2)#simulated trainer timeout
         
         ####################BROADCAST AND RECEIVE ANT+ data####################
@@ -894,11 +911,22 @@ class Window(Frame):
         #reply = []
         #if rv[6:8]=="33":
         #rtn = {'grade' : int(rv[18:20]+rv[16:18],16) * 0.01 - 200} #7% in zwift = 3.5% grade in ANT+  
-        matching = [s for s in reply if "a4094f0033" in s]#a4094f0033ffffffff964ffff7 is gradient message
+        matching = [s for s in reply if "a4094f0033" in s]#target resistance
+        # 0x33 a4094f00 33 ffffffff964fff f7 is gradient message
         if matching:
           grade = int(matching[0][20:22]+matching[0][18:20],16) * 0.01 - 200
+          target_power = False
+          self.SlopeVariable.set(round(grade*2,1))
+          self.TargetPowerVariable.set("")
           if debug: print grade, matching[0]
-          
+        else:
+          matching = [s for s in reply if "a4094f0031" in s]#target watts
+          # 0x31 a4094f00 31 ffffffffff5c02 72 is target power message in 0.25w 0x025c = 604 = 151W
+          if matching:
+            target_power = int(matching[0][22:24]+matching[0][20:22],16)/4
+            grade = False
+            self.TargetPowerVariable.set(target_power)
+            self.SlopeVariable.set("")
         ####################HR#######################
         #HR format
         #D00000693_-_ANT+_Device_Profile_-_Heart_Rate_Rev_2.1.pdf
@@ -1006,7 +1034,6 @@ class Window(Frame):
         self.HeartrateVariable.set(heart_rate)
         self.CadenceVariable.set(cadence)
         self.PowerVariable.set(calc_power)
-        self.SlopeVariable.set(round(grade*2,1))
         self.ResistanceLevelVariable.set(resistance_level)
 
       if os.name == 'posix':#close serial port to ANT stick on Linux
