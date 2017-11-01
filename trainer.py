@@ -28,6 +28,7 @@ def receive(dev_trainer):
       pass
     else:
       print "TRAINER READ ERROR", str(e)
+    return "Not Found", False, False, False, False
   if trainer_type == 0x1932:
     if len(data)>40:
       fs = int(data[33])<<8 | int(data[32])
