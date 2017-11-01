@@ -1036,10 +1036,11 @@ class Window(Frame):
         self.PowerVariable.set(calc_power)
         self.ResistanceLevelVariable.set(resistance_level)
 
+      
+      ant.antreset(dev_ant, debug)#reset dongle
       if os.name == 'posix':#close serial port to ANT stick on Linux
         dev_ant.close()
-        
-      ant.antreset(dev_ant, debug)#reset dongle
+      
       if debug: print "stopped"
       self.RunoffButton.config(state='normal')
       
