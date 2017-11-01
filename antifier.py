@@ -822,7 +822,7 @@ class Window(Frame):
           speed, pedecho, heart_rate, force_index, cadence = 0, 0, 0, 0, 0
           self.trainerVariable.set('Cannot read from trainer')
         else:
-        self.trainerVariable.set("Trainer detected")
+          self.trainerVariable.set("Trainer detected")
         factors = pc_dict[pc_sorted_keys[force_index]]
         calc_power=int(speed*factors[0] + factors[1])
         if calc_power <0: calc_power = 0
