@@ -491,7 +491,7 @@ class Window(Frame):
     subSetup.add_command(label='Custom Curve', command=lambda p="power_calc_factors_custom.txt": self.settrainer(p))
     
     
-    Setup.add_cascade(label='Power_Curve', menu=subSetup)
+    Setup.add_cascade(label='Power Curve', menu=subSetup)
 
     Setup.add_command(label="Calibrate", command=self.Calibrate_window)
     
@@ -766,7 +766,7 @@ class Window(Frame):
     def run():
       global dev_ant, dev_trainer, simulatetrainer, switch, power_curve
       if power_curve == "":
-        self.PowerCurveVariable.set("Choose a power curve")
+        self.PowerCurveVariable.set("Choose a power curve under setup menu")
         self.StartAPPbutton.config(state="normal")
         self.StopAPPbutton.config(state="disabled")
         return
