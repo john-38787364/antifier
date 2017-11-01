@@ -1,17 +1,16 @@
 OVERVIEW
 This project will enable a Windows or Linux PC to broadcast ANT+ data via a dongle from a Tacx trainer connected to it via USB. This can be either be from a standalone PC broadcasting to a PC or tablet running e.g. Zwift or Trainerroad, or from a Windows PC already running Zwift/ Trainerroad (this PC will therefore require two ANT+ dongles) 
-Home page: https://github.com/john-38787364/tacx-ant
+Home page: https://github.com/john-38787364/antifier
 
 REQUIREMENTS
 - Windows or Linux PC
 - ANT+ dongle to broadcast data - standard Garmin and Suunto dongles tested. Any dongle with hardware ID 0fcf:1009 or 0fcf:1008 should work
-- Tacx trainer. So far tested with 1932 head unit:
-https://github.com/john-38787364/tacx-ant/blob/master/1932.jpg
+- Tacx trainer. So far tested with 1932 and 1942 head unit
 
 INSTALLATION
 Linux (Root required):
-sudo curl https://raw.githubusercontent.com/john-38787364/tacx-ant/master/install.sh | sudo bash  
-This will create a directory tacx-interface with required scripts in. 
+sudo curl https://raw.githubusercontent.com/john-38787364/antifier/master/install.sh | sudo bash  
+This will create a directory "antifier" with required scripts in. 
 
 Windows:
 You will need to reinstall your trainer as a libusb-win32 device:
@@ -26,26 +25,32 @@ You will need to reinstall your trainer as a libusb-win32 device:
 8. Select ANT USB Stick 2, then OK in the warning, then close
 
 Download the Windows build of the application from:
-https://github.com/john-38787364/tacx-ant/raw/master/dist/tacx-interface.exe
-Optionally dowload the calibration app:
-https://github.com/john-38787364/tacx-ant/raw/master/dist/runoff_calibration.exe
+https://github.com/john-38787364/antifier/raw/master/dist/tacx-interface.exe
 
-Run by double clicking on the downloaded EXE
+Double click on the self extracting package and run by double clicking on the downloaded antifier.exe
 
-If you wish to run as a native python script then you will need to run python.exe -m pip install pyusb and to download libusb-win32-devel-filter https://sourceforge.net/projects/libusb-win32/files/libusb-win32-releases/1.2.6.0/
+If you wish to run as a native python script then you will need to run python.exe -m pip install pyusb and to download libusb-win32-devel-filter:
+https://sourceforge.net/projects/libusb-win32/files/libusb-win32-releases/1.2.6.0/
 
 USAGE
 Linux
-sudo python tacx-interface.py
-To calibrate trainer pressue on tyre via run off run
-sudo python runoff_calibration.py
+sudo python antifier.py
 
 Windows
 1. Quit Garmin express if running
-2. Run application- a black screen should open. If it opens then closes then you've got a problem (see debug options below)
-(3. Start Zwift - Power, Heart rate, Cadence and Smart Trainer should all be available as FE-C device )
-To calibrate trainer pressue on tyre via run off run
-runoff_calibration.exe
+2. Run application- the gui should open
+
+Both
+1. Pick the appropriate power curve for your trainer under "setup"
+2. Scan for hardware to pickup your trainer and ANT dongle
+3. Perform a rundown test to calibrate your trainer. (see below)
+4. Start Zwift/ Trainerroad - Power, Heart rate, Cadence and Smart Trainer should all be available as FE-C device 
+
+Rundown test
+To ensure comparable training sessions, the trainer should exert the same relative resistance each time
+1. Aim for about 100psi in tyre when cold
+2. Warm up for 2-3 minutes to warm rubberer
+3. Perform test- try for about a 7 second rundown from 40kph
 
 OPTIONS
 -p, --power-factor=x - will alter power reported by factor selected. Defaults to 1. e.g. power-factor=0.9 and power is 100, then power of 90W will be reported
@@ -54,47 +59,34 @@ PROBLEMS
 1. Unplug and replug USB ANT+ dongles if having problems! Some applications esp Garmin Express can be greedy about ownership of dongles
 2. Open a command prompt and from the download directory and run the program in the console with the following switches:
 -d, --debug - starts verbose output from script
--s, --simulate-trainer - will ignore if a trainer is connected and sends cadence=90, power=283, HR=72 to test if your ANT+ dongle is broadcasting correctly, and if Zwift is receiving
-save output with tacx-interface.py/.exe --debug > out.log
+-s, --simulate-trainer - will ignore if a trainer is connected and sends cadence=90, power, HR=72 to test if your ANT+ dongle is broadcasting correctly, and if Zwift is receiving
+save output with antifier.py/.exe --debug > out.log
 
 To run the program in the console in Windows:
 2.1 Open the folder containing tacx-interface.exe then press "Shift Key" and right click in the white space next to it, then select "Open command window here". A black window should open
-2.2 Run the script with "tacx-interface.exe --debug > out.log"
+2.2 Run the script with "antifier.exe --debug > out.log"
 (select this command without the quotes then copy, right click on the black window should paste it into the black window)
 2.3 Press return- there should be no output on the screen
 2.4 Take a short Zwift ride- you should get data from your trainer on Zwift
 2.5 Finish the ride then press ctrl-c whilst in the black window to exit the script
 2.6 Post out.log to github as an issue
 
-3. Report all issues via github at https://github.com/john-38787364/tacx-ant
+3. Report all issues via github at https://github.com/john-38787364/antifier
 
 POWER AND RESISTANCE CALIBRATION
 As the trainer does not report power, power must be inferred by the following formula:
 
 speed x resistance exerted by the trainer.
 
-The file T1932_calibration.py contains the resistance values on the trainer in response to the slope indicated by the training program, as well as the fomulae to calculate power at each resistance level.
+The powercurve files power_calc_factors_TRAINER.txt contain the factors rewuired by the calculation as well as grade informtaion. You select which file to use when you choose a powercurve under "setup".
 
-Change the resistance exerted by the trainer for grade sent by training application:
-Alter the list variable "grade_resistance" values to match the resistance level you want at grades up to the value you input.
-e.g.
-grade_resistance = [
--3,     #up to grade -3% will cause trainer to exert resistance level 1
--2,     #from grade >-3% to <=-2% will cause trainer to exert resistance level 2
--1,     #from grade >-2% to <=-1% will cause trainer to exert resistance level 3 etc.
-... etc.
+Format: (comments after # sign)
+#grade:multiplier,additional
+-3:4.5000,-20 #1st line- any grade up to -3% will exert resistance level 0; power = speed x 4.5 + (-20) watts = 20kph x 4.5 - 20 = 70 watts
+-2:5.3666,-29 #2nd line- grades from -3% to -2% will exert resistance level 1; power = speed x 5.3666 + (-29) = 20kph x 5.3666 -29 =  78 watts
 
-The resistance level 7 was most extensively tested for power calculations so it is recommended that grades 0-2% are around this level
+Resistance level 6 was most extensively tested for power calculations so it is recommended that grades 0-2% are around this level
 
-To change the power calculation:
-The basic formula is speed x resistance level. Each resistance level is contained within the "factors" dictionary variable as
-resistance level:[multiplier],[additional power]
-so the power output at a particular resistance = speed * multiplier + additional power
-e.g.
-factors={
-1:[4.5,-20],#i.e. for resistance level 1, power = speed(kph) x 4.5 + (-20) watts = 20kph  x 4.5 - 20 = 70 watts
+Alter the grade and factors as you see fit. However, ensure there are 14 grades/ resistance value defined
 
-The "factors" dictionary variable has been derived from tests using values from a Powertap hub vs speed/resistance level.
-The runoff_calibration.py script will help you get your trainer closer to these test conditions and hence a more accurate power value.
-You may alter the multiplier and additional power values for each resistance level to more closely match your personal setup
 

@@ -667,22 +667,25 @@ class Window(Frame):
         trainer.send(dev_trainer, resistance_level, pedecho)
         
         if speed > 40:#speed above 40, start rolldown
-          self.runoffVariable.set("Rolldown timer started - STOP PEDALLING! %s " % ( round((time.time() - rolldown_time),1) ) )
+          self.runoffVariable.set("Rolldown timer started - STOP PEDALLING!")
           rolldown = True
         
         if speed <=40 and rolldown:#rolldown timer starts when dips below 40
           if rolldown_time == 0:
             rolldown_time = time.time()#set initial rolldown time
+          self.runoffVariable.set("Rolldown timer started - STOP PEDALLING! %s " % ( round((time.time() - rolldown_time),1) ) )
           
         if speed < 0.1 and rolldown:#wheel stopped
           runoff_loop_running = False#break loop
           self.runoffVariable.set("Rolldown time = %s seconds (aim 7s)" % round((time.time() - rolldown_time),1))
 
-          time_to_process_loop = time.time() * 1000 - last_measured_time
-          sleep_time = 0.1 - (time_to_process_loop)/1000
-          if sleep_time < 0: sleep_time = 0
-          time.sleep(sleep_time)
-          self.RunoffButton.config(text="2. Perform Runoff")#reset runoff button
+        time_to_process_loop = time.time() * 1000 - last_measured_time
+        sleep_time = 0.1 - (time_to_process_loop)/1000
+        if sleep_time < 0: sleep_time = 0
+        time.sleep(sleep_time)
+        
+      self.RunoffButton.config(text="2. Perform Runoff")#reset runoff button
+      self.StartAPPbutton.config(state="normal")
     
     if self.RunoffButton.cget('text')=="2. Perform Runoff":#start runoff
       self.runoffVariable.set('Cycle to above 40kph then stop')
