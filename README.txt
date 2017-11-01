@@ -9,7 +9,7 @@ REQUIREMENTS
 
 INSTALLATION
 Linux (Root required):
-sudo curl https://raw.githubusercontent.com/john-38787364/antifier/master/install.sh | sudo bash  
+wget -O - https://raw.githubusercontent.com/john-38787364/antifier/master/install.sh | sudo sh
 This will create a directory "antifier" with required scripts in. 
 
 Windows:
