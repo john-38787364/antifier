@@ -32,7 +32,7 @@ Double click on the self extracting package and run by double clicking on the do
 If you wish to run as a native python script then you will need to run python.exe -m pip install pyusb and to download libusb-win32-devel-filter:
 https://sourceforge.net/projects/libusb-win32/files/libusb-win32-releases/1.2.6.0/
 
-USAGE
+USAGE (GUI)
 Linux
 sudo python antifier.py
 
@@ -52,8 +52,17 @@ To ensure comparable training sessions, the trainer should exert the same relati
 2. Warm up for 2-3 minutes to warm rubberer
 3. Perform test- try for about a 7 second rundown from 40kph
 
+USAGE (HEADLESS)
+Linux
+sudo python antifier.py -l -c power_calc_factors_imagic.txt (-s , -d)
+Stop with ctrl-C
+
 OPTIONS
 -p, --power-factor=x - will alter power reported by factor selected. Defaults to 1. e.g. power-factor=0.9 and power is 100, then power of 90W will be reported
+-l, --healess - run without GUI (headless). Requires -c
+-c, --power-curve - choose powercurve file for headless operation
+-s, --simulate-trainer - simulate trainer
+-d, --debug - print debugging info
 
 PROBLEMS
 1. Unplug and replug USB ANT+ dongles if having problems! Some applications esp Garmin Express can be greedy about ownership of dongles

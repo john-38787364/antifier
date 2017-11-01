@@ -44,9 +44,7 @@ def read_ant(dev_ant, debug):
   if os.name == 'posix': 
     dev_ant.timeout = 0.1
     try:
-      while trv:
-        trv = binascii.hexlify(dev_ant.read(size=256))
-        read_val += trv
+      read_val += binascii.hexlify(dev_ant.read(size=256))
     except Exception, e:
       read_val = ""
       print str(e)
