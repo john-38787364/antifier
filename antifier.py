@@ -818,11 +818,11 @@ class Window(Frame):
           speed, pedecho, heart_rate, force_index, cadence = 20, 0, 70, 5, 90
         else:
           speed, pedecho, heart_rate, force_index, cadence = trainer.receive(dev_trainer) #get data from device
-	if speed == "Not Found":
-	  speed, pedecho, heart_rate, force_index, cadence = 0, 0, 0, 0, 0
-	  self.trainerVariable.set('Cannot read from trainer')
-	else:
-	  self.trainerVariable.set("Trainer detected")
+        if speed == "Not Found":
+          speed, pedecho, heart_rate, force_index, cadence = 0, 0, 0, 0, 0
+          self.trainerVariable.set('Cannot read from trainer')
+        else:
+        self.trainerVariable.set("Trainer detected")
         factors = pc_dict[pc_sorted_keys[force_index]]
         calc_power=int(speed*factors[0] + factors[1])
         if calc_power <0: calc_power = 0
@@ -920,79 +920,79 @@ class Window(Frame):
         #[83][01][01][33][4F][3F][13][48] - [83] page 3 with toggle on 
         
         #if eventcounter > 40: heart_rate = 100 #comment out in production
-        #if heart_rate>0:#i.e. heart rate belt attached
-	if eventcounter % 4 == 0:#toggle bit every 4 counts
-	  if heart_toggle == 0: heart_toggle = 128
-	  else: 
-	    heart_toggle = 0
-	
-	#check if heart beat has occurred as tacx only reports instanatenous heart rate data
-	#last heart beat is at heart_beat_event_time
-	#if now - heart_beat_event_time > time taken for hr to occur, trigger beat. 70 bpm = beat every 60/70 seconds
-	if (time.time()*1000 - heart_beat_event_time) >= (60 / float(heart_rate))*1000:
-	  heart_beat_count += 1#increment heart beat count           
-	  heart_beat_event_time += (60 / float(heart_rate))*1000#reset last time of heart beat
-	  
-	if heart_beat_event_time - heart_beat_event_time_start_cycle >= 64000:#rollover every 64s
-	  heart_beat_event_time = time.time()*1000#reset last heart beat event
-	  heart_beat_event_time_start_cycle = time.time()*1000#reset start of cycle
-	  
-	
-	if heart_beat_count >= 256:
-	  heart_beat_count = 0
-	
-	if heart_rate >= 256:
-	  heart_rate = 255
-	
-	hex_heart_beat_time = int((heart_beat_event_time - heart_beat_event_time_start_cycle)*1.024) # convert ms to 1/1024 of a second
-	hex_heart_beat_time = hex(hex_heart_beat_time)[2:].zfill(4)
-	
-	hr_byte_4 = hex_heart_beat_time[2:]
-	hr_byte_5 = hex_heart_beat_time[:2]
-	hr_byte_6 = hex(heart_beat_count)[2:].zfill(2)
-	hr_byte_7 = hex(heart_rate)[2:].zfill(2)
-	
-	#data page 1,6,7 every 80s
-	if eventcounter % 65 ==0 or (eventcounter + 1) % 65 == 0 or (eventcounter + 2) % 65 == 0 or (eventcounter + 3) % 65 == 0:#send first and second manufacturer's info packet
-	  hr_byte_0 = hex(2 + heart_toggle)[2:].zfill(2)
-	  hr_byte_1 = "0f"
-	  hr_byte_2 = "01"
-	  hr_byte_3 = "00"
-	  #[82][0F][01][00][00][3A][12][48]
-	elif (eventcounter+31) % 65 == 0 or (eventcounter+32) % 65 == 0 or (eventcounter+33) % 65 == 0 or (eventcounter+34) % 65 == 0:#send first and second product info packet
-	  hr_byte_0 = hex(3 + heart_toggle)[2:].zfill(2)
-	  hr_byte_1 = "01"
-	  hr_byte_2 = "01"
-	  hr_byte_3 = "33"      
-	  #[83][01][01][33][4F][3F][13][48]
-	elif (eventcounter+11) % 65 == 0 or (eventcounter+12) % 65 == 0 or (eventcounter+13) % 65 == 0 or (eventcounter+44) % 65 == 0:#send page 0x01 cumulative operating time
-	  cot = int((time.time() - cot_start) / 2)
-	  cot_hex = hex(cot)[2:].zfill(6)
-	  hr_byte_0 = hex(1 + heart_toggle)[2:].zfill(2)
-	  hr_byte_1 = cot_hex[4:6]
-	  hr_byte_2 = cot_hex[2:4]
-	  hr_byte_3 = cot_hex[0:2]
-	elif (eventcounter+21) % 65 == 0 or (eventcounter+22) % 65 == 0 or (eventcounter+23) % 65 == 0 or (eventcounter+24) % 65 == 0:#send page 0x06 capabilities
-	  hr_byte_0 = hex(6 + heart_toggle)[2:].zfill(2)
-	  hr_byte_1 = "ff"
-	  hr_byte_2 = "00"
-	  hr_byte_3 = "00"
-	elif (eventcounter+41) % 65 == 0 or (eventcounter+42) % 65 == 0 or (eventcounter+43) % 65 == 0 or (eventcounter+44) % 65 == 0:#send page 0x07 battery
-	  hr_byte_0 = hex(7 + heart_toggle)[2:].zfill(2)
-	  hr_byte_1 = "64"
-	  hr_byte_2 = "55"
-	  hr_byte_3 = "13"
-	else:#send page 0
-	  hr_byte_0 = hex(0 + heart_toggle)[2:].zfill(2)
-	  hr_byte_1 = "ff"
-	  hr_byte_2 = "ff"
-	  hr_byte_3 = "ff"
-	  
-	hrdata = "a4 09 4e 01 "+hr_byte_0+" "+hr_byte_1+" "+hr_byte_2+" "+hr_byte_3+" "+hr_byte_4+" "+hr_byte_5+" "+hr_byte_6+" "+hr_byte_7+" 02 00 00"
-	hrdata = "a4 09 4e 01 "+hr_byte_0+" "+hr_byte_1+" "+hr_byte_2+" "+hr_byte_3+" "+hr_byte_4+" "+hr_byte_5+" "+hr_byte_6+" "+hr_byte_7+" "+ant.calc_checksum(hrdata)+" 00 00"
-	time.sleep(0.125)# sleep for 125ms
-	if debug == True: print datetime.utcnow().strftime('%Y-%m-%d %H:%M:%S.%f')[:-3],"HEART RATE",hrdata
-	ant.send_ant([hrdata], dev_ant, debug)
+        if heart_rate>0:#i.e. heart rate belt attached
+          if eventcounter % 4 == 0:#toggle bit every 4 counts
+            if heart_toggle == 0: heart_toggle = 128
+            else: 
+              heart_toggle = 0
+          
+          #check if heart beat has occurred as tacx only reports instanatenous heart rate data
+          #last heart beat is at heart_beat_event_time
+          #if now - heart_beat_event_time > time taken for hr to occur, trigger beat. 70 bpm = beat every 60/70 seconds
+          if (time.time()*1000 - heart_beat_event_time) >= (60 / float(heart_rate))*1000:
+            heart_beat_count += 1#increment heart beat count           
+            heart_beat_event_time += (60 / float(heart_rate))*1000#reset last time of heart beat
+            
+          if heart_beat_event_time - heart_beat_event_time_start_cycle >= 64000:#rollover every 64s
+            heart_beat_event_time = time.time()*1000#reset last heart beat event
+            heart_beat_event_time_start_cycle = time.time()*1000#reset start of cycle
+            
+          
+          if heart_beat_count >= 256:
+            heart_beat_count = 0
+          
+          if heart_rate >= 256:
+            heart_rate = 255
+          
+          hex_heart_beat_time = int((heart_beat_event_time - heart_beat_event_time_start_cycle)*1.024) # convert ms to 1/1024 of a second
+          hex_heart_beat_time = hex(hex_heart_beat_time)[2:].zfill(4)
+          
+          hr_byte_4 = hex_heart_beat_time[2:]
+          hr_byte_5 = hex_heart_beat_time[:2]
+          hr_byte_6 = hex(heart_beat_count)[2:].zfill(2)
+          hr_byte_7 = hex(heart_rate)[2:].zfill(2)
+          
+          #data page 1,6,7 every 80s
+          if eventcounter % 65 ==0 or (eventcounter + 1) % 65 == 0 or (eventcounter + 2) % 65 == 0 or (eventcounter + 3) % 65 == 0:#send first and second manufacturer's info packet
+            hr_byte_0 = hex(2 + heart_toggle)[2:].zfill(2)
+            hr_byte_1 = "0f"
+            hr_byte_2 = "01"
+            hr_byte_3 = "00"
+            #[82][0F][01][00][00][3A][12][48]
+          elif (eventcounter+31) % 65 == 0 or (eventcounter+32) % 65 == 0 or (eventcounter+33) % 65 == 0 or (eventcounter+34) % 65 == 0:#send first and second product info packet
+            hr_byte_0 = hex(3 + heart_toggle)[2:].zfill(2)
+            hr_byte_1 = "01"
+            hr_byte_2 = "01"
+            hr_byte_3 = "33"      
+            #[83][01][01][33][4F][3F][13][48]
+          elif (eventcounter+11) % 65 == 0 or (eventcounter+12) % 65 == 0 or (eventcounter+13) % 65 == 0 or (eventcounter+44) % 65 == 0:#send page 0x01 cumulative operating time
+            cot = int((time.time() - cot_start) / 2)
+            cot_hex = hex(cot)[2:].zfill(6)
+            hr_byte_0 = hex(1 + heart_toggle)[2:].zfill(2)
+            hr_byte_1 = cot_hex[4:6]
+            hr_byte_2 = cot_hex[2:4]
+            hr_byte_3 = cot_hex[0:2]
+          elif (eventcounter+21) % 65 == 0 or (eventcounter+22) % 65 == 0 or (eventcounter+23) % 65 == 0 or (eventcounter+24) % 65 == 0:#send page 0x06 capabilities
+            hr_byte_0 = hex(6 + heart_toggle)[2:].zfill(2)
+            hr_byte_1 = "ff"
+            hr_byte_2 = "00"
+            hr_byte_3 = "00"
+          elif (eventcounter+41) % 65 == 0 or (eventcounter+42) % 65 == 0 or (eventcounter+43) % 65 == 0 or (eventcounter+44) % 65 == 0:#send page 0x07 battery
+            hr_byte_0 = hex(7 + heart_toggle)[2:].zfill(2)
+            hr_byte_1 = "64"
+            hr_byte_2 = "55"
+            hr_byte_3 = "13"
+          else:#send page 0
+            hr_byte_0 = hex(0 + heart_toggle)[2:].zfill(2)
+            hr_byte_1 = "ff"
+            hr_byte_2 = "ff"
+            hr_byte_3 = "ff"
+            
+          hrdata = "a4 09 4e 01 "+hr_byte_0+" "+hr_byte_1+" "+hr_byte_2+" "+hr_byte_3+" "+hr_byte_4+" "+hr_byte_5+" "+hr_byte_6+" "+hr_byte_7+" 02 00 00"
+          hrdata = "a4 09 4e 01 "+hr_byte_0+" "+hr_byte_1+" "+hr_byte_2+" "+hr_byte_3+" "+hr_byte_4+" "+hr_byte_5+" "+hr_byte_6+" "+hr_byte_7+" "+ant.calc_checksum(hrdata)+" 00 00"
+          time.sleep(0.125)# sleep for 125ms
+          if debug == True: print datetime.utcnow().strftime('%Y-%m-%d %H:%M:%S.%f')[:-3],"HEART RATE",hrdata
+          ant.send_ant([hrdata], dev_ant, debug)
         ####################wait ####################
 
         #add wait so we only send every 250ms
@@ -1026,9 +1026,9 @@ class Window(Frame):
     thread.start() 
 
 def on_closing():#handle for window closing- stop loops
- global switch
- switch = False
- root.destroy()
+  global switch
+  switch = False
+  root.destroy()
 
 
 #load defaults
