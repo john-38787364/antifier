@@ -89,4 +89,10 @@ Resistance level 6 was most extensively tested for power calculations so it is r
 
 Alter the grade and factors as you see fit. However, ensure there are 14 grades/ resistance value defined
 
+TODO
+Add power curve generation
+Fix power factor window
+Fix head unit button functionality
+
+
 
