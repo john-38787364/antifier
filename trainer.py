@@ -55,10 +55,14 @@ def receive(dev_trainer):
     heart_rate = int(data[12])
     cadence = int(data[44])
     force = fromcomp((data[39]<<8)|data[38],16)
-    
+    #print force, possfov
     #autodetect resistance return
+    #force = 0 could be either
+    if possfov[0] != 0 and force==0:#still fixed values, alter to minum force
+      force = 1039
     if force not in possfov:#not an imagic fixed value return- find closest value
-      print "Found variable resistance retur value from trainer"
+      if possfov[0] != 0:
+        print "Found variable resistance return value from trainer"
       reslist = [0, 1000, 2000, 3000, 4000, 5000, 6000, 7000, 8000, 9000, 10000, 11000, 12000, 13000]#possible resistance value to be transmitted to device
       possfov = [0, 1000, 2000, 3000, 4000, 5000, 6000, 7000, 8000, 9000, 10000, 11000, 12000, 13000]
       #find value with minimum distance to reported force

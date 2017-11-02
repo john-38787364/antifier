@@ -844,6 +844,7 @@ class Window(Frame):
             else: print "Cannot read from trainer"
           else:
             if not headless: self.trainerVariable.set("Trainer detected")
+          #print force_index
           factors = pc_dict[pc_sorted_keys[force_index]]
           calc_power=int(speed*factors[0] + factors[1])
           if calc_power <0: calc_power = 0
@@ -866,9 +867,11 @@ class Window(Frame):
             closest = 1000
             for idx, g in enumerate(sorted(pc_dict)):#iterate up
               power_at_level = int(speed*pc_dict[g][0] + pc_dict[g][1])
+              #print idx,g,power_at_level
               if (target_power - power_at_level)**2 < closest ** 2:
                 resistance_level = idx
                 closest = ((target_power - power_at_level)**2)**0.5
+          #print resistance_level
           if not simulatetrainer:
             trainer.send(dev_trainer, resistance_level, pedecho)
 
