@@ -99,10 +99,24 @@ Format: (comments after # sign)
 
 Resistance level 6 was most extensively tested for power calculations so it is recommended that grades 0-2% are around this level
 
-Alter the grade and factors as you see fit. However, ensure there are 14 grades/ resistance value defined
+Alter the grade and factors as you see fit. However, ensure there are 14 grades and resistance value defined.
+
+ROLL YOUR OWN POWER CURVE
+The package include the scripts power_curve.exe/power_curve.py. You will need your trainer, an ANT dongle and a bike power meter (powertap, quarq, vector,stages etc.)
+
+When run this will ask you to do a runoff test (aim for 7 seconds) and then calibrate your power meter. 
+
+You will then ride at increasing speeds through each of the 14 resistance levels. The script will record the power meter data, speed and resistance levels and save (via pickle) this data into a file called calibration.pickle.
+
+For the coders- this is a pickled list of lists in the following format:
+[
+[resistance, speed, power],
+]
+It will then (using numpy and scipy) generate the linear equation facors for each resistance level and save it to power_calc_factors_custom.txt
+
+You can then use this power curve "Custom" in the main script. Please submit any power curves along with the trainer model to the GitHub site for others to use :)
 
 TODO
-Add power curve generation
 Fix power factor window
 Fix head unit button functionality
 
