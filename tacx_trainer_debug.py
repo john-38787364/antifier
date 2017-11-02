@@ -4,6 +4,9 @@ import os
 import trainer
 
 dev_trainer = trainer.get_trainer()
+if not dev_trainer:
+  print "Could not find trainer"
+  sys.exit()
 trainer.initialise_trainer(dev_trainer)
 
 eventcounter=1
