@@ -11,6 +11,7 @@ wget --quiet https://raw.githubusercontent.com/john-38787364/antifier/master/pow
 wget --quiet https://raw.githubusercontent.com/john-38787364/antifier/master/power_calc_factors_fortius.txt
 wget --quiet https://raw.githubusercontent.com/john-38787364/antifier/master/power_calc_factors_imagic.txt
 wget --quiet https://raw.githubusercontent.com/john-38787364/antifier/master/README.txt
+wget --quiet https://raw.githubusercontent.com/john-38787364/antifier/master/tacx_trainer_debug.py
 echo "##########################################################################"
 echo "This script has installed python-pip and pyserial. It has created the"
 echo "directory antifier and downloaded the required files."
