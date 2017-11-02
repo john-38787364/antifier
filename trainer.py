@@ -1,6 +1,10 @@
 import usb.core, os
 global reslist, trainer_type, possfov
 
+#assume is imagic wheel unit (fixed return values) first
+possfov=[1039, 1299, 1559, 1819, 2078, 2338, 2598, 2858, 3118, 3378, 3767, 4027, 4287, 4677]#possible force values to be recv from device
+reslist=[1900, 2030, 2150, 2300, 2400, 2550, 2700, 2900, 3070, 3200, 3350, 3460, 3600, 3750]#possible resistance value to be transmitted to device
+
 def fromcomp(val,bits):
   if val>>(bits-1) == 1:
     return 0-(val^(2**bits-1))-1
@@ -19,7 +23,7 @@ def send(dev_trainer, resistance_level, pedecho=0):
       print "TRAINER WRITE ERROR", str(e)
   
 def receive(dev_trainer):
-  global trainer_type, possfov
+  global trainer_type, possfov, reslist
   try:
     data = dev_trainer.read(0x82, 64, 30)
   except Exception, e:
@@ -28,32 +32,40 @@ def receive(dev_trainer):
     else:
       print "TRAINER READ ERROR", str(e)
     return "Not Found", False, False, False, False
-  if trainer_type == 0x1932:
-    if len(data)>40:
-      fs = int(data[33])<<8 | int(data[32])
-      speed = round(fs/2.8054/100,1)#speed kph
-      pedecho = data[42]
-      heart_rate = int(data[12])
-      cadence = int(data[44])
-      force = fromcomp((data[39]<<8)|data[38],16)
-      if force == 0:
-        force = 1039
-      force_index = possfov.index(force)
-      return speed, pedecho, heart_rate, force_index, cadence
-    else:
-      return "Not Found", False, False, False, False
-  elif trainer_type == 0x1942:#[0x0b,0x17,0x00,0x00,0x08,0x01,0x00,0x00,0x06,0x00,0x80,0xf8,0x00,0x00,0x00,0x00,0x59,0x02,0xdc,0x03,0xd0,0x07,0xd0,0x07,0x03,0x13,0x02,0x00,0x28,0x2b,0x00,0x00,0x00,0x00,0x28,0x63,0x00,0x00,0x00,0x00,0x41,0xf3,0x00,0x00,0x00,0x00,0x02,0xaa]
-    if len(data)>40:
-      fs = int(data[33])<<8 | int(data[32])
-      speed = round(fs/2.8054/100,1)#speed kph
-      pedecho = data[42]
-      heart_rate = int(data[12])
-      cadence = int(data[44])
-      force = fromcomp((data[39]<<8)|data[38],16)
-      force_index = possfov.index(force)
-      return speed, pedecho, heart_rate, force_index, cadence
-    else:
-      return "Not Found", False, False, False, False
+  #if trainer_type == 0x1932:
+    #if len(data)>40:
+      #fs = int(data[33])<<8 | int(data[32])
+      #speed = round(fs/2.8054/100,1)#speed kph
+      #pedecho = data[42]
+      #heart_rate = int(data[12])
+      #cadence = int(data[44])
+      #force = fromcomp((data[39]<<8)|data[38],16)
+      #if force == 0:
+        #force = 1039
+      #force_index = possfov.index(force)
+      #return speed, pedecho, heart_rate, force_index, cadence
+    #else:
+      #return "Not Found", False, False, False, False
+  #elif trainer_type == 0x1942:#[0x0b,0x17,0x00,0x00,0x08,0x01,0x00,0x00,0x06,0x00,0x80,0xf8,0x00,0x00,0x00,0x00,0x59,0x02,0xdc,0x03,0xd0,0x07,0xd0,0x07,0x03,0x13,0x02,0x00,0x28,0x2b,0x00,0x00,0x00,0x00,0x28,0x63,0x00,0x00,0x00,0x00,0x41,0xf3,0x00,0x00,0x00,0x00,0x02,0xaa]
+  if len(data)>40:
+    fs = int(data[33])<<8 | int(data[32])
+    speed = round(fs/2.8054/100,1)#speed kph
+    pedecho = data[42]
+    heart_rate = int(data[12])
+    cadence = int(data[44])
+    force = fromcomp((data[39]<<8)|data[38],16)
+    
+    #autodetect resistance return
+    if force not in possfov:#not an imagic fixed value return- find closest value
+      reslist = [0, 1000, 2000, 3000, 4000, 5000, 6000, 7000, 8000, 9000, 10000, 11000, 12000, 13000]#possible resistance value to be transmitted to device
+      possfov = [0, 1000, 2000, 3000, 4000, 5000, 6000, 7000, 8000, 9000, 10000, 11000, 12000, 13000]
+      #find value with minimum distance to reported force
+      force = min(possfov, key=lambda x:abs(x-force))
+      
+    force_index = possfov.index(force)
+    return speed, pedecho, heart_rate, force_index, cadence
+  else:
+    return "Not Found", False, False, False, False
     
 def get_trainer():
   global trainer_type, reslist, possfov
@@ -85,15 +97,7 @@ def get_trainer():
         print "Unable to initialise trainer"
         return False
       
-    if trainer_type == 0x1932:
-      print "Found 1932 head unit"
-      possfov=[1039, 1299, 1559, 1819, 2078, 2338, 2598, 2858, 3118, 3378, 3767, 4027, 4287, 4677]#possible force values to be recv from device
-      reslist=[1900, 2030, 2150, 2300, 2400, 2550, 2700, 2900, 3070, 3200, 3350, 3460, 3600, 3750]#possible resistance value to be transmitted to device
-    elif trainer_type == 0x1942:
-      print "Found initialised 1942 head unit"
-      possfov=[0, 1000, 2000, 3000, 4000, 5000, 6000, 7000, 8000, 9000, 10000, 11000, 12000, 13000]#possible force values to be recv from device
-      reslist=[0, 1000, 2000, 3000, 4000, 5000, 6000, 7000, 8000, 9000, 10000, 11000, 12000, 13000]#possible resistance value to be transmitted to device
-    print antifier.power_curve
+    print hex(trainer_type)  
     dev.set_configuration()
     return dev
   
