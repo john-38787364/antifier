@@ -25,7 +25,7 @@ You will need to reinstall your trainer as a libusb-win32 device:
 8. Select ANT USB Stick 2, then OK in the warning, then close
 
 Download the Windows build of the application from:
-https://github.com/john-38787364/antifier/raw/master/dist/tacx-interface.exe
+https://github.com/john-38787364/antifier/raw/master/antifier_package.EXE
 
 Double click on the self extracting package and run by double clicking on the downloaded antifier.exe
 
@@ -55,7 +55,7 @@ To ensure comparable training sessions, the trainer should exert the same relati
 USAGE (HEADLESS)
 Linux
 sudo python antifier.py -l -c power_calc_factors_imagic.txt (-s , -d)
-Stop with ctrl-C
+Stop with Ctrl-C
 
 OPTIONS
 -p, --power-factor=x - will alter power reported by factor selected. Defaults to 1. e.g. power-factor=0.9 and power is 100, then power of 90W will be reported
@@ -72,7 +72,7 @@ PROBLEMS
 save output with antifier.py/.exe --debug > out.log
 
 To run the program in the console in Windows:
-2.1 Open the folder containing tacx-interface.exe then press "Shift Key" and right click in the white space next to it, then select "Open command window here". A black window should open
+2.1 Open the folder containing antifier.exe then press "Shift Key" and right click in the white space next to it, then select "Open command window here". A black window should open
 2.2 Run the script with "antifier.exe --debug > out.log"
 (select this command without the quotes then copy, right click on the black window should paste it into the black window)
 2.3 Press return- there should be no output on the screen
