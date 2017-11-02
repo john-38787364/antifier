@@ -39,12 +39,18 @@ FILE5="power_calc_factors_imagic.txt"
 FILE6="README.md"
 FILE7="README.txt"
 FILE8="tacx_trainer_debug.exe"
+FILE9="power_curve.py"
+FILE10="power_curve.exe"
+FILE11="ant.py"
+FILE12="antifier.py"
+FILE13="trainer.py"
 [SourceFiles]
 SourceFiles0=C:\Users\John\Documents\GitHub\tacx-ant\dist\
 SourceFiles1=C:\Users\John\Documents\GitHub\tacx-ant\
 [SourceFiles0]
 %FILE0%=
 %FILE8%=
+%FILE10%=
 [SourceFiles1]
 %FILE1%=
 %FILE2%=
@@ -53,3 +59,7 @@ SourceFiles1=C:\Users\John\Documents\GitHub\tacx-ant\
 %FILE5%=
 %FILE6%=
 %FILE7%=
+%FILE9%=
+%FILE11%=
+%FILE12%=
+%FILE13%=

@@ -29,8 +29,11 @@ https://github.com/john-38787364/antifier/raw/master/antifier_package.EXE
 
 Double click on the self extracting package and run by double clicking on the downloaded antifier.exe
 
-If you wish to run as a native python script then you will need to run python.exe -m pip install pyusb and to download libusb-win32-devel-filter:
-https://sourceforge.net/projects/libusb-win32/files/libusb-win32-releases/1.2.6.0/
+If you wish to run as a native python script then you will need to run :
+python.exe -m pip install pyusb numpy scipy
+and to download libusb-win32-devel-filter:
+https://sourceforge.net/projects/libusb-win32/files/libusb-win32-releases/1.2.6.0/ 
+or easier, use Zadig to install libusb driver
 
 USAGE (GUI)
 Linux

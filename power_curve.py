@@ -1,7 +1,12 @@
 import ant, os, usb.core, time, binascii, trainer, sys, os, pickle
 from Tkinter import *
 import threading
+import numpy as np
+from scipy.optimize import curve_fit
 
+def fit_func(x, a, b):
+  return a*x + b
+      
 class Window(Frame):
   
   def __init__(self, master=None):
@@ -228,9 +233,9 @@ class Window(Frame):
       self.ANTStatusVariable.set(u"ANT dongle found")
 
       
-      ant.antreset(dev_ant)#reset dongle
-      ant.calibrate(dev_ant)#calibrate ANT+ dongle
-      ant.powerdisplay(dev_ant)#calibrate as power display
+      ant.antreset(dev_ant, False)#reset dongle
+      ant.calibrate(dev_ant, False)#calibrate ANT+ dongle
+      ant.powerdisplay(dev_ant, False)#calibrate as power display
       
       iterations = 0
       rest = 1
@@ -270,11 +275,13 @@ class Window(Frame):
             self.TrainerStatusVariable.set("Check trainer is powered on")
             speed = 0
           #send data to trainer
-          trainer.send(dev_trainer, 0, pedecho, resistance_level)
+          trainer.send(dev_trainer, resistance_level, pedecho)
           
           self.PowerVariable.set(power)
           self.SpeedVariable.set(speed)
           self.ResistanceVariable.set(resistance_level)
+          
+          
           if rest == 0 and speed > 0:#in calibration mode and moving
             save_data.append([resistance_level,speed,power])
 	  
@@ -292,6 +299,8 @@ class Window(Frame):
         pickle.dump(save_data, handle, protocol=pickle.HIGHEST_PROTOCOL)
         
       #produce custom power curve calibration file
+      m="#grade:multiplier,additional\n"
+      valid_levels = 0
       for res in range(0,14):
         x=[]
         y=[]
@@ -302,20 +311,25 @@ class Window(Frame):
             #print res,val[1],val[2]
             x.append(val[1])
             y.append(val[2])
-            
-        npx = np.array(x)
-        npy = np.array(y)
-          
-        try:
-          params = curve_fit(fit_func, npx, npy)
-        except:
-          pass
-        [a, b] = params[0]
+        if len(x)>0:
+          npx = np.array(x)
+          npy = np.array(y)
+          try:
+            params = curve_fit(fit_func, npx, npy)
+          except:
+            pass
+          [a, b] = params[0]
+          valid_levels += 1
 
-        m+="%s:%s,%s\n" % (res-3,a,b)
-        calibration_file=open('power_calc_factors_custom.txt','w')
-        calibration_file.write(m)
-        calibration_file.close()
+          m+="%s:%s,%s\n" % (res-3,a,b)
+      
+      if valid_levels != 14:
+        self.InstructionsVariable.set("Not enough data- try again")
+      else:
+        self.InstructionsVariable.set("Power curve generated OK")
+      calibration_file=open('power_calc_factors_custom.txt','w')
+      calibration_file.write(m)
+      calibration_file.close()
       
           
           
