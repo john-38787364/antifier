@@ -93,7 +93,7 @@ def get_trainer():
       print "Found initialised 1942 head unit"
       possfov=[0, 1000, 2000, 3000, 4000, 5000, 6000, 7000, 8000, 9000, 10000, 11000, 12000, 13000]#possible force values to be recv from device
       reslist=[0, 1000, 2000, 3000, 4000, 5000, 6000, 7000, 8000, 9000, 10000, 11000, 12000, 13000]#possible resistance value to be transmitted to device
-    
+    print antifier.power_curve
     dev.set_configuration()
     return dev
   
