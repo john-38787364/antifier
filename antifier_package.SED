@@ -38,11 +38,13 @@ FILE4="power_calc_factors_fortius.txt"
 FILE5="power_calc_factors_imagic.txt"
 FILE6="README.md"
 FILE7="README.txt"
+FILE8="tacx_trainer_debug.exe"
 [SourceFiles]
 SourceFiles0=C:\Users\John\Documents\GitHub\tacx-ant\dist\
 SourceFiles1=C:\Users\John\Documents\GitHub\tacx-ant\
 [SourceFiles0]
 %FILE0%=
+%FILE8%=
 [SourceFiles1]
 %FILE1%=
 %FILE2%=

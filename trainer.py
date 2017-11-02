@@ -2,6 +2,7 @@ import usb.core, os
 global reslist, trainer_type, possfov
 
 #assume is imagic wheel unit (fixed return values) first
+print "Assuming fixed resistance return value from trainer"
 possfov=[1039, 1299, 1559, 1819, 2078, 2338, 2598, 2858, 3118, 3378, 3767, 4027, 4287, 4677]#possible force values to be recv from device
 reslist=[1900, 2030, 2150, 2300, 2400, 2550, 2700, 2900, 3070, 3200, 3350, 3460, 3600, 3750]#possible resistance value to be transmitted to device
 
@@ -57,6 +58,7 @@ def receive(dev_trainer):
     
     #autodetect resistance return
     if force not in possfov:#not an imagic fixed value return- find closest value
+      print "Found variable resistance retur value from trainer"
       reslist = [0, 1000, 2000, 3000, 4000, 5000, 6000, 7000, 8000, 9000, 10000, 11000, 12000, 13000]#possible resistance value to be transmitted to device
       possfov = [0, 1000, 2000, 3000, 4000, 5000, 6000, 7000, 8000, 9000, 10000, 11000, 12000, 13000]
       #find value with minimum distance to reported force
