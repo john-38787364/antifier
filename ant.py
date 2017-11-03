@@ -1,5 +1,6 @@
-import binascii, re, os, usb.core, glob, time
-if os.name == 'posix':
+import binascii, re, os, usb.core, glob, time, platform
+#if os.name == 'posix':
+if platform.system() == 'Linux':
   import serial
 
 def calc_checksum(message):#calulate message checksum
@@ -24,7 +25,8 @@ def send_ant(stringl, dev_ant, debug):#send message string to dongle
       send = send + binascii.unhexlify(string[i:i+2])
       i=i+3
     if debug == True: print int(time.time()*1000),'>>',binascii.hexlify(send)#log data to console
-    if os.name == 'posix':
+    #if os.name == 'posix':
+    if platform.system() == 'Linux':
       dev_ant.write(send)
     else:
       try:
@@ -41,14 +43,16 @@ def send_ant(stringl, dev_ant, debug):#send message string to dongle
 def read_ant(dev_ant, debug):
   read_val = ""
   trv = True #temp rtn value from ANT stick
-  if os.name == 'posix': 
+  #if os.name == 'posix':
+  if platform.system() == 'Linux':
     dev_ant.timeout = 0.1
     try:
       read_val += binascii.hexlify(dev_ant.read(size=256))
     except Exception, e:
       read_val = ""
       print str(e)
-  elif os.name == 'nt': 
+  #elif os.name == 'nt': 
+  else:
     try:
       while trv:
         trv = binascii.hexlify(dev_ant.read(0x81,64,20))
@@ -143,7 +147,8 @@ def get_ant(debug):
     send = send + binascii.unhexlify(reset_string[i:i+2])
     i=i+3
   ###windows###
-  if os.name == 'nt':
+  #if os.name == 'nt':
+  if platform.system() == 'Windows' or platform.system() == 'Darwin':
     found_available_ant_stick= False
     ant_pids = [0x1008, 0x1009]#0x1008 4104 suunto, 0x1009 4105 garmin
     for ant_pid in ant_pids:#iterate through ant pids
@@ -171,7 +176,8 @@ def get_ant(debug):
       dev_ant = False 
 
   ###Linux###
-  elif os.name == 'posix':
+  #elif os.name == 'posix':
+  elif platform.system() == 'Linux':
     #Find ANT+ USB stick on serial (Linux)
     ant_stick_found = False
     for p in glob.glob('/dev/ttyUSB*'):
