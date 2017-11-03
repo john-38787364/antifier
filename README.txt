@@ -25,7 +25,8 @@ You will need to reinstall your trainer as a libusb-win32 device:
 8. Select ANT USB Stick 2, then OK in the warning, then close
 
 Download the Windows build of the application from:
-https://github.com/john-38787364/antifier/raw/master/antifier_package.EXE
+https://github.com/john-38787364/antifier/raw/master/antifier_package_x64.EXE
+https://github.com/john-38787364/antifier/raw/master/antifier_package_x32.EXE
 
 Double click on the self extracting package and run by double clicking on the downloaded antifier.exe
 

@@ -168,7 +168,8 @@ def get_ant(debug):
           except usb.core.USBError:#cannot write to ANT dongle
             if debug: print "ANT dongle in use"
             found_available_ant_stick = False
-        except AttributeError:#could not find dongle
+        #except AttributeError:#could not find dongle
+        except:
           if debug: print "Could not find %s dongle" % ant_pid
           found_available_ant_stick = False
 
