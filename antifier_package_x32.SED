@@ -24,7 +24,7 @@ SourceFiles=SourceFiles
 InstallPrompt=
 DisplayLicense=
 FinishMessage=Antifier extraction complete
-TargetName=C:\Users\John\Documents\GitHub\tacx-ant\antifier_package_x64.EXE
+TargetName=C:\Users\John\Documents\GitHub\tacx-ant\antifier_package_x32.EXE
 FriendlyName=Antifier
 AppLaunched=
 PostInstallCmd=
@@ -45,7 +45,7 @@ FILE11="ant.py"
 FILE12="antifier.py"
 FILE13="trainer.py"
 [SourceFiles]
-SourceFiles0=C:\Users\John\Documents\GitHub\tacx-ant\build_x64\
+SourceFiles0=C:\Users\John\Documents\GitHub\tacx-ant\build_x32\
 SourceFiles1=C:\Users\John\Documents\GitHub\tacx-ant\
 [SourceFiles0]
 %FILE0%=
