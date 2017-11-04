@@ -3,3 +3,4 @@ c:\Python27\Scripts\pyinstaller.exe --distpath=.\build_x64\ --onefile tacx_train
 c:\Python27\Scripts\pyinstaller.exe --distpath=.\build_x64\ --onefile power_curve.py
 rd /s /q .\build
 iexpress /N antifier_package_x64.SED
+del *.spec
