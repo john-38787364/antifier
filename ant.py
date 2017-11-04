@@ -170,7 +170,7 @@ def get_ant(debug):
             found_available_ant_stick = False
         #except AttributeError:#could not find dongle
         except Exception, e:
-          print str(e)
+          print str(e)+"xx"
           if "AttributeError" in str(e):
             if debug: print "Could not find %s dongle" % ant_pid
             msg = "Could not find dongle"
