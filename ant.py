@@ -169,8 +169,14 @@ def get_ant(debug):
             if debug: print "ANT dongle in use"
             found_available_ant_stick = False
         #except AttributeError:#could not find dongle
-        except:
-          if debug: print "Could not find %s dongle" % ant_pid
+        except Exception, e:
+          print str(e)
+          if "AttributeError" in str(e):
+            if debug: print "Could not find %s dongle" % ant_pid
+            msg = "Could not find dongle"
+          elif "None" in str(e):
+            if debug: print "No backend- check libusb"
+            msg = "No backend- check libusb"
           found_available_ant_stick = False
 
     if found_available_ant_stick == False:
