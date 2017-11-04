@@ -4,8 +4,76 @@ import threading
 import numpy as np
 from scipy.optimize import curve_fit
 
+def produce_power_curve_file(save_data):
+  #produce custom power curve calibration file
+  m="#grade:multiplier,additional\n"
+  valid_levels = 0
+  for res in range(0,14):
+    x=[]
+    y=[]
+    for val in save_data:
+      #if val[0] == 6:
+      #  print "%s,%s" % (val[1],val[2])
+      if val[0] == res:
+        #print res,val[1],val[2]
+        x.append(val[1])
+        y.append(val[2])
+    if len(x)>0:
+      npx = np.array(x)
+      npy = np.array(y)
+      try:
+        params = curve_fit(fit_func, npx, npy)
+      except:
+        pass
+      [a, b] = params[0]
+      valid_levels += 1
+      
+      #power = speed x a + b
+      reqspeed = 35
+      reqpower= reqspeed * a + b
+      res=[]
+      for s in range (-100,100):#produce list of speeds at various slopes
+        test_slope = s/10.0
+        res.append(float(get_speed(reqpower, 0.25, 0.01, 80, test_slope ,0,0)*3.6))
+  
+
+      closest = min(res, key=lambda x:abs(x-reqspeed))#get nearest speed to requires and work out slope required to get speed at that power
+      ind = res.index(closest)#get nearest slope
+      slope = (-100 + ind)/10.0
+
+      m+="%s:%s,%s\n" % (slope*3+2,a,b) # times by 3 and add 2 to slope to get general zwift range
+  
+  if valid_levels != 14:
+    msg = "Not enough data- try again" 
+  else:
+    msg = "Power curve generated OK"
+  calibration_file=open('power_calc_factors_custom.txt','w')
+  calibration_file.write(m)
+  calibration_file.close()
+  return msg
+
 def fit_func(x, a, b):
   return a*x + b
+
+def get_speed(power,Cx,f,W,slope,headwind,elevation):
+    # slope in percent
+    # headwind in m/s at 10 m high
+    # elevation in meters
+    air_pressure = 1 - 0.000104 * elevation
+    Cx = Cx*air_pressure
+    G = 9.81
+    headwind = (0.1**0.143) * headwind
+    roots = np.roots([Cx, 2*Cx*headwind, Cx*headwind**2 + W*G*(slope/100.0+f), -power])
+    roots = np.real(roots[np.imag(roots) == 0])
+    roots = roots[roots>0]
+    speed = np.min(roots)
+    if speed + headwind < 0:
+        roots = np.roots([-Cx, -2*Cx*headwind, -Cx*headwind**2 + W*G*(slope/100.0+f), -power])
+        roots = np.real(roots[np.imag(roots) == 0])
+        roots = roots[roots>0]
+        if len(roots) > 0:
+            speed = np.min(roots)  
+    return speed
       
 class Window(Frame):
   
@@ -297,40 +365,9 @@ class Window(Frame):
       #ant.send(["a4 01 4a 00 ef 00 00"],dev_ant, False)#reset ANT+ dongle
       with open('calibration.pickle', 'wb') as handle:
         pickle.dump(save_data, handle, protocol=pickle.HIGHEST_PROTOCOL)
-        
-      #produce custom power curve calibration file
-      m="#grade:multiplier,additional\n"
-      valid_levels = 0
-      for res in range(0,14):
-        x=[]
-        y=[]
-        for val in save_data:
-          #if val[0] == 6:
-          #  print "%s,%s" % (val[1],val[2])
-          if val[0] == res:
-            #print res,val[1],val[2]
-            x.append(val[1])
-            y.append(val[2])
-        if len(x)>0:
-          npx = np.array(x)
-          npy = np.array(y)
-          try:
-            params = curve_fit(fit_func, npx, npy)
-          except:
-            pass
-          [a, b] = params[0]
-          valid_levels += 1
-
-          m+="%s:%s,%s\n" % (res-3,a,b)
       
-      if valid_levels != 14:
-        self.InstructionsVariable.set("Not enough data- try again")
-      else:
-        self.InstructionsVariable.set("Power curve generated OK")
-      calibration_file=open('power_calc_factors_custom.txt','w')
-      calibration_file.write(m)
-      calibration_file.close()
-      
+      msg = produce_power_curve_file(save_data)
+      self.InstructionsVariable.set(msg)
           
           
     if self.StartText.get()=="Start":
