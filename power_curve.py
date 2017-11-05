@@ -2,30 +2,38 @@ import ant, os, usb.core, time, binascii, trainer, sys, os, pickle
 from Tkinter import *
 import threading
 import numpy as np
-from scipy.optimize import curve_fit
+#from scipy.optimize import curve_fit
 
-def produce_power_curve_file(save_data):
+def produce_power_curve_file(save_data):#res, speed, power
   #produce custom power curve calibration file
   m="#grade:multiplier,additional\n"
   valid_levels = 0
   for res in range(0,14):
-    x=[]
-    y=[]
+    #x=[]
+    #y=[]
+    nx=[]
+    ny=[]
     for val in save_data:
       #if val[0] == 6:
       #  print "%s,%s" % (val[1],val[2])
       if val[0] == res:
         #print res,val[1],val[2]
-        x.append(val[1])
-        y.append(val[2])
-    if len(x)>0:
-      npx = np.array(x)
-      npy = np.array(y)
-      try:
-        params = curve_fit(fit_func, npx, npy)
-      except:
-        pass
-      [a, b] = params[0]
+        #x.append(val[1])
+        #y.append(val[2])
+        nx.append([val[1],1])
+        ny.append(val[2])
+    if len(nx)>0:
+      #npx = np.array(x)
+      #npy = np.array(y)
+      #try:
+        #params = curve_fit(fit_func, npx, npy)
+      #except:
+        #pass
+      #[a, b] = params[0]
+      #print a, b
+      lsq = np.linalg.lstsq(nx, ny)
+      [a, b] = lsq[0]
+      #print a, b
       valid_levels += 1
       
       #power = speed x a + b
