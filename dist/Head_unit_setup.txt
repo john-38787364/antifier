@@ -1,5 +1,0 @@
-This file contains information regarding Head Unit buttons and Zwift keyboard shortcuts mapping 
-PGUP 
-PGDOWN 
-0 
-SB 
