@@ -1,5 +1,5 @@
 apt-get install python-pip python-tk
-pip install pyserial pyusb numpy scipy
+pip install pyserial pyusb numpy
 mkdir antifier
 cd antifier
 wget --quiet https://raw.githubusercontent.com/john-38787364/antifier/master/antifier.py
