@@ -11,6 +11,9 @@ INSTALLATION
 Linux (Root required):
 wget -O - https://raw.githubusercontent.com/john-38787364/antifier/master/install.sh | sudo sh
 This will create a directory "antifier" with required scripts in. 
+Raspberry Pi- if you're using the stock Raspian you will need to create the file /etc/udev/rules.d/garmin-ant2.rules and add the following line (replacing NNNN with the product ID of the dongle from lsusb e.g. 1008 or 1009:
+SUBSYSTEM=="usb", ATTRS{idVendor}=="0fcf", ATTRS{idProduct}=="NNNN", RUN+="/sbin/modprobe usbserial vendor=0x0fcf product=0xNNNN"
+Don't forget to reboot afterwards. If you have the dongle in whilst installing the script will attempt to detect it and autogenerate the line. you will still need to create the file and copy/paste.
 
 Windows:
 You will need to reinstall your trainer as a libusb-win32 device:
