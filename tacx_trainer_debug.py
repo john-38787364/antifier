@@ -3,6 +3,7 @@ from datetime import datetime
 import os
 import trainer
 
+
 dev_trainer = trainer.get_trainer()
 if not dev_trainer:
   print "Could not find trainer"
