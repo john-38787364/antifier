@@ -1,5 +1,9 @@
 OVERVIEW
 This project will enable a Windows or Linux PC to broadcast ANT+ data via a dongle from a Tacx trainer connected to it via USB. This can be either be from a standalone PC broadcasting to a PC or tablet running e.g. Zwift or Trainerroad, or from a Windows PC already running Zwift/ Trainerroad (this PC will therefore require two ANT+ dongles) 
+
+It will work as a "Smart Trainer". It will control the resistance of the trainer from the application controlling it. i.e. as the hill in Zwift gets steeper, the resistance will increase. 
+It will also work in "erg mode" e.g. if Trainerroad sets a target wattage of 200W it will alter the resistance so you generate that power at the wheel speed you are at, negating the need for cadence or gear changes.
+
 Home page: https://github.com/john-38787364/antifier
 
 REQUIREMENTS
@@ -34,10 +38,10 @@ https://github.com/john-38787364/antifier/raw/master/antifier_package_x32.EXE
 Double click on the self extracting package and run by double clicking on the downloaded antifier.exe
 
 If you wish to run as a native python script then you will need to run :
-python.exe -m pip install pyusb numpy scipy
+python.exe -m pip install pyusb numpy
 and to download libusb-win32-devel-filter:
 https://sourceforge.net/projects/libusb-win32/files/libusb-win32-releases/1.2.6.0/ 
-or easier, use Zadig to install libusb driver
+(or easier, use Zadig to install libusb driver)
 
 USAGE (GUI)
 Linux
