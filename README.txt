@@ -1,8 +1,10 @@
 OVERVIEW
 This project will enable a Windows or Linux PC to broadcast ANT+ data via a dongle from a Tacx trainer connected to it via USB. This can be either be from a standalone PC broadcasting to a PC or tablet running e.g. Zwift or Trainerroad, or from a Windows PC already running Zwift/ Trainerroad (this PC will therefore require two ANT+ dongles) 
 
-It will work as a "Smart Trainer". It will control the resistance of the trainer from the application controlling it. i.e. as the hill in Zwift gets steeper, the resistance will increase. 
+It will work as a "Smart Trainer". In "resistance mode" it will control the resistance of the trainer via messages from the application controlling it. i.e. as the hill in Zwift gets steeper, the resistance will increase. 
 It will also work in "erg mode" e.g. if Trainerroad sets a target wattage of 200W it will alter the resistance so you generate that power at the wheel speed you are at, negating the need for cadence or gear changes.
+
+A note on gradients- Antifier will set the resistance of the trainer according to the data it receives from the app. Zwift has a setting "trainer difficulty" which alters the gradient sent from the gradient ahown on the screen. In its default setting (middle of the slider), the gradient sent to Antifier is approximately 50% of the slope on the screen. In this case a screen 5% slope shows on Antifier as a 2.5% slope. If the slider is moved all the way to the left (off), then Zwift will only send a gradient of 0% regardless of screen slope. If the slider is all the way to the right, then Zwift sends a gradient double that which is shown on the screen, i.e. a 5% slope on the Zwift screen will show in Antifier as 10%. Adjust this slider as required- about 3/4 of the way to the right will result in Zwift sending the same slope it shows on the screen. This will not affect calculated power values sent to an app from Antifier.
 
 Home page: https://github.com/john-38787364/antifier
 
@@ -120,7 +122,7 @@ For the coders- this is a pickled list of lists in the following format:
 [
 [resistance, speed, power],
 ]
-It will then (using numpy and scipy) generate the linear equation facors for each resistance level and save it to power_calc_factors_custom.txt
+It will then (using numpy) generate the linear equation facors for each resistance level, as well as a realistic gradient and save it to power_calc_factors_custom.txt.
 
 You can then use this power curve "Custom" in the main script. Please submit any power curves along with the trainer model to the GitHub site for others to use :)
 
