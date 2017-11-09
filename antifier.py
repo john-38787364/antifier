@@ -562,14 +562,14 @@ class Window(Frame):
           if debug == True: print speed, pedecho, heart_rate, force_index, cadence, calc_power
           ####################SEND DATA TO TRAINER####################
           #send resistance data to trainer   
-          if debug == True: print datetime.utcnow().strftime('%Y-%m-%d %H:%M:%S.%f')[:-3],"GRADE", grade*2,"%"
+          if debug == True: print datetime.utcnow().strftime('%Y-%m-%d %H:%M:%S.%f')[:-3],"GRADE", grade,"%"
           #set resistance level
           if not grade and not target_power:#if trainer not been been set a grade or target power
             grade = 0
           resistance_level = len(pc_dict) - 1#set to highest by default
           if grade is not False:#find resistance for grade
             for idx, g in enumerate(sorted(pc_dict)):
-              if g >= grade*2:#find resistance value immediately above grade set by zwift (Zwift ANT+ grade is half that displayed on screen)
+              if g >= grade:#find resistance value immediately above grade set by zwift 
                 resistance_level = idx
                 break
           elif target_power:#get resistance closest for power target
@@ -644,7 +644,7 @@ class Window(Frame):
           if matching:
             grade = int(matching[0][20:22]+matching[0][18:20],16) * 0.01 - 200
             target_power = False
-            if not headless: self.SlopeVariable.set(round(grade*2,1))
+            if not headless: self.SlopeVariable.set(round(grade,1))
             if not headless: self.TargetPowerVariable.set("")
             if debug: print grade, matching[0]
           else:
