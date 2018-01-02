@@ -23,6 +23,7 @@ if os.name == 'posix':
 #powerfactor = 1
 #debug = False
 #simulatetrainer = False
+
 parser = argparse.ArgumentParser(description='Program to broadcast data from USB Tacx trainer, and to receive resistance data for the trainer')
 parser.add_argument('-d','--debug', help='Show debugging data', required=False, action='store_true')
 parser.add_argument('-s','--simulate-trainer', help='Simulated trainer to test ANT+ connectivity', required=False, action='store_true')
@@ -38,6 +39,8 @@ headless = args.headless
 switch = True
 runoff_loop_running = False
 
+TACX_READ_DELAY             = 0.25 # sec
+TACX_WRITE_DELAY            = 0.10 # sec
 
 
 filename = "Head_unit_setup.txt"
@@ -65,6 +68,13 @@ CANCEL = fileAsList[4]
 
 f.close()
 
+# Go to sleep
+def gotoSleep (last_measured_time, delay):
+    time_passed = time.time() * 1000 - last_measured_time
+    sleep_time = delay - (time_passed)/1000
+    if sleep_time < 0: 
+        sleep_time = 0
+    time.sleep(sleep_time)
 
 class PowerFactor_Window:
   def __init__(self, master):
@@ -365,7 +375,9 @@ class Window(Frame):
       global dev_trainer, runoff_loop_running
       rolldown = False
       rolldown_time = 0
+      #speed, pedecho, heart_rate, force_index, cadence = 0, 0, 0, 0, 0
       speed = 0
+      last_measured_time = 0
       #self.InstructionsVariable.set('''
   #CALIBRATION TIPS: 
   #1. Tyre pressure 100psi (unloaded and cold) aim for 7.2s rolloff
@@ -375,16 +387,24 @@ class Window(Frame):
   #''')
       
       while runoff_loop_running:#loop every 100ms
-        last_measured_time = time.time() * 1000
+        gotoSleep (last_measured_time, TACX_WRITE_DELAY)
+
         #receive data from trainer
-        speed, pedecho, heart_rate, force_index, cadence = trainer.receive(dev_trainer) #get data from device
+        speed_new, pedecho_new, heart_rate_new, force_index_new, cadence_new = trainer.receive(dev_trainer) #get data from device
+        last_measured_time = time.time() * 1000
+        print speed_new
+        if speed_new == "Not found":
+          self.TrainerStatusVariable.set("Check trainer is powered on")        
+        else:
+          speed, pedecho, heart_rate, force_index, cadence = speed_new, pedecho_new, heart_rate_new, force_index_new, cadence_new
+
         self.SpeedVariable.set(speed)
-        if speed == "Not found":
-          self.TrainerStatusVariable.set("Check trainer is powered on")
-        
+
+        gotoSleep (last_measured_time, TACX_READ_DELAY)
         #send data to trainer
         resistance_level = 6
         trainer.send(dev_trainer, resistance_level, pedecho)
+        last_measured_time = time.time() * 1000
         
         if speed > 40:#speed above 40, start rolldown
           self.runoffVariable.set("Rolldown timer started - STOP PEDALLING!")
@@ -399,10 +419,10 @@ class Window(Frame):
           runoff_loop_running = False#break loop
           self.runoffVariable.set("Rolldown time = %s seconds (aim 7s)" % round((time.time() - rolldown_time),1))
 
-        time_to_process_loop = time.time() * 1000 - last_measured_time
-        sleep_time = 0.1 - (time_to_process_loop)/1000
-        if sleep_time < 0: sleep_time = 0
-        time.sleep(sleep_time)
+#        time_to_process_loop = time.time() * 1000 - last_measured_time
+#        sleep_time = 0.1 - (time_to_process_loop)/1000
+#        if sleep_time < 0: sleep_time = 0
+#        time.sleep(sleep_time)
         
       self.RunoffButton.config(text="2. Perform Runoff")#reset runoff button
       self.StartAPPbutton.config(state="normal")
@@ -446,7 +466,6 @@ class Window(Frame):
     switch = False  
     self.StartAPPbutton.config(state="normal")
     self.StopAPPbutton.config(state="disabled")
-
 
   def ScanForHW(self):
     global dev_trainer, dev_ant, simulatetrainer
@@ -533,6 +552,8 @@ class Window(Frame):
       accumulated_time = time.time()*1000
       distance_travelled = 0
       last_dist_time = time.time()*1000
+      speed_new, pedecho_new, heart_rate_new, force_index_new, cadence_new = 0, 0, 0, 0, 0
+      speed, pedecho, heart_rate, force_index, cadence = 0, 0, 0, 0, 0
       
       #p.60 [19] specific trainer data, [10] counter rollover 256, [5a] inst cadence, [b0] acc power lsb, [47] acc power msb (r/over 65536W), [1b] inst power lsb, 
       #[01] bits 0-3 inst power MSB bits 4-7 trainer status bit, [30] flags bit field
@@ -540,21 +561,27 @@ class Window(Frame):
       try:
         while switch == True:
           if debug == True: print "Running", round(time.time() * 1000 - last_measured_time)
-          last_measured_time = time.time() * 1000
+ #         last_measured_time = time.time() * 1000
           if eventcounter >= 256:
             eventcounter = 0
           ###TRAINER- SHOULD WRITE THEN READ 70MS LATER REALLY
           ####################GET DATA FROM TRAINER####################
+          gotoSleep (last_measured_time, TACX_WRITE_DELAY)
+
           if simulatetrainer: 
             speed, pedecho, heart_rate, force_index, cadence = 20, 0, 70, 5, 90
           else:
-            speed, pedecho, heart_rate, force_index, cadence = trainer.receive(dev_trainer) #get data from device
-          if speed == "Not Found":
-            speed, pedecho, heart_rate, force_index, cadence = 0, 0, 0, 0, 0
-            if not headless: self.trainerVariable.set('Cannot read from trainer')
-            else: print "Cannot read from trainer"
-          else:
-            if not headless: self.trainerVariable.set("Trainer detected")
+            speed_new, pedecho_new, heart_rate_new, force_index_new, cadence_new = trainer.receive(dev_trainer) #get data from device
+            if speed_new == "Not Found":
+              #speed, pedecho, heart_rate, force_index, cadence = 0, 0, 0, 0, 0
+              if not headless: self.trainerVariable.set('Cannot read from trainer')
+              else: print "Cannot read from trainer"
+            else:
+              if not headless: self.trainerVariable.set("Trainer detected")
+              speed, pedecho, heart_rate, force_index, cadence = speed_new, pedecho_new, heart_rate_new, force_index_new, cadence_new
+
+          last_measured_time = time.time() * 1000
+			
           #print force_index
           factors = pc_dict[pc_sorted_keys[force_index]]
           calc_power=int(speed*factors[0] + factors[1])
@@ -583,8 +610,11 @@ class Window(Frame):
                 resistance_level = idx
                 closest = ((target_power - power_at_level)**2)**0.5
           #print resistance_level
+          gotoSleep (last_measured_time, TACX_READ_DELAY)
           if not simulatetrainer:
             trainer.send(dev_trainer, resistance_level, pedecho)
+
+          last_measured_time = time.time() * 1000
 
             #time.sleep(0.2)#simulated trainer timeout
           ####################BROADCAST AND RECEIVE ANT+ data####################
@@ -751,10 +781,12 @@ class Window(Frame):
           ####################wait ####################
 
           #add wait so we only send every 250ms
-          time_to_process_loop = time.time() * 1000 - last_measured_time
-          sleep_time = 0.25 - (time_to_process_loop)/1000
-          if sleep_time < 0: sleep_time = 0
-          time.sleep(sleep_time)
+ #         time_to_process_loop = time.time() * 1000 - last_measured_time
+ #         sleep_time = 0.25 - (time_to_process_loop)/1000
+ #         print datetime.fromtimestamp(time.time()), sleep_time
+ #         if sleep_time < 0: sleep_time = 0
+ #         time.sleep(sleep_time)
+ #         print datetime.fromtimestamp(time.time())
           eventcounter += 1
           
           if not headless: 
