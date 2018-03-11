@@ -76,7 +76,7 @@ def receive(dev_trainer):
 def get_trainer():
   global trainer_type, reslist, possfov
   trainer_type = 0
-  idpl = [0x1932, 0x1942, 0xe6be]#iflow, fortius, uninitialised fortius
+  idpl = [0x1904, 0x1932, 0x1942, 0xe6be]#imagic, iflow, fortius, uninitialised fortius
   for idp in idpl:
     dev = usb.core.find(idVendor=0x3561, idProduct=idp) #find trainer USB device
     if dev != None:
